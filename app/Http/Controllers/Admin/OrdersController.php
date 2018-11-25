@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Order;
+use App\OrderStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
@@ -11,6 +12,11 @@ use App\Http\Requests\Admin\UpdateOrdersRequest;
 
 class OrdersController extends Controller
 {
+    public function __construct(OrderStatus $orderStatus)
+    {
+        $this->orderStatus = $orderStatus;
+    }
+
     /**
      * Display a listing of Order.
      *
@@ -45,7 +51,7 @@ class OrdersController extends Controller
         if (! Gate::allows('order_create')) {
             return abort(401);
         }
-        
+
         $companies = \App\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
         $clients = \App\Cliente::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
 
@@ -82,7 +88,7 @@ class OrdersController extends Controller
         if (! Gate::allows('order_edit')) {
             return abort(401);
         }
-        
+
         $companies = \App\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
         $clients = \App\Cliente::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
 
@@ -123,7 +129,7 @@ class OrdersController extends Controller
         if (! Gate::allows('order_view')) {
             return abort(401);
         }
-        
+
         $companies = \App\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
         $clients = \App\Cliente::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');$scores = \App\Score::where('order_id', $id)->get();
 
