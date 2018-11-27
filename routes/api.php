@@ -16,4 +16,6 @@ Route::group(['prefix' => '/v1', 'namespace' => 'Api\V1', 'as' => 'api.'], funct
 
         Route::resource('partner_types', 'PartnerTypesController', ['except' => ['create', 'edit']]);
 
+        Route::get('partners/company/{id}', 'PartnersController@findByCompany');
+
 });

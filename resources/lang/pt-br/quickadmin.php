@@ -39,6 +39,7 @@ return [
 			'descricao' => 'Descrição',
 			'company' => 'Empresa',
 			'client' => 'Cliente',
+            'score' => 'Pontuação'
 		],
 	],
 
