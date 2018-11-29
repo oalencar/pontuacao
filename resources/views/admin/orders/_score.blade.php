@@ -13,7 +13,7 @@
             <tbody>
             <tr>
                 <td class="col-sm-4">
-                    <input type="text" name="observacao" class="form-control" />
+                    <select name="pontuacao" class="form-control pontuacaoSelect" />
                 </td>
                 <td class="col-sm-4">
                     <input type="text" name="score" class="form-control"/>

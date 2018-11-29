@@ -41,19 +41,13 @@
             <div class="row">
                 <div class="col-xs-12 form-group">
                     {!! Form::label('company_id', trans('quickadmin.orders.fields.company').'*', ['class' => 'control-label']) !!}
-                    {!! Form::select('company_id', $companies, old('company_id'), ['class' => 'form-control select2', 'id' => 'company', 'required' => '']) !!}
+                    {!! Form::select('company_id', $companies, old('company_id'), ['class' => 'form-control select2', 'id' => 'companySelect', 'required' => '']) !!}
                     <p class="help-block"></p>
                     @if($errors->has('company_id'))
                         <p class="help-block">
                             {{ $errors->first('company_id') }}
                         </p>
                     @endif
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xs-12">
-                    <select class="js-example-data-ajax" style="width: 100%"></select>
                 </div>
             </div>
 
@@ -88,7 +82,9 @@
 @section('javascript')
     <script>
 
+
         let empresaId = null;
+        let selectPartnersData = [];
 
         $(document).ready(function () {
 
@@ -125,14 +121,10 @@
             //Date picker
             $('.datepicker').datepicker({
                 autoclose: true
-            })
-
-
-
-
+            });
 
             /***********************************************
-            SCORE
+             SCORE
              ************************************************/
 
             let counterScore = 0;
@@ -141,7 +133,7 @@
                 var newRow = $("<tr>");
                 var cols = "";
 
-                cols += '<td><input type="text" class="form-control" name="observacao' + counterScore + '"/></td>';
+                cols += '<td><select name="pontuacao" class="form-control pontuacaoSelect" /></td>';
                 cols += '<td><input type="text" class="form-control" name="score' + counterScore + '"/></td>';
 
                 cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
@@ -156,79 +148,40 @@
                 counterScore -= 1
             });
 
-
-
             $('#companySelect').on('select2:select', function (e) {
                 var data = e.params.data;
-                console.log(data);
-                empresaId = data.id;
+                if (!data.id) return;
+                getPartnersCompany(data.id)
             });
 
+            function getPartnersCompany(companyId) {
+                if (!companyId) return;
 
-            $(".js-example-data-ajax").select2({
-                ajax: {
-                    url: "https://api.github.com/search/repositories",
-                    dataType: 'json',
-                    delay: 250,
-                    data: function (params) {
-                        return {
-                            q: params.term, // search term
-                            page: params.page
-                        };
-                    },
-                    processResults: function (data, params) {
-                        // parse the results into the format expected by Select2
-                        // since we are using custom formatting functions we do not need to
-                        // alter the remote JSON data, except to indicate that infinite
-                        // scrolling can be used
-                        params.page = params.page || 1;
+                $.get('{{ url('/api/v1/partners/company') }}' + '/' + companyId, function( data ) {
+                   selectPartnersData = transformResponseToSelectData(data);
+                   console.log(selectPartnersData);
+                   createSelect();
+                });
 
-                        return {
-                            results: data.items,
-                            pagination: {
-                                more: (params.page * 30) < data.total_count
-                            }
-                        };
-                    },
-                    cache: true
-                },
-                placeholder: 'Search for a repository',
-                escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
-                minimumInputLength: 1,
-                templateResult: formatRepo,
-                templateSelection: formatRepoSelection
-            });
-
-            function formatRepo (repo) {
-                if (repo.loading) {
-                    return repo.text;
-                }
-
-                var markup = "<div class='select2-result-repository clearfix'>" +
-                    "<div class='select2-result-repository__avatar'><img src='" + repo.owner.avatar_url + "' /></div>" +
-                    "<div class='select2-result-repository__meta'>" +
-                    "<div class='select2-result-repository__title'>" + repo.full_name + "</div>";
-
-                if (repo.description) {
-                    markup += "<div class='select2-result-repository__description'>" + repo.description + "</div>";
-                }
-
-                markup += "<div class='select2-result-repository__statistics'>" +
-                    "<div class='select2-result-repository__forks'><i class='fa fa-flash'></i> " + repo.forks_count + " Forks</div>" +
-                    "<div class='select2-result-repository__stargazers'><i class='fa fa-star'></i> " + repo.stargazers_count + " Stars</div>" +
-                    "<div class='select2-result-repository__watchers'><i class='fa fa-eye'></i> " + repo.watchers_count + " Watchers</div>" +
-                    "</div>" +
-                    "</div></div>";
-
-                return markup;
             }
 
-            function formatRepoSelection (repo) {
-                return repo.full_name || repo.text;
+            function transformResponseToSelectData(data) {
+
+                const newData = $.map(data, function (obj) {
+                    obj.id = obj.id;
+                    obj.text = obj.name + ' (' + obj.email + ')';
+
+                    return obj;
+                });
+
+                return newData;
             }
 
-
-
+            function createSelect() {
+                $('.pontuacaoSelect').select2({
+                    data: selectPartnersData
+                })
+            }
 
         });
 
@@ -246,7 +199,6 @@
             });
             $("#grandtotal").text(grandTotal.toFixed(2));
         }
-
 
 
 

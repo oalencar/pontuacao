@@ -18,8 +18,19 @@ class PartnersController extends Controller
         return Partner::findOrFail($id);
     }
 
-    public function findByCompany($company_id) {
-        return $company_id;
+    public function findByCompany($id) {
+        $company_id = $id;
+
+        if (!$company_id) {
+            abort(400, 'bad request.');
+        }
+
+        $partners =  Partner::with('user')->where('company_id', $company_id)->get();
+
+        return collect($partners)->map(function($item) {
+           return $item->user;
+        });
+
     }
 
 
