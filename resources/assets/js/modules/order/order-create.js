@@ -36,7 +36,7 @@ $("#addrow").on("click", function () {
     order.addOrderStatusRow();
 });
 
-$("table#order-list").on("click", ".ibtnDel", function (event) {
+$("table#order-status-list").on("click", ".ibtnDel", function (event) {
     order.removeRow(event.target)
 });
 

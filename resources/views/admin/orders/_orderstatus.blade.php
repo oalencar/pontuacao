@@ -4,7 +4,7 @@
     <div class="col-xs-12 col-md-6 form-group">
         {!! Form::label('orderStatus', trans('quickadmin.order-status.title').'', ['class' => 'control-label']) !!}
 
-        <table id="order-list" class="table">
+        <table id="order-status-list" class="table">
             <thead>
             <tr>
                 <td>Descrição</td>
@@ -14,7 +14,7 @@
             <tbody>
             <tr>
                 <td class="col-sm-4">
-                    <input type="text" name="observacao" class="form-control" />
+                    <input type="text" name="order-status-observacao[]" class="form-control" />
                 </td>
                 <td class="col-sm-4">
 
@@ -23,7 +23,7 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" class="form-control pull-right datepicker">
+                            <input type="text" class="form-control pull-right datepicker" name="order-status-data[]">
                         </div>
                         <!-- /.input group -->
                     </div>

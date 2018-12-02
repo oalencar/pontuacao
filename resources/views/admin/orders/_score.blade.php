@@ -13,10 +13,10 @@
             <tbody>
             <tr>
                 <td class="col-sm-4">
-                    <select name="pontuacao" class="form-control pontuacaoSelect" />
+                    <select name="score-user-id[]" class="form-control pontuacaoSelect" />
                 </td>
                 <td class="col-sm-4">
-                    <input type="text" name="score" class="form-control"/>
+                    <input type="text" name="score-score[]" class="form-control"/>
                 </td>
                 <td class="col-sm-2">
                     <a class="deleteRow"></a>

@@ -12,7 +12,9 @@ use App\Http\Requests\Admin\UpdateOrdersRequest;
 
 class OrdersController extends Controller
 {
-    public function __construct(OrderStatus $orderStatus)
+    public function __construct(
+        OrderStatus $orderStatus
+    )
     {
         $this->orderStatus = $orderStatus;
     }
@@ -69,8 +71,14 @@ class OrdersController extends Controller
         if (! Gate::allows('order_create')) {
             return abort(401);
         }
-        $order = Order::create($request->all());
 
+        // $order = Order::create($request->all());
+
+
+        $orderStatus = [
+            $request->get('order-status-observacao[]'),
+            $request->get('order-status-data[]'),
+        ];
 
 
         return redirect()->route('admin.orders.index');

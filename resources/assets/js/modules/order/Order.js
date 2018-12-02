@@ -74,18 +74,18 @@ export class Order {
         const newRow = $('<tr>');
 
         const rowTemplate = `
-                <td><input type="text" class="form-control" name="observacao"/></td>
+                <td><input type="text" class="form-control" name="order-status-observacao[]"/></td>
                 <td>
                     <div class="input-group date">
                     <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                    <input type="text" class="form-control pull-right datepicker" name="data">
+                    <input type="text" class="form-control pull-right datepicker" name="order-status-data[]">
                 </td>
                 <td><input type="button" class="ibtnDel btn btn-md btn-danger"  value="Delete"></td>
             `;
 
         newRow.append(rowTemplate);
 
-        $("table#order-list").append(newRow);
+        $("table#order-status-list").append(newRow);
 
         $('.datepicker').datepicker();
     }
@@ -142,8 +142,8 @@ export class Order {
         var newRow = $("<tr>");
 
         const templateRow = `
-        <td><select name="pontuacao" class="form-control pontuacaoSelect" /></td>
-        <td><input type="text" class="form-control" name="score"/></td>
+        <td><select name="score-user-id[]" class="form-control pontuacaoSelect" /></td>
+        <td><input type="text" class="form-control" name="score-pontuacao[]"/></td>
         <td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>`;
 
         newRow.append(templateRow);
