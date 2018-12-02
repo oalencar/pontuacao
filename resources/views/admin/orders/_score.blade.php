@@ -3,11 +3,11 @@
 <div class="row">
     <div class="col-xs-12 col-md-6 form-group">
         {!! Form::label('score', trans('quickadmin.orders.fields.score').'', ['class' => 'control-label']) !!}
-        <table id="myTable" class="table score-list">
+        <table id="score-list" class="table">
             <thead>
             <tr>
-                <td>Descrição</td>
-                <td>Data</td>
+                <td>Parceiro</td>
+                <td>Pontos</td>
             </tr>
             </thead>
             <tbody>

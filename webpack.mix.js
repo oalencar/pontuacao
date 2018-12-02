@@ -13,3 +13,16 @@ let mix = require('laravel-mix');
 
 mix.js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css');
+
+
+// ORDER MODULE
+mix.js(
+    [
+        'resources/assets/js/modules/order/Order.js',
+        'resources/assets/js/modules/order/order-create.js'
+    ], 'public/js/modules/order')
+    .sourceMaps();
+
+mix.styles([
+    'node_modules/air-datepicker/dist/css/datepicker.css',
+], 'public/css/datepicker.css');

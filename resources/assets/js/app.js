@@ -21,5 +21,3 @@ require('./bootstrap');
 //     el: '#app'
 // });
 
-
-require('./modules/order');

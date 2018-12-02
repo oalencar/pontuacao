@@ -10,6 +10,9 @@
 <meta http-equiv="Content-type"
       content="text/html; charset=utf-8">
 
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
+
 <!-- Tell the browser to be responsive to screen width -->
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <!-- Font Awesome -->
@@ -36,6 +39,8 @@
 <link rel="stylesheet"
       href="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css"/>
 <link rel="stylesheet"
+      href="//cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css"/><link rel="stylesheet"
       href="//cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css"/>
 
 <link href="{{ url('adminlte/plugins/datetimepicker/bootstrap-datetimepicker.min.css') }}" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker3.standalone.min.css" />
