@@ -146,7 +146,7 @@ export class Order {
 
         const templateRow = `
         <td><select name="score-user-id[]" class="form-control pontuacaoSelect" /></td>
-        <td><input type="text" class="form-control" name="score-pontuacao[]"/></td>
+        <td><input type="text" class="form-control" name="score-score[]"/></td>
         <td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>`;
 
         newRow.append(templateRow);

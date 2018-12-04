@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Order;
 use App\OrderStatus;
+use App\Score;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -15,10 +16,12 @@ use function PHPSTORM_META\map;
 class OrdersController extends Controller
 {
     public function __construct(
-        OrderStatus $orderStatus
+        OrderStatus $orderStatus,
+        Score $score
     )
     {
         $this->orderStatus = $orderStatus;
+        $this->score = $score;
     }
 
     /**
@@ -70,26 +73,39 @@ class OrdersController extends Controller
      */
     public function store(StoreOrdersRequest $request)
     {
+        //dd($request->all());
         if (! Gate::allows('order_create')) {
             return abort(401);
         }
 
-        // $order = Order::create($request->all());
-        $order = 12;
+        $order = Order::create($request->all());
 
+        // ORDERSTATUS LOGIC
         $orderStatusObservacao = collect($request->get('order-status-observacao'));
         $orderStatusData = collect($request->get('order-status-data'));
 
-        $orderStatusToSave = $orderStatusData->map(function ($data, $key) use ($order, $orderStatusObservacao) {
+        $orderStatusData->map(function ($data, $key) use ($order, $orderStatusObservacao) {
             return [
                 'observacao' => $orderStatusObservacao[$key],
                 'data' =>  $data,
                 'order_id' => $order
             ];
+        })->map(function ($item) {
+            $this->orderStatus->updateOrCreate($item);
         });
 
-        $orderStatusToSave->map(function ($item) {
-           $this->orderStatus->updateOrCreate($item);
+        // SCORE LOGIC
+        $scoreUsersIds = collect($request->get('score-user-id'));
+        $scoreScores = collect($request->get('score-score'));
+
+        $scoreScores->map(function ($score, $key) use ($scoreUsersIds, $order){
+            return [
+                'score'     => $score,
+                'user_id'   => $scoreUsersIds[$key],
+                'order_id'  => $order
+            ];
+        })->map(function ($item) {
+            $this->score->updateOrCreate($item);
         });
 
         return redirect()->route('admin.orders.index');
