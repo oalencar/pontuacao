@@ -24,8 +24,8 @@ class Premiacao extends Model
 
     protected $fillable = ['title', 'description', 'goal', 'start_date', 'finish_date', 'image', 'partner_type_id', 'company_id'];
     protected $hidden = [];
-    
-    
+
+
 
     /**
      * Set attribute to money format
@@ -72,6 +72,7 @@ class Premiacao extends Model
      */
     public function setFinishDateAttribute($input)
     {
+
         if ($input != null && $input != '') {
             $this->attributes['finish_date'] = Carbon::createFromFormat(config('app.date_format'), $input)->format('Y-m-d');
         } else {
@@ -113,15 +114,15 @@ class Premiacao extends Model
     {
         $this->attributes['company_id'] = $input ? $input : null;
     }
-    
+
     public function partner_type()
     {
         return $this->belongsTo(PartnerType::class, 'partner_type_id')->withTrashed();
     }
-    
+
     public function company()
     {
         return $this->belongsTo(Company::class, 'company_id')->withTrashed();
     }
-    
+
 }

@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Order;
 use App\OrderStatus;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreOrdersRequest;
 use App\Http\Requests\Admin\UpdateOrdersRequest;
+use function PHPSTORM_META\map;
 
 class OrdersController extends Controller
 {
@@ -73,13 +75,22 @@ class OrdersController extends Controller
         }
 
         // $order = Order::create($request->all());
+        $order = 12;
 
+        $orderStatusObservacao = collect($request->get('order-status-observacao'));
+        $orderStatusData = collect($request->get('order-status-data'));
 
-        $orderStatus = [
-            $request->get('order-status-observacao[]'),
-            $request->get('order-status-data[]'),
-        ];
+        $orderStatusToSave = $orderStatusData->map(function ($data, $key) use ($order, $orderStatusObservacao) {
+            return [
+                'observacao' => $orderStatusObservacao[$key],
+                'data' =>  $data,
+                'order_id' => $order
+            ];
+        });
 
+        $orderStatusToSave->map(function ($item) {
+           $this->orderStatus->updateOrCreate($item);
+        });
 
         return redirect()->route('admin.orders.index');
     }

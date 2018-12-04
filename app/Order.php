@@ -19,8 +19,6 @@ class Order extends Model
 
     protected $fillable = ['codigo', 'descricao', 'company_id', 'client_id'];
     protected $hidden = [];
-    
-    
 
     /**
      * Set to null if empty
@@ -39,15 +37,19 @@ class Order extends Model
     {
         $this->attributes['client_id'] = $input ? $input : null;
     }
-    
+
     public function company()
     {
         return $this->belongsTo(Company::class, 'company_id')->withTrashed();
     }
-    
+
     public function client()
     {
         return $this->belongsTo(Cliente::class, 'client_id')->withTrashed();
     }
-    
+
+    public function order_statuses() {
+        return $this->hasMany(OrderStatus::class, 'order_id');
+    }
+
 }

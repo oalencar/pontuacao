@@ -87,7 +87,10 @@ export class Order {
 
         $("table#order-status-list").append(newRow);
 
-        $('.datepicker').datepicker();
+        $('.datepicker').datetimepicker({
+            format: "DD/MM/YYYY",
+            locale: "pt-br"
+        });
     }
 
     /**

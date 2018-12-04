@@ -16,8 +16,8 @@ class Create1524579840OrderStatusesTable extends Migration
             Schema::create('order_statuses', function (Blueprint $table) {
                 $table->increments('id');
                 $table->text('observacao')->nullable();
-                $table->datetime('data')->nullable();
-                
+                $table->date('data')->nullable();
+
                 $table->timestamps();
                 $table->softDeletes();
 
