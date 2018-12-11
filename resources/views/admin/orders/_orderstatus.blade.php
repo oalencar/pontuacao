@@ -12,27 +12,41 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td class="col-sm-4">
-                    <input type="text" name="order-status-observacao[]" class="form-control" />
-                </td>
-                <td class="col-sm-4">
-
-                    <div class="form-group">
-                        <div class="input-group date">
-                            <div class="input-group-addon">
-                                <i class="fa fa-calendar"></i>
+                @if(isset($orderStatuses))
+                    @foreach($orderStatuses as $orderStatus)
+                    <tr>
+                        <td>
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    name="order-status-observacao[]"
+                                    value="{{ $orderStatus->observacao }}"/>
+                        </td>
+                        <td>
+                            <div class="input-group date">
+                                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                <input
+                                    type="text"
+                                    class="form-control pull-right datepicker"
+                                    name="order-status-data[]"
+                                    value="{{ $orderStatus->data }}">
                             </div>
-                            <input type="text" class="form-control pull-right datepicker" name="order-status-data[]">
-                        </div>
-                        <!-- /.input group -->
-                    </div>
-
-                </td>
-                <td class="col-sm-2">
-                    <a class="deleteRow"></a>
-                </td>
-            </tr>
+                        </td>
+                        <td><input type="button" class="ibtnDel btn btn-md btn-danger"  value="Delete"></td>
+                    </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td><input type="text" class="form-control" name="order-status-observacao[]"/></td>
+                        <td>
+                            <div class="input-group date">
+                                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                <input type="text" class="form-control pull-right datepicker" name="order-status-data[]">
+                            </div>
+                        </td>
+                        <td><input type="button" class="ibtnDel btn btn-md btn-danger"  value="Delete"></td>
+                    </tr>
+                @endif
             </tbody>
             <tfoot>
             <tr>

@@ -21,3 +21,5 @@ require('./bootstrap');
 //     el: '#app'
 // });
 
+window.imask = require('imask');
+

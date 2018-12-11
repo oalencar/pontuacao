@@ -52,4 +52,8 @@ class Order extends Model
         return $this->hasMany(OrderStatus::class, 'order_id');
     }
 
+    public function scores() {
+        return $this->hasMany(Score::class, 'order_id');
+    }
+
 }

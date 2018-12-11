@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Order;
 use App\OrderStatus;
+use App\Partner;
 use App\Score;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreOrdersRequest;
@@ -17,11 +19,13 @@ class OrdersController extends Controller
 {
     public function __construct(
         OrderStatus $orderStatus,
-        Score $score
+        Score $score,
+        Partner $partner
     )
     {
         $this->orderStatus = $orderStatus;
         $this->score = $score;
+        $this->partner = $partner;
     }
 
     /**
@@ -84,29 +88,34 @@ class OrdersController extends Controller
         $orderStatusObservacao = collect($request->get('order-status-observacao'));
         $orderStatusData = collect($request->get('order-status-data'));
 
-        $orderStatusData->map(function ($data, $key) use ($order, $orderStatusObservacao) {
-            return [
-                'observacao' => $orderStatusObservacao[$key],
-                'data' =>  $data,
-                'order_id' => $order
-            ];
-        })->map(function ($item) {
-            $this->orderStatus->updateOrCreate($item);
+        $orderStatuses = $orderStatusData->map(function ($data, $key) use ($order, $orderStatusObservacao) {
+            $orderStatus = new $this->orderStatus;
+
+            $orderStatus->observacao = $orderStatusObservacao[$key];
+            $orderStatus->data = $data;
+            $orderStatus->order_id = $order->id;
+
+            return $orderStatus;
         });
+
+        $order->order_statuses()->saveMany($orderStatuses);
 
         // SCORE LOGIC
         $scoreUsersIds = collect($request->get('score-user-id'));
         $scoreScores = collect($request->get('score-score'));
 
-        $scoreScores->map(function ($score, $key) use ($scoreUsersIds, $order){
-            return [
-                'score'     => $score,
-                'user_id'   => $scoreUsersIds[$key],
-                'order_id'  => $order
-            ];
-        })->map(function ($item) {
-            $this->score->updateOrCreate($item);
+        $scoresToSave = $scoreScores->map(function ($score, $key) use ($scoreUsersIds, $order) {
+            $newScore = new $this->score;
+
+            $newScore->score = $score;
+            $newScore->user_id = $scoreUsersIds[$key];
+            $newScore->order_id = $order->id;
+
+            return $newScore;
+
         });
+
+        $order->scores()->saveMany($scoresToSave);
 
         return redirect()->route('admin.orders.index');
     }
@@ -129,7 +138,11 @@ class OrdersController extends Controller
 
         $order = Order::findOrFail($id);
 
-        return view('admin.orders.edit', compact('order', 'companies', 'clients'));
+        $orderStatuses = $this->orderStatus::where('order_id', $order->id)->get();
+        $scores = $this->score::where('order_id', $order->id)->get();
+        $partners = $this->partner::where('company_id', $order->company_id);
+
+        return view('admin.orders.edit', compact('order', 'companies', 'clients', 'orderStatuses', 'scores', 'partners'));
     }
 
     /**
@@ -145,9 +158,46 @@ class OrdersController extends Controller
             return abort(401);
         }
         $order = Order::findOrFail($id);
+
+
+        $order->order_statuses()->delete();
+
+
+        // ORDERSTATUS LOGIC
+        $orderStatusObservacao = collect($request->get('order-status-observacao'));
+        $orderStatusData = collect($request->get('order-status-data'));
+
+        $orderStatuses = $orderStatusData->map(function ($data, $key) use ($order, $orderStatusObservacao) {
+            $orderStatus = new $this->orderStatus;
+
+            $orderStatus->observacao = $orderStatusObservacao[$key];
+            $orderStatus->data = $data;
+            $orderStatus->order_id = $order->id;
+
+            return $orderStatus;
+        });
+
+        $order->order_statuses()->saveMany($orderStatuses);
+
+
+        // SCORE LOGIC
+        $scoreUsersIds = collect($request->get('score-user-id'));
+        $scoreScores = collect($request->get('score-score'));
+
+        $scoresToSave = $scoreScores->map(function ($score, $key) use ($scoreUsersIds, $order) {
+            $newScore = new $this->score;
+
+            $newScore->score = $score;
+            $newScore->user_id = $scoreUsersIds[$key];
+            $newScore->order_id = $order->id;
+
+            return $newScore;
+
+        });
+
+        $order->scores()->saveMany($scoresToSave);
+
         $order->update($request->all());
-
-
 
         return redirect()->route('admin.orders.index');
     }

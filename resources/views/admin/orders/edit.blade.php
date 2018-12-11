@@ -2,7 +2,7 @@
 
 @section('content')
     <h3 class="page-title">@lang('quickadmin.orders.title')</h3>
-    
+
     {!! Form::model($order, ['method' => 'PUT', 'route' => ['admin.orders.update', $order->id]]) !!}
 
     <div class="panel panel-default">
@@ -38,7 +38,7 @@
             <div class="row">
                 <div class="col-xs-12 form-group">
                     {!! Form::label('company_id', trans('quickadmin.orders.fields.company').'*', ['class' => 'control-label']) !!}
-                    {!! Form::select('company_id', $companies, old('company_id'), ['class' => 'form-control select2', 'required' => '']) !!}
+                    {!! Form::select('company_id', $companies, old('company_id'), ['class' => 'form-control select2', 'id' => 'companySelect', 'required' => '']) !!}
                     <p class="help-block"></p>
                     @if($errors->has('company_id'))
                         <p class="help-block">
@@ -47,6 +47,11 @@
                     @endif
                 </div>
             </div>
+
+            @include('admin.orders._score')
+
+            @include('admin.orders._orderstatus')
+
             <div class="row">
                 <div class="col-xs-12 form-group">
                     {!! Form::label('client_id', trans('quickadmin.orders.fields.client').'', ['class' => 'control-label']) !!}
@@ -59,7 +64,7 @@
                     @endif
                 </div>
             </div>
-            
+
         </div>
     </div>
 
@@ -67,3 +72,29 @@
     {!! Form::close() !!}
 @stop
 
+@section('javascript')
+    <script src="{{ url('adminlte/plugins/datetimepicker/moment-with-locales.min.js') }}"></script>
+    <script src="{{ url('adminlte/plugins/datetimepicker/bootstrap-datetimepicker.min.js') }}"></script>
+
+    <script src="{{ mix('js/modules/order/Order.js') }}"></script>
+    <script>
+        $(function() {
+            moment.updateLocale('{{ App::getLocale() }}', {
+                week: { dow: 1 } // Monday is the first day of the week
+            });
+
+            $('.datepicker').datetimepicker({
+                format: "{{ config('app.date_format_moment') }}",
+                locale: "{{ App::getLocale() }}",
+            });
+
+
+            let companyId = $("#companySelect").val();
+
+            if (companyId) {
+                getPartnersCompanyAndUpdateData(companyId);
+            }
+
+        });
+    </script>
+@endsection

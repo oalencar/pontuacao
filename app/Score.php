@@ -18,8 +18,8 @@ class Score extends Model
 
     protected $fillable = ['score', 'order_id', 'user_id'];
     protected $hidden = [];
-    
-    
+
+
 
     /**
      * Set to null if empty
@@ -47,15 +47,15 @@ class Score extends Model
     {
         $this->attributes['score'] = $input ? $input : null;
     }
-    
+
     public function order()
     {
-        return $this->belongsTo(Order::class, 'order_id')->withTrashed();
+        return $this->belongsTo(Order::class, 'order_id');
     }
-    
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-    
+
 }

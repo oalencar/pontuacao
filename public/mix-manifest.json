@@ -2,5 +2,6 @@
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
     "/js/modules/order/Order.js": "/js/modules/order/Order.js",
+    "/js/modules/order/order-crud.js": "/js/modules/order/order-crud.js",
     "/css/datepicker.css": "/css/datepicker.css"
 }

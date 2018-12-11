@@ -11,17 +11,29 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td class="col-sm-4">
-                    <select name="score-user-id[]" class="form-control pontuacaoSelect" />
-                </td>
-                <td class="col-sm-4">
-                    <input type="text" name="score-score[]" class="form-control"/>
-                </td>
-                <td class="col-sm-2">
-                    <a class="deleteRow"></a>
-                </td>
-            </tr>
+            @if(isset($scores))
+                @foreach($scores as $score)
+                    <tr>
+                        <td class="col-sm-4">
+                            <select name="score-user-id[]" class="form-control pontuacaoSelect" value="{{ $score->user_id }}"/>
+                        </td>
+                        <td class="col-sm-4">
+                            <input type="number" name="score-score[]" class="form-control" value="{{ $score->score }}"/>
+                        </td>
+                        <td><input type="button" class="ibtnDel btn btn-md btn-danger"  value="Delete"></td>
+                    </tr>
+                @endforeach
+            @else
+                <tr>
+                    <td class="col-sm-4">
+                        <select name="score-user-id[]" class="form-control pontuacaoSelect" />
+                    </td>
+                    <td class="col-sm-4">
+                        <input type="number" name="score-score[]" class="form-control"/>
+                    </td>
+                    <td><input type="button" class="ibtnDel btn btn-md btn-danger"  value="Delete"></td>
+                </tr>
+            @endif
             </tbody>
             <tfoot>
             <tr>
