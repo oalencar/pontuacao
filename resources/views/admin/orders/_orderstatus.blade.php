@@ -32,7 +32,10 @@
                                     value="{{ $orderStatus->data }}">
                             </div>
                         </td>
-                        <td><input type="button" class="ibtnDel btn btn-md btn-danger"  value="Delete"></td>
+                        <td>
+                            <button type="button" class="ibtnDel btn btn-md btn-danger">Delete</button>
+                            <input type="hidden" name="order-status-id[]" value="{{ $orderStatus->id }}" class="edit-orderStatus"/>
+                        </td>
                     </tr>
                     @endforeach
                 @else

@@ -8,6 +8,8 @@ Route::group(['prefix' => '/v1', 'namespace' => 'Api\V1', 'as' => 'api.'], funct
 
         Route::resource('orders', 'OrdersController', ['except' => ['create', 'edit']]);
 
+        Route::resource('orderstatuses', 'OrderStatusesController', ['except' => ['create', 'edit']]);
+
         Route::resource('premiacaos', 'PremiacaosController', ['except' => ['create', 'edit']]);
 
         Route::resource('clientes', 'ClientesController', ['except' => ['create', 'edit']]);

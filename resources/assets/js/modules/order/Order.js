@@ -101,6 +101,80 @@ export class Order {
         $(element).closest("tr").remove();
     }
 
+    deleteScore(element) {
+
+        const self = this;
+
+        const inputHidden = $(element).next("input:hidden");
+
+        if (!inputHidden.val()) {
+            this.removeRow(element);
+            return
+        };
+
+        const resposta = window.confirm('Deseja realmente excluir esta pontuação?');
+
+        if (!resposta) return;
+
+        var id = inputHidden.val();
+        var token = window._token;
+
+        $.ajax(
+            {
+                url: `${window.appUrl}/api/v1/scores/${id}`,
+                type: 'POST',
+                data: {
+                    "id": id,
+                    "_method": 'DELETE',
+                    "_token": token
+                }
+            }).done(function() {
+                self.removeRow(element);
+            })
+            .fail(function() {
+                console.error(err);
+                alert('Houve um erro ao excluir a pontuação');
+            });
+
+    }
+
+    deleteOrderStatus(element) {
+
+        const self = this;
+
+        const inputHidden = $(element).next("input:hidden");
+
+        if (!inputHidden.val()) {
+            this.removeRow(element);
+            return
+        };
+
+        const resposta = window.confirm('Deseja realmente excluir este andamento?');
+
+        if (!resposta) return;
+
+        var id = inputHidden.val();
+        var token = window._token;
+
+        $.ajax(
+            {
+                url: `${window.appUrl}/api/v1/orderstatuses/${id}`,
+                type: 'POST',
+                data: {
+                    "id": id,
+                    "_method": 'DELETE',
+                    "_token": token
+                }
+            }).done(function() {
+                self.removeRow(element);
+            })
+            .fail(function() {
+                console.error(err);
+                alert('Houve um erro ao excluir a pontuação');
+            });
+
+    }
+
     /**
      *
      * @param companyId
@@ -110,7 +184,7 @@ export class Order {
         if (!companyId) return;
 
         return fromPromise(
-            $.get(`http://localhost:8000/api/v1/partners/company/${companyId}`)
+            $.get(`${window.appUrl}/api/v1/partners/company/${companyId}`)
         );
     }
 
@@ -135,6 +209,11 @@ export class Order {
         $('.pontuacaoSelect').select2({
             data: data
         })
+    }
+
+    updateSelectValue(item, key, obj) {
+        const select = $(obj[key]);
+        select.val(item.user_id).trigger('change');
     }
 
     /**

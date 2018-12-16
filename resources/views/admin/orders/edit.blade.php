@@ -78,6 +78,24 @@
 
     <script src="{{ mix('js/modules/order/Order.js') }}"></script>
     <script>
+
+        var partnersData = [
+            @foreach ($partners as $partner)
+            { 'id' : '{{$partner->user->id}}', 'name' : '{{ $partner->user->name }}' },
+            @endforeach
+        ];
+
+        window.partnersData = partnersData;
+
+        var scores = [
+                @foreach ($scores as $score)
+            { 'user_id' : {{$score->user_id}} },
+            @endforeach
+        ];
+
+        window.scores = scores;
+
+
         $(function() {
             moment.updateLocale('{{ App::getLocale() }}', {
                 week: { dow: 1 } // Monday is the first day of the week
@@ -87,13 +105,6 @@
                 format: "{{ config('app.date_format_moment') }}",
                 locale: "{{ App::getLocale() }}",
             });
-
-
-            let companyId = $("#companySelect").val();
-
-            if (companyId) {
-                getPartnersCompanyAndUpdateData(companyId);
-            }
 
         });
     </script>

@@ -15,12 +15,16 @@
                 @foreach($scores as $score)
                     <tr>
                         <td class="col-sm-4">
-                            <select name="score-user-id[]" class="form-control pontuacaoSelect" value="{{ $score->user_id }}"/>
+                            <select name="score-user-id[]" class="form-control pontuacaoSelect"/>
                         </td>
                         <td class="col-sm-4">
                             <input type="number" name="score-score[]" class="form-control" value="{{ $score->score }}"/>
                         </td>
-                        <td><input type="button" class="ibtnDel btn btn-md btn-danger"  value="Delete"></td>
+                        <td>
+                            <button type="button" class="ibtnDel btn btn-md btn-danger">Delete</button>
+                            <input type="hidden" name="score-id[]" value="{{ $score->id }}" class="edit-score"/>
+                        </td>
+
                     </tr>
                 @endforeach
             @else

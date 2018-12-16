@@ -140,7 +140,7 @@ class OrdersController extends Controller
 
         $orderStatuses = $this->orderStatus::where('order_id', $order->id)->get();
         $scores = $this->score::where('order_id', $order->id)->get();
-        $partners = $this->partner::where('company_id', $order->company_id);
+        $partners = $this->partner::with('user')->where('company_id', $order->company_id)->get();
 
         return view('admin.orders.edit', compact('order', 'companies', 'clients', 'orderStatuses', 'scores', 'partners'));
     }
@@ -159,43 +159,65 @@ class OrdersController extends Controller
         }
         $order = Order::findOrFail($id);
 
-
-        $order->order_statuses()->delete();
-
-
         // ORDERSTATUS LOGIC
+        $orderStatusIds = collect($request->get('order-status-id'));
         $orderStatusObservacao = collect($request->get('order-status-observacao'));
         $orderStatusData = collect($request->get('order-status-data'));
 
-        $orderStatuses = $orderStatusData->map(function ($data, $key) use ($order, $orderStatusObservacao) {
-            $orderStatus = new $this->orderStatus;
 
-            $orderStatus->observacao = $orderStatusObservacao[$key];
-            $orderStatus->data = $data;
-            $orderStatus->order_id = $order->id;
+        $orderStatusData->map(function ($data, $key) use ($orderStatusIds, $orderStatusObservacao, $order) {
 
-            return $orderStatus;
+
+            if (isset($orderStatusIds[$key])) {
+
+                $orderStatusSaved = $this->orderStatus->find($orderStatusIds[$key]);
+
+                $orderStatusSaved->observacao = $orderStatusObservacao[$key];
+                $orderStatusSaved->data = $data;
+
+                $orderStatusSaved->save();
+            } else {
+                $newOrderStatus = new $this->orderStatus;
+
+                $newOrderStatus->observacao = $orderStatusObservacao[$key];
+                $newOrderStatus->data = $data;
+                $newOrderStatus->order_id = $order->id;
+
+                $newOrderStatus->save();
+            }
+
         });
 
-        $order->order_statuses()->saveMany($orderStatuses);
-
-
         // SCORE LOGIC
+        $scoreIds = collect($request->get('score-id'));
         $scoreUsersIds = collect($request->get('score-user-id'));
         $scoreScores = collect($request->get('score-score'));
 
-        $scoresToSave = $scoreScores->map(function ($score, $key) use ($scoreUsersIds, $order) {
-            $newScore = new $this->score;
+        $scoreScores->map(function ($score, $key) use ($scoreIds, $scoreUsersIds, $order) {
 
-            $newScore->score = $score;
-            $newScore->user_id = $scoreUsersIds[$key];
-            $newScore->order_id = $order->id;
+            if (isset($scoreIds[$key])) {
+                $newScore['id'] = $scoreIds[$key];
 
-            return $newScore;
+                $scoreSaved = $this->score->find($scoreIds[$key]);
+
+                $scoreSaved->score = $score;
+                $scoreSaved->user_id = $scoreUsersIds[$key];
+
+                $scoreSaved->save();
+
+            } else {
+
+                $newScore = new $this->score;
+
+                $newScore->score = $score;
+                $newScore->user_id = $scoreUsersIds[$key];
+                $newScore->order_id = $order->id;
+
+                $newScore->save();
+
+            }
 
         });
-
-        $order->scores()->saveMany($scoresToSave);
 
         $order->update($request->all());
 

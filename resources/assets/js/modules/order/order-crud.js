@@ -1,3 +1,5 @@
+import {Order} from "./Order";
+
 let empresaId = null;
 let selectPartnersData = [];
 
@@ -14,7 +16,7 @@ $("#addScore").on("click", function () {
 });
 
 $("table#score-list").on("click", ".ibtnDel", function (event) {
-    order.removeRow(event.target)
+    order.deleteScore(event.target)
 });
 
 $('#companySelect').on('select2:select', function (e) {
@@ -26,7 +28,28 @@ $('#companySelect').on('select2:select', function (e) {
         order.createSelect(partnersDataTransformed);
         selectPartnersData = partnersDataTransformed;
     });
-    // getPartnersCompanyAndUpdateData(data.id);
+});
+
+$(document).ready(function () {
+    const self = this;
+    const companyId = $('#companySelect').val();
+
+    if (!companyId) return;
+
+    order.getPartnersCompany(companyId).subscribe(res => {
+        const partnersDataTransformed = order.transformResponseToSelectData(res);
+        order.createSelect(partnersDataTransformed);
+        selectPartnersData = partnersDataTransformed;
+
+        const objs = $('.pontuacaoSelect');
+
+        window.scores.map((item, key) => {
+            order.updateSelectValue(item, key, objs);
+        })
+    });
+
+
+
 });
 
 $("#addrow").on("click", function () {
@@ -34,5 +57,7 @@ $("#addrow").on("click", function () {
 });
 
 $("table#order-status-list").on("click", ".ibtnDel", function (event) {
-    order.removeRow(event.target)
+    order.deleteOrderStatus(event.target);
 });
+
+

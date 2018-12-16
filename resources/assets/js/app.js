@@ -21,5 +21,10 @@ require('./bootstrap');
 //     el: '#app'
 // });
 
+const appUrl = document.head.querySelector('meta[name="app-url"]');
+window.appUrl = appUrl.content;
+
 window.imask = require('imask');
+window.fromPromise = require('rxjs/internal/observable/fromPromise');
+
 
