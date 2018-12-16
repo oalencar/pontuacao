@@ -229,7 +229,7 @@ class ScoresController extends Controller
 
         $companies = $this->company->all();
 
-        return view('admin.scores.report', compact('companies'));
+        return view('admin.scores.report.index', compact('companies'));
 
     }
 
@@ -241,7 +241,7 @@ class ScoresController extends Controller
         $companies = $this->company->all();
         $company = $this->company->where('nome', $companyName)->firstOrFail();
 
-        return view('admin.scores.report', compact('companies', 'company'));
+        return view('admin.scores.report.index', compact('companies', 'company'));
 
     }
 }
