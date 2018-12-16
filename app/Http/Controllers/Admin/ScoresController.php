@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Company;
+use App\Partner;
 use App\Score;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -11,6 +13,20 @@ use App\Http\Requests\Admin\UpdateScoresRequest;
 
 class ScoresController extends Controller
 {
+    /**
+     * ScoresController constructor.
+     */
+    public function __construct(
+        Company $company,
+        Partner $partner,
+        Score $score
+    ) {
+        $this->partner = $partner;
+        $this->company = $company;
+        $this->score = $score;
+    }
+
+
     /**
      * Display a listing of Score.
      *
@@ -211,6 +227,8 @@ class ScoresController extends Controller
             return abort(401);
         }
 
+        $companies = $this->company->all();
+        dd($companies);
         return view('admin.scores.reportIndex');
 
     }
