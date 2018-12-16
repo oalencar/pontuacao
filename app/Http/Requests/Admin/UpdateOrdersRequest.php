@@ -26,7 +26,7 @@ class UpdateOrdersRequest extends FormRequest
 
             'codigo' => 'required',
             'company_id' => 'required',
-            'star_date' => 'required'
+            'start_date' => 'required'
         ];
     }
 }
