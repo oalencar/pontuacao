@@ -23,10 +23,10 @@ class UpdateCompaniesRequest extends FormRequest
     public function rules()
     {
         return [
-            
+
             'nome' => 'required',
-            'premiacaos.*.title' => 'required',
-            'premiacaos.*.goal' => 'max:2147483647|required|numeric',
+            'awards.*.title' => 'required',
+            'awards.*.goal' => 'max:2147483647|required|numeric',
         ];
     }
 }

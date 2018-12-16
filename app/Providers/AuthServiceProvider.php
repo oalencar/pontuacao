@@ -29,7 +29,7 @@ class AuthServiceProvider extends ServiceProvider
 
         $user = \Auth::user();
 
-        
+
         // Auth gates for: User management
         Gate::define('user_management_access', function ($user) {
             return in_array($user->role_id, [1]);
@@ -135,20 +135,20 @@ class AuthServiceProvider extends ServiceProvider
             return in_array($user->role_id, [1, 2, 3]);
         });
 
-        // Auth gates for: Premiacao
-        Gate::define('premiacao_access', function ($user) {
+        // Auth gates for: Award
+        Gate::define('award_access', function ($user) {
             return in_array($user->role_id, [1, 2]);
         });
-        Gate::define('premiacao_create', function ($user) {
+        Gate::define('award_create', function ($user) {
             return in_array($user->role_id, [1, 2]);
         });
-        Gate::define('premiacao_edit', function ($user) {
+        Gate::define('award_edit', function ($user) {
             return in_array($user->role_id, [1, 2]);
         });
-        Gate::define('premiacao_view', function ($user) {
+        Gate::define('award_view', function ($user) {
             return in_array($user->role_id, [1, 2]);
         });
-        Gate::define('premiacao_delete', function ($user) {
+        Gate::define('award_delete', function ($user) {
             return in_array($user->role_id, [1, 2]);
         });
 

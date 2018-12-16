@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h3 class="page-title">@lang('quickadmin.premiacao.title')</h3>
+    <h3 class="page-title">@lang('quickadmin.award.title')</h3>
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -13,28 +13,28 @@
                 <div class="col-md-6">
                     <table class="table table-bordered table-striped">
                         <tr>
-                            <th>@lang('quickadmin.premiacao.fields.title')</th>
-                            <td field-key='title'>{{ $premiacao->title }}</td>
+                            <th>@lang('quickadmin.award.fields.title')</th>
+                            <td field-key='title'>{{ $award->title }}</td>
                         </tr>
                         <tr>
-                            <th>@lang('quickadmin.premiacao.fields.description')</th>
-                            <td field-key='description'>{!! $premiacao->description !!}</td>
+                            <th>@lang('quickadmin.award.fields.description')</th>
+                            <td field-key='description'>{!! $award->description !!}</td>
                         </tr>
                         <tr>
-                            <th>@lang('quickadmin.premiacao.fields.goal')</th>
-                            <td field-key='goal'>{{ $premiacao->goal }}</td>
+                            <th>@lang('quickadmin.award.fields.goal')</th>
+                            <td field-key='goal'>{{ $award->goal }}</td>
                         </tr>
                         <tr>
-                            <th>@lang('quickadmin.premiacao.fields.start-date')</th>
-                            <td field-key='start_date'>{{ $premiacao->start_date }}</td>
+                            <th>@lang('quickadmin.award.fields.start-date')</th>
+                            <td field-key='start_date'>{{ $award->start_date }}</td>
                         </tr>
                         <tr>
-                            <th>@lang('quickadmin.premiacao.fields.finish-date')</th>
-                            <td field-key='finish_date'>{{ $premiacao->finish_date }}</td>
+                            <th>@lang('quickadmin.award.fields.finish-date')</th>
+                            <td field-key='finish_date'>{{ $award->finish_date }}</td>
                         </tr>
                         <tr>
-                            <th>@lang('quickadmin.premiacao.fields.image')</th>
-                            <td field-key='image'>@if($premiacao->image)<a href="{{ asset(env('UPLOAD_PATH').'/' . $premiacao->image) }}" target="_blank"><img src="{{ asset(env('UPLOAD_PATH').'/thumb/' . $premiacao->image) }}"/></a>@endif</td>
+                            <th>@lang('quickadmin.award.fields.image')</th>
+                            <td field-key='image'>@if($award->image)<a href="{{ asset(env('UPLOAD_PATH').'/' . $award->image) }}" target="_blank"><img src="{{ asset(env('UPLOAD_PATH').'/thumb/' . $award->image) }}"/></a>@endif</td>
                         </tr>
                     </table>
                 </div>
@@ -42,7 +42,7 @@
 
             <p>&nbsp;</p>
 
-            <a href="{{ route('admin.premiacaos.index') }}" class="btn btn-default">@lang('quickadmin.qa_back_to_list')</a>
+            <a href="{{ route('admin.awards.index') }}" class="btn btn-default">@lang('quickadmin.qa_back_to_list')</a>
         </div>
     </div>
 @stop
@@ -68,13 +68,13 @@
             moment.updateLocale('{{ App::getLocale() }}', {
                 week: { dow: 1 } // Monday is the first day of the week
             });
-            
+
             $('.date').datetimepicker({
                 format: "{{ config('app.date_format_moment') }}",
                 locale: "{{ App::getLocale() }}",
             });
-            
+
         });
     </script>
-            
+
 @stop

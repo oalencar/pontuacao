@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Premiacao
+ * Class Award
  *
  * @package App
  * @property string $title
@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $partner_type
  * @property string $company
 */
-class Premiacao extends Model
+class Award extends Model
 {
     use SoftDeletes;
 

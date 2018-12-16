@@ -2,7 +2,7 @@
 
 @section('content')
     <h3 class="page-title">@lang('quickadmin.companies.title')</h3>
-    
+
     {!! Form::model($company, ['method' => 'PUT', 'route' => ['admin.companies.update', $company->id]]) !!}
 
     <div class="panel panel-default">
@@ -47,7 +47,7 @@
                     @endif
                 </div>
             </div>
-            
+
         </div>
     </div>
     <div class="panel panel-default">
@@ -58,20 +58,20 @@
             <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th>@lang('quickadmin.premiacao.fields.title')</th>
-                        <th>@lang('quickadmin.premiacao.fields.goal')</th>
-                        
+                    <th>@lang('quickadmin.award.fields.title')</th>
+                        <th>@lang('quickadmin.award.fields.goal')</th>
+
                     <th>Actions</th>
                 </tr>
                 </thead>
-                <tbody id="premiacao">
-                    @forelse(old('premiacaos', []) as $index => $data)
-                        @include('admin.companies.premiacaos_row', [
+                <tbody id="award">
+                    @forelse(old('awards', []) as $index => $data)
+                        @include('admin.companies.awards_row', [
                             'index' => $index
                         ])
                     @empty
-                        @foreach($company->premiacaos as $item)
-                            @include('admin.companies.premiacaos_row', [
+                        @foreach($company->awards as $item)
+                            @include('admin.companies.awards_row', [
                                 'index' => 'id-' . $item->id,
                                 'field' => $item
                             ])
@@ -90,12 +90,12 @@
 @section('javascript')
     @parent
 
-    <script type="text/html" id="premiacao-template">
-        @include('admin.companies.premiacaos_row',
+    <script type="text/html" id="award-template">
+        @include('admin.companies.awards_row',
                 [
                     'index' => '_INDEX_',
                 ])
-               </script > 
+               </script >
 
             <script>
         $('.add-new').click(function () {

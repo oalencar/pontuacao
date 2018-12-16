@@ -2,50 +2,50 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Premiacao;
+use App\Award;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\StorePremiacaosRequest;
-use App\Http\Requests\Admin\UpdatePremiacaosRequest;
+use App\Http\Requests\Admin\StoreAwardsRequest;
+use App\Http\Requests\Admin\UpdateAwardsRequest;
 use App\Http\Controllers\Traits\FileUploadTrait;
 
-class PremiacaosController extends Controller
+class AwardsController extends Controller
 {
     use FileUploadTrait;
 
     public function index()
     {
-        return Premiacao::all();
+        return Award::all();
     }
 
     public function show($id)
     {
-        return Premiacao::findOrFail($id);
+        return Award::findOrFail($id);
     }
 
-    public function update(UpdatePremiacaosRequest $request, $id)
+    public function update(UpdateAwardsRequest $request, $id)
     {
         $request = $this->saveFiles($request);
-        $premiacao = Premiacao::findOrFail($id);
-        $premiacao->update($request->all());
-        
+        $award = Award::findOrFail($id);
+        $award->update($request->all());
 
-        return $premiacao;
+
+        return $award;
     }
 
-    public function store(StorePremiacaosRequest $request)
+    public function store(StoreAwardsRequest $request)
     {
         $request = $this->saveFiles($request);
-        $premiacao = Premiacao::create($request->all());
-        
+        $award = Award::create($request->all());
 
-        return $premiacao;
+
+        return $award;
     }
 
     public function destroy($id)
     {
-        $premiacao = Premiacao::findOrFail($id);
-        $premiacao->delete();
+        $award = Award::findOrFail($id);
+        $award->delete();
         return '';
     }
 }

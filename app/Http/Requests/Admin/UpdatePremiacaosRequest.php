@@ -3,7 +3,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatePremiacaosRequest extends FormRequest
+class UpdateAwardsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,7 @@ class UpdatePremiacaosRequest extends FormRequest
     public function rules()
     {
         return [
-            
+
             'title' => 'required',
             'goal' => 'max:2147483647|required|numeric',
             'start_date' => 'required|date_format:'.config('app.date_format'),

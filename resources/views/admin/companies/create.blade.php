@@ -8,7 +8,7 @@
         <div class="panel-heading">
             @lang('quickadmin.qa_create')
         </div>
-        
+
         <div class="panel-body">
             <div class="row">
                 <div class="col-xs-12 form-group">
@@ -46,7 +46,7 @@
                     @endif
                 </div>
             </div>
-            
+
         </div>
     </div>
     <div class="panel panel-default">
@@ -57,15 +57,15 @@
             <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th>@lang('quickadmin.premiacao.fields.title')</th>
-                        <th>@lang('quickadmin.premiacao.fields.goal')</th>
-                        
+                    <th>@lang('quickadmin.award.fields.title')</th>
+                        <th>@lang('quickadmin.award.fields.goal')</th>
+
                     <th>Actions</th>
                 </tr>
                 </thead>
-                <tbody id="premiacao">
-                    @foreach(old('premiacaos', []) as $index => $data)
-                        @include('admin.companies.premiacaos_row', [
+                <tbody id="award">
+                    @foreach(old('awards', []) as $index => $data)
+                        @include('admin.companies.awards_row', [
                             'index' => $index
                         ])
                     @endforeach
@@ -82,12 +82,12 @@
 @section('javascript')
     @parent
 
-    <script type="text/html" id="premiacao-template">
-        @include('admin.companies.premiacaos_row',
+    <script type="text/html" id="award-template">
+        @include('admin.companies.awards_row',
                 [
                     'index' => '_INDEX_',
                 ])
-               </script > 
+               </script >
 
             <script>
         $('.add-new').click(function () {

@@ -1,19 +1,108 @@
 <?php
 
 return [
-		'user-management' => [		'title' => 'Gestão de usuários',		'fields' => [		],	],
-		'roles' => [		'title' => 'Funções',		'fields' => [			'title' => 'Título',		],	],
-		'users' => [		'title' => 'Usuários',		'fields' => [			'name' => 'Nome',			'email' => 'E-mail',			'password' => 'Senha',			'role' => 'Função',			'remember-token' => 'Lembrar Senha',		],	],
-		'gestao-de-pedidos' => [		'title' => 'Gestão de pedidos',		'fields' => [		],	],
-		'orders' => [		'title' => 'Pedidos',		'fields' => [			'codigo' => 'Código',			'descricao' => 'Descrição',		],	],
-		'order-status' => [		'title' => 'Pedido Status',		'fields' => [			'observacao' => 'Observação',			'data' => 'Data',		],	],
-		'gestao-de-empresas' => [		'title' => 'Gestão de empresas',		'fields' => [		],	],
-		'companies' => [		'title' => 'Empresas',		'fields' => [			'nome' => 'Nome',			'endereco' => 'Endereço',			'telefone' => 'Telefone',		],	],
-		'partner' => [		'title' => 'Parceiros',		'fields' => [			'tipo' => 'Tipo',			'company' => 'Company id',			'user' => 'Usuário',		],	],
-		'teste' => [		'title' => 'Teste',		'fields' => [		],	],
-		'gestao-de-premiacao' => [		'title' => 'Gestão de premiação',		'fields' => [		],	],
-		'premiacao' => [		'title' => 'Premiação',		'fields' => [			'description' => 'Descrição',			'goal' => 'Goal',			'start-date' => 'Data Inicial',			'finish-date' => 'Data Final',			'image' => 'Imagem',		],	],
-		'clientes' => [		'title' => 'Clientes',		'fields' => [			'name' => 'Nome',			'email' => 'Email',			'email-alternative' => 'Email Alternativo',		],	],
+
+	'user-management' => [
+		'title' => 'Gestão de usuários',
+		'fields' => [
+		],
+	],
+
+	'roles' => [
+		'title' => 'Funções',
+		'fields' => [
+			'title' => 'Título',
+		],
+	],
+
+	'users' => [
+		'title' => 'Usuários',
+		'fields' => [
+			'name' => 'Nome',
+			'email' => 'E-mail',
+			'password' => 'Senha',
+			'role' => 'Função',
+			'remember-token' => 'Lembrar Senha',
+		],
+	],
+
+	'gestao-de-pedidos' => [
+		'title' => 'Gestão de pedidos',
+		'fields' => [
+		],
+	],
+
+	'orders' => [
+		'title' => 'Pedidos',
+		'fields' => [
+			'codigo' => 'Código',
+			'descricao' => 'Descrição',
+		],
+	],
+
+	'order-status' => [
+		'title' => 'Pedido Status',
+		'fields' => [
+			'observacao' => 'Observação',
+			'data' => 'Data',
+		],
+	],
+
+	'gestao-de-empresas' => [
+		'title' => 'Gestão de empresas',
+		'fields' => [
+		],
+	],
+
+	'companies' => [
+		'title' => 'Empresas',
+		'fields' => [
+			'nome' => 'Nome',
+			'endereco' => 'Endereço',
+			'telefone' => 'Telefone',
+		],
+	],
+
+	'partner' => [
+		'title' => 'Parceiros',
+		'fields' => [
+			'tipo' => 'Tipo',
+			'company' => 'Company id',
+			'user' => 'Usuário',
+		],
+	],
+
+	'teste' => [
+		'title' => 'Teste',
+		'fields' => [
+		],
+	],
+
+	'gestao-de-award' => [
+		'title' => 'Gestão de premiação',
+		'fields' => [
+		],
+	],
+
+	'award' => [
+		'title' => 'Premiação',
+		'fields' => [
+			'description' => 'Descrição',
+			'goal' => 'Goal',
+			'start-date' => 'Data Inicial',
+			'finish-date' => 'Data Final',
+			'image' => 'Imagem',
+		],
+	],
+
+	'clientes' => [
+		'title' => 'Clientes',
+		'fields' => [
+			'name' => 'Nome',
+			'email' => 'Email',
+			'email-alternative' => 'Email Alternativo',
+		],
+	],
 	'qa_create' => 'Criar',
 	'qa_save' => 'Guardar',
 	'qa_edit' => 'Editar',

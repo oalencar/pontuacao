@@ -17,8 +17,8 @@ class PartnerType extends Model
 
     protected $fillable = ['description', 'company_id'];
     protected $hidden = [];
-    
-    
+
+
 
     /**
      * Set to null if empty
@@ -28,13 +28,13 @@ class PartnerType extends Model
     {
         $this->attributes['company_id'] = $input ? $input : null;
     }
-    
+
     public function company()
     {
         return $this->belongsTo(Company::class, 'company_id')->withTrashed();
     }
-    
-    public function premiacaos() {
-        return $this->hasMany(Premiacao::class, 'partner_type_id');
+
+    public function awards() {
+        return $this->hasMany(Award::class, 'partner_type_id');
     }
 }

@@ -24,14 +24,14 @@
                 </div>
             </div><!-- Nav tabs -->
 <ul class="nav nav-tabs" role="tablist">
-    
+
 <li role="presentation" class="active"><a href="#partner" aria-controls="partner" role="tab" data-toggle="tab">Parceiros</a></li>
-<li role="presentation" class=""><a href="#premiacao" aria-controls="premiacao" role="tab" data-toggle="tab">Premiação</a></li>
+<li role="presentation" class=""><a href="#award" aria-controls="award" role="tab" data-toggle="tab">Premiação</a></li>
 </ul>
 
 <!-- Tab panes -->
 <div class="tab-content">
-    
+
 <div role="tabpanel" class="tab-pane active" id="partner">
 <table class="table table-bordered table-striped {{ count($partners) > 0 ? 'datatable' : '' }}">
     <thead>
@@ -104,16 +104,16 @@
     </tbody>
 </table>
 </div>
-<div role="tabpanel" class="tab-pane " id="premiacao">
-<table class="table table-bordered table-striped {{ count($premiacaos) > 0 ? 'datatable' : '' }}">
+<div role="tabpanel" class="tab-pane " id="award">
+<table class="table table-bordered table-striped {{ count($awards) > 0 ? 'datatable' : '' }}">
     <thead>
         <tr>
-            <th>@lang('quickadmin.premiacao.fields.title')</th>
-                        <th>@lang('quickadmin.premiacao.fields.description')</th>
-                        <th>@lang('quickadmin.premiacao.fields.goal')</th>
-                        <th>@lang('quickadmin.premiacao.fields.start-date')</th>
-                        <th>@lang('quickadmin.premiacao.fields.finish-date')</th>
-                        <th>@lang('quickadmin.premiacao.fields.image')</th>
+            <th>@lang('quickadmin.award.fields.title')</th>
+                        <th>@lang('quickadmin.award.fields.description')</th>
+                        <th>@lang('quickadmin.award.fields.goal')</th>
+                        <th>@lang('quickadmin.award.fields.start-date')</th>
+                        <th>@lang('quickadmin.award.fields.finish-date')</th>
+                        <th>@lang('quickadmin.award.fields.image')</th>
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
                         @else
@@ -123,50 +123,50 @@
     </thead>
 
     <tbody>
-        @if (count($premiacaos) > 0)
-            @foreach ($premiacaos as $premiacao)
-                <tr data-entry-id="{{ $premiacao->id }}">
-                    <td field-key='title'>{{ $premiacao->title }}</td>
-                                <td field-key='description'>{!! $premiacao->description !!}</td>
-                                <td field-key='goal'>{{ $premiacao->goal }}</td>
-                                <td field-key='start_date'>{{ $premiacao->start_date }}</td>
-                                <td field-key='finish_date'>{{ $premiacao->finish_date }}</td>
-                                <td field-key='image'>@if($premiacao->image)<a href="{{ asset(env('UPLOAD_PATH').'/' . $premiacao->image) }}" target="_blank"><img src="{{ asset(env('UPLOAD_PATH').'/thumb/' . $premiacao->image) }}"/></a>@endif</td>
+        @if (count($awards) > 0)
+            @foreach ($awards as $award)
+                <tr data-entry-id="{{ $award->id }}">
+                    <td field-key='title'>{{ $award->title }}</td>
+                                <td field-key='description'>{!! $award->description !!}</td>
+                                <td field-key='goal'>{{ $award->goal }}</td>
+                                <td field-key='start_date'>{{ $award->start_date }}</td>
+                                <td field-key='finish_date'>{{ $award->finish_date }}</td>
+                                <td field-key='image'>@if($award->image)<a href="{{ asset(env('UPLOAD_PATH').'/' . $award->image) }}" target="_blank"><img src="{{ asset(env('UPLOAD_PATH').'/thumb/' . $award->image) }}"/></a>@endif</td>
                                 @if( request('show_deleted') == 1 )
                                 <td>
-                                    @can('premiacao_delete')
+                                    @can('award_delete')
                                                                         {!! Form::open(array(
                                         'style' => 'display: inline-block;',
                                         'method' => 'POST',
                                         'onsubmit' => "return confirm('".trans("quickadmin.qa_are_you_sure")."');",
-                                        'route' => ['admin.premiacaos.restore', $premiacao->id])) !!}
+                                        'route' => ['admin.awards.restore', $award->id])) !!}
                                     {!! Form::submit(trans('quickadmin.qa_restore'), array('class' => 'btn btn-xs btn-success')) !!}
                                     {!! Form::close() !!}
                                 @endcan
-                                    @can('premiacao_delete')
+                                    @can('award_delete')
                                                                         {!! Form::open(array(
                                         'style' => 'display: inline-block;',
                                         'method' => 'DELETE',
                                         'onsubmit' => "return confirm('".trans("quickadmin.qa_are_you_sure")."');",
-                                        'route' => ['admin.premiacaos.perma_del', $premiacao->id])) !!}
+                                        'route' => ['admin.awards.perma_del', $award->id])) !!}
                                     {!! Form::submit(trans('quickadmin.qa_permadel'), array('class' => 'btn btn-xs btn-danger')) !!}
                                     {!! Form::close() !!}
                                 @endcan
                                 </td>
                                 @else
                                 <td>
-                                    @can('premiacao_view')
-                                    <a href="{{ route('admin.premiacaos.show',[$premiacao->id]) }}" class="btn btn-xs btn-primary">@lang('quickadmin.qa_view')</a>
+                                    @can('award_view')
+                                    <a href="{{ route('admin.awards.show',[$award->id]) }}" class="btn btn-xs btn-primary">@lang('quickadmin.qa_view')</a>
                                     @endcan
-                                    @can('premiacao_edit')
-                                    <a href="{{ route('admin.premiacaos.edit',[$premiacao->id]) }}" class="btn btn-xs btn-info">@lang('quickadmin.qa_edit')</a>
+                                    @can('award_edit')
+                                    <a href="{{ route('admin.awards.edit',[$award->id]) }}" class="btn btn-xs btn-info">@lang('quickadmin.qa_edit')</a>
                                     @endcan
-                                    @can('premiacao_delete')
+                                    @can('award_delete')
 {!! Form::open(array(
                                         'style' => 'display: inline-block;',
                                         'method' => 'DELETE',
                                         'onsubmit' => "return confirm('".trans("quickadmin.qa_are_you_sure")."');",
-                                        'route' => ['admin.premiacaos.destroy', $premiacao->id])) !!}
+                                        'route' => ['admin.awards.destroy', $award->id])) !!}
                                     {!! Form::submit(trans('quickadmin.qa_delete'), array('class' => 'btn btn-xs btn-danger')) !!}
                                     {!! Form::close() !!}
                                     @endcan

@@ -1,6 +1,6 @@
 <?php
 
-$factory->define(App\Premiacao::class, function (Faker\Generator $faker) {
+$factory->define(App\Award::class, function (Faker\Generator $faker) {
     return [
         "title" => $faker->name,
         "description" => $faker->name,

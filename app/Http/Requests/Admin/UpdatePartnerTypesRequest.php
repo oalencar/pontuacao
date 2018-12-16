@@ -23,11 +23,11 @@ class UpdatePartnerTypesRequest extends FormRequest
     public function rules()
     {
         return [
-            
+
             'description' => 'min:3|required|unique:partner_types,description,'.$this->route('partner_type'),
             'company_id' => 'required',
-            'premiacaos.*.title' => 'required',
-            'premiacaos.*.goal' => 'max:2147483647|required|numeric',
+            'awards.*.title' => 'required',
+            'awards.*.goal' => 'max:2147483647|required|numeric',
         ];
     }
 }

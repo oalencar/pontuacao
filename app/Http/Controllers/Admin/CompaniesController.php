@@ -61,8 +61,8 @@ class CompaniesController extends Controller
         }
         $company = Company::create($request->all());
 
-        foreach ($request->input('premiacaos', []) as $data) {
-            $company->premiacaos()->create($data);
+        foreach ($request->input('awards', []) as $data) {
+            $company->awards()->create($data);
         }
 
 
@@ -101,19 +101,19 @@ class CompaniesController extends Controller
         $company = Company::findOrFail($id);
         $company->update($request->all());
 
-        $premiacaos           = $company->premiacaos;
-        $currentPremiacaoData = [];
-        foreach ($request->input('premiacaos', []) as $index => $data) {
+        $awards           = $company->awards;
+        $currentAwardData = [];
+        foreach ($request->input('awards', []) as $index => $data) {
             if (is_integer($index)) {
-                $company->premiacaos()->create($data);
+                $company->awards()->create($data);
             } else {
                 $id                          = explode('-', $index)[1];
-                $currentPremiacaoData[$id] = $data;
+                $currentAwardData[$id] = $data;
             }
         }
-        foreach ($premiacaos as $item) {
-            if (isset($currentPremiacaoData[$item->id])) {
-                $item->update($currentPremiacaoData[$item->id]);
+        foreach ($awards as $item) {
+            if (isset($currentAwardData[$item->id])) {
+                $item->update($currentAwardData[$item->id]);
             } else {
                 $item->delete();
             }
@@ -135,11 +135,11 @@ class CompaniesController extends Controller
         if (! Gate::allows('company_view')) {
             return abort(401);
         }
-        $partners = \App\Partner::where('company_id', $id)->get();$partner_types = \App\PartnerType::where('company_id', $id)->get();$orders = \App\Order::where('company_id', $id)->get();$clientes = \App\Cliente::where('company_id', $id)->get();$premiacaos = \App\Premiacao::where('company_id', $id)->get();
+        $partners = \App\Partner::where('company_id', $id)->get();$partner_types = \App\PartnerType::where('company_id', $id)->get();$orders = \App\Order::where('company_id', $id)->get();$clientes = \App\Cliente::where('company_id', $id)->get();$awards = \App\Award::where('company_id', $id)->get();
 
         $company = Company::findOrFail($id);
 
-        return view('admin.companies.show', compact('company', 'partners', 'partner_types', 'orders', 'clientes', 'premiacaos'));
+        return view('admin.companies.show', compact('company', 'partners', 'partner_types', 'orders', 'clientes', 'awards'));
     }
 
 

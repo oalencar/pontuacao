@@ -81,13 +81,13 @@ return [
 		],
 	],
 
-	'gestao-de-premiacao' => [
+	'gestao-de-award' => [
 		'title' => 'Gestão de premiação',
 		'fields' => [
 		],
 	],
 
-	'premiacao' => [
+	'award' => [
 		'title' => 'Premiação',
 		'fields' => [
 			'title' => 'Título',

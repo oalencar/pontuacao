@@ -24,20 +24,20 @@ class PartnerTypesController extends Controller
     {
         $partner_type = PartnerType::findOrFail($id);
         $partner_type->update($request->all());
-        
-        $premiacaos           = $partner_type->premiacaos;
-        $currentPremiacaoData = [];
-        foreach ($request->input('premiacaos', []) as $index => $data) {
+
+        $awards           = $partner_type->awards;
+        $currentAwardData = [];
+        foreach ($request->input('awards', []) as $index => $data) {
             if (is_integer($index)) {
-                $partner_type->premiacaos()->create($data);
+                $partner_type->awards()->create($data);
             } else {
                 $id                          = explode('-', $index)[1];
-                $currentPremiacaoData[$id] = $data;
+                $currentAwardData[$id] = $data;
             }
         }
-        foreach ($premiacaos as $item) {
-            if (isset($currentPremiacaoData[$item->id])) {
-                $item->update($currentPremiacaoData[$item->id]);
+        foreach ($awards as $item) {
+            if (isset($currentAwardData[$item->id])) {
+                $item->update($currentAwardData[$item->id]);
             } else {
                 $item->delete();
             }
@@ -49,9 +49,9 @@ class PartnerTypesController extends Controller
     public function store(StorePartnerTypesRequest $request)
     {
         $partner_type = PartnerType::create($request->all());
-        
-        foreach ($request->input('premiacaos', []) as $data) {
-            $partner_type->premiacaos()->create($data);
+
+        foreach ($request->input('awards', []) as $data) {
+            $partner_type->awards()->create($data);
         }
 
         return $partner_type;

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Update1540945759PremiacaosTable extends Migration
+class Update1540945759AwardsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,13 @@ class Update1540945759PremiacaosTable extends Migration
      */
     public function up()
     {
-        Schema::table('premiacaos', function (Blueprint $table) {
-            if(Schema::hasColumn('premiacaos', 'partner_tipe_id')) {
+        Schema::table('awards', function (Blueprint $table) {
+            if(Schema::hasColumn('awards', 'partner_tipe_id')) {
                 $table->dropForeign('214395_5bd8f20a910a5');
                 $table->dropIndex('214395_5bd8f20a910a5');
                 $table->dropColumn('partner_tipe_id');
             }
-            
+
         });
 
     }
@@ -30,8 +30,8 @@ class Update1540945759PremiacaosTable extends Migration
      */
     public function down()
     {
-        Schema::table('premiacaos', function (Blueprint $table) {
-                        
+        Schema::table('awards', function (Blueprint $table) {
+
         });
 
     }

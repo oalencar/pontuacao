@@ -18,10 +18,10 @@ class Company extends Model
 
     protected $fillable = ['nome', 'endereco', 'telefone'];
     protected $hidden = [];
-    
-    
-    
-    public function premiacaos() {
-        return $this->hasMany(Premiacao::class, 'company_id');
+
+
+
+    public function awards() {
+        return $this->hasMany(Award::class, 'company_id');
     }
 }

@@ -105,17 +105,17 @@
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-gears"></i>
-                    <span>@lang('quickadmin.gestao-de-premiacao.title')</span>
+                    <span>@lang('quickadmin.gestao-de-award.title')</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    @can('premiacao_access')
+                    @can('award_access')
                     <li>
-                        <a href="{{ route('admin.premiacaos.index') }}">
+                        <a href="{{ route('admin.awards.index') }}">
                             <i class="fa fa-gears"></i>
-                            <span>@lang('quickadmin.premiacao.title')</span>
+                            <span>@lang('quickadmin.award.title')</span>
                         </a>
                     </li>@endcan
 

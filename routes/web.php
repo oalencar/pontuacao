@@ -44,10 +44,10 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('partners_restore/{id}', ['uses' => 'Admin\PartnersController@restore', 'as' => 'partners.restore']);
     Route::delete('partners_perma_del/{id}', ['uses' => 'Admin\PartnersController@perma_del', 'as' => 'partners.perma_del']);
 
-    Route::resource('premiacaos', 'Admin\PremiacaosController');
-    Route::post('premiacaos_mass_destroy', ['uses' => 'Admin\PremiacaosController@massDestroy', 'as' => 'premiacaos.mass_destroy']);
-    Route::post('premiacaos_restore/{id}', ['uses' => 'Admin\PremiacaosController@restore', 'as' => 'premiacaos.restore']);
-    Route::delete('premiacaos_perma_del/{id}', ['uses' => 'Admin\PremiacaosController@perma_del', 'as' => 'premiacaos.perma_del']);
+    Route::resource('awards', 'Admin\AwardsController');
+    Route::post('awards_mass_destroy', ['uses' => 'Admin\AwardsController@massDestroy', 'as' => 'awards.mass_destroy']);
+    Route::post('awards_restore/{id}', ['uses' => 'Admin\AwardsController@restore', 'as' => 'awards.restore']);
+    Route::delete('awards_perma_del/{id}', ['uses' => 'Admin\AwardsController@perma_del', 'as' => 'awards.perma_del']);
 
     Route::resource('clientes', 'Admin\ClientesController');
     Route::post('clientes_mass_destroy', ['uses' => 'Admin\ClientesController@massDestroy', 'as' => 'clientes.mass_destroy']);

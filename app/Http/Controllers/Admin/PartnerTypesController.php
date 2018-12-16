@@ -45,7 +45,7 @@ class PartnerTypesController extends Controller
         if (! Gate::allows('partner_type_create')) {
             return abort(401);
         }
-        
+
         $companies = \App\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
 
         return view('admin.partner_types.create', compact('companies'));
@@ -64,8 +64,8 @@ class PartnerTypesController extends Controller
         }
         $partner_type = PartnerType::create($request->all());
 
-        foreach ($request->input('premiacaos', []) as $data) {
-            $partner_type->premiacaos()->create($data);
+        foreach ($request->input('awards', []) as $data) {
+            $partner_type->awards()->create($data);
         }
 
 
@@ -84,7 +84,7 @@ class PartnerTypesController extends Controller
         if (! Gate::allows('partner_type_edit')) {
             return abort(401);
         }
-        
+
         $companies = \App\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
 
         $partner_type = PartnerType::findOrFail($id);
@@ -107,19 +107,19 @@ class PartnerTypesController extends Controller
         $partner_type = PartnerType::findOrFail($id);
         $partner_type->update($request->all());
 
-        $premiacaos           = $partner_type->premiacaos;
-        $currentPremiacaoData = [];
-        foreach ($request->input('premiacaos', []) as $index => $data) {
+        $awards           = $partner_type->awards;
+        $currentAwardData = [];
+        foreach ($request->input('awards', []) as $index => $data) {
             if (is_integer($index)) {
-                $partner_type->premiacaos()->create($data);
+                $partner_type->awards()->create($data);
             } else {
                 $id                          = explode('-', $index)[1];
-                $currentPremiacaoData[$id] = $data;
+                $currentAwardData[$id] = $data;
             }
         }
-        foreach ($premiacaos as $item) {
-            if (isset($currentPremiacaoData[$item->id])) {
-                $item->update($currentPremiacaoData[$item->id]);
+        foreach ($awards as $item) {
+            if (isset($currentAwardData[$item->id])) {
+                $item->update($currentAwardData[$item->id]);
             } else {
                 $item->delete();
             }
@@ -141,12 +141,12 @@ class PartnerTypesController extends Controller
         if (! Gate::allows('partner_type_view')) {
             return abort(401);
         }
-        
-        $companies = \App\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');$partners = \App\Partner::where('partner_type_id', $id)->get();$premiacaos = \App\Premiacao::where('partner_type_id', $id)->get();
+
+        $companies = \App\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');$partners = \App\Partner::where('partner_type_id', $id)->get();$awards = \App\Award::where('partner_type_id', $id)->get();
 
         $partner_type = PartnerType::findOrFail($id);
 
-        return view('admin.partner_types.show', compact('partner_type', 'partners', 'premiacaos'));
+        return view('admin.partner_types.show', compact('partner_type', 'partners', 'awards'));
     }
 
 
