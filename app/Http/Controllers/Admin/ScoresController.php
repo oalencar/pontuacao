@@ -221,15 +221,27 @@ class ScoresController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function reportIndex()
+    public function report()
     {
         if (! Gate::allows('score_access')) {
             return abort(401);
         }
 
         $companies = $this->company->all();
-        dd($companies);
-        return view('admin.scores.reportIndex');
+
+        return view('admin.scores.report', compact('companies'));
+
+    }
+
+    public function reportByCompanyName($companyName) {
+        if (!$companyName) {
+            return abort(400, 'Necessário informar o nome da empresa');
+        }
+
+        $companies = $this->company->all();
+        $company = $this->company->where('nome', $companyName)->firstOrFail();
+
+        return view('admin.scores.report', compact('companies', 'company'));
 
     }
 }
