@@ -5,7 +5,7 @@
     <section class="sidebar">
         <ul class="sidebar-menu">
 
-             
+
 
             <li class="{{ $request->segment(1) == 'home' ? 'active' : '' }}">
                 <a href="{{ url('/') }}">
@@ -31,7 +31,7 @@
                             <span>@lang('quickadmin.roles.title')</span>
                         </a>
                     </li>@endcan
-                    
+
                     @can('user_access')
                     <li>
                         <a href="{{ route('admin.users.index') }}">
@@ -39,10 +39,10 @@
                             <span>@lang('quickadmin.users.title')</span>
                         </a>
                     </li>@endcan
-                    
+
                 </ul>
             </li>@endcan
-            
+
             @can('gestão_de_pedido_access')
             <li class="treeview">
                 <a href="#">
@@ -59,19 +59,11 @@
                             <i class="fa fa-gears"></i>
                             <span>@lang('quickadmin.orders.title')</span>
                         </a>
-                    </li>@endcan
-                    
-                    @can('order_status_access')
-                    <li>
-                        <a href="{{ route('admin.order_statuses.index') }}">
-                            <i class="fa fa-gears"></i>
-                            <span>@lang('quickadmin.order-status.title')</span>
-                        </a>
-                    </li>@endcan
-                    
+                    </li>
+                    @endcan
                 </ul>
             </li>@endcan
-            
+
             @can('gestão_de_empresa_access')
             <li class="treeview">
                 <a href="#">
@@ -89,7 +81,7 @@
                             <span>@lang('quickadmin.companies.title')</span>
                         </a>
                     </li>@endcan
-                    
+
                     @can('partner_access')
                     <li>
                         <a href="{{ route('admin.partners.index') }}">
@@ -97,7 +89,7 @@
                             <span>@lang('quickadmin.partner.title')</span>
                         </a>
                     </li>@endcan
-                    
+
                     @can('partner_type_access')
                     <li>
                         <a href="{{ route('admin.partner_types.index') }}">
@@ -105,10 +97,10 @@
                             <span>@lang('quickadmin.partner-type.title')</span>
                         </a>
                     </li>@endcan
-                    
+
                 </ul>
             </li>@endcan
-            
+
             @can('gestão_de_premiação_access')
             <li class="treeview">
                 <a href="#">
@@ -126,7 +118,7 @@
                             <span>@lang('quickadmin.premiacao.title')</span>
                         </a>
                     </li>@endcan
-                    
+
                     @can('score_access')
                     <li>
                         <a href="{{ route('admin.scores.index') }}">
@@ -134,10 +126,10 @@
                             <span>@lang('quickadmin.score.title')</span>
                         </a>
                     </li>@endcan
-                    
+
                 </ul>
             </li>@endcan
-            
+
             @can('cliente_access')
             <li>
                 <a href="{{ route('admin.clientes.index') }}">
@@ -145,11 +137,11 @@
                     <span>@lang('quickadmin.clientes.title')</span>
                 </a>
             </li>@endcan
-            
 
-            
 
-            
+
+
+
 
 
 
