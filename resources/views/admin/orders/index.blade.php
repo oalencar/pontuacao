@@ -6,7 +6,7 @@
     @can('order_create')
     <p>
         <a href="{{ route('admin.orders.create') }}" class="btn btn-success">@lang('quickadmin.qa_add_new')</a>
-        
+
     </p>
     @endcan
 
@@ -44,7 +44,7 @@
                         @endif
                     </tr>
                 </thead>
-                
+
                 <tbody>
                     @if (count($orders) > 0)
                         @foreach ($orders as $order)
@@ -80,9 +80,6 @@
                                 </td>
                                 @else
                                 <td>
-                                    @can('order_view')
-                                    <a href="{{ route('admin.orders.show',[$order->id]) }}" class="btn btn-xs btn-primary">@lang('quickadmin.qa_view')</a>
-                                    @endcan
                                     @can('order_edit')
                                     <a href="{{ route('admin.orders.edit',[$order->id]) }}" class="btn btn-xs btn-info">@lang('quickadmin.qa_edit')</a>
                                     @endcan
@@ -110,7 +107,7 @@
     </div>
 @stop
 
-@section('javascript') 
+@section('javascript')
     <script>
         @can('order_delete')
             @if ( request('show_deleted') != 1 ) window.route_mass_crud_entries_destroy = '{{ route('admin.orders.mass_destroy') }}'; @endif
