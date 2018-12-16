@@ -39,6 +39,19 @@
 
             <div class="row">
                 <div class="col-xs-12 form-group">
+                    {!! Form::label('start_date', trans('quickadmin.award.fields.start-date').'*', ['class' => 'control-label']) !!}
+                    {!! Form::text('start_date', old('start_date'), ['class' => 'form-control date', 'placeholder' => '', 'required' => '']) !!}
+                    <p class="help-block"></p>
+                    @if($errors->has('start_date'))
+                        <p class="help-block">
+                            {{ $errors->first('start_date') }}
+                        </p>
+                    @endif
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 form-group">
                     {!! Form::label('company_id', trans('quickadmin.orders.fields.company').'*', ['class' => 'control-label']) !!}
                     {!! Form::select('company_id', $companies, old('company_id'), ['class' => 'form-control select2', 'id' => 'companySelect', 'required' => '']) !!}
                     <p class="help-block"></p>
@@ -94,6 +107,10 @@
                 locale: "{{ App::getLocale() }}",
             });
 
+            $('.date').datetimepicker({
+                format: "{{ config('app.date_format_moment') }}",
+                locale: "{{ App::getLocale() }}",
+            });
 
         });
     </script>

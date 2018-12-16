@@ -25,6 +25,7 @@ class StoreOrdersRequest extends FormRequest
         return [
             'codigo' => 'required',
             'company_id' => 'required',
+            'stard_date' => 'required',
         ];
     }
 }
