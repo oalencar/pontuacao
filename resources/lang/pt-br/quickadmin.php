@@ -114,6 +114,7 @@ return [
 
 	'score' => [
 		'title' => 'Pontuação',
+        'report' => 'Relatório',
 		'fields' => [
 			'order' => 'Order id',
 			'user' => 'Parceiro',

@@ -45,7 +45,7 @@ class ScoresController extends Controller
         if (! Gate::allows('score_create')) {
             return abort(401);
         }
-        
+
         $orders = \App\Order::get()->pluck('codigo', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
         $users = \App\User::get()->pluck('email', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
 
@@ -82,7 +82,7 @@ class ScoresController extends Controller
         if (! Gate::allows('score_edit')) {
             return abort(401);
         }
-        
+
         $orders = \App\Order::get()->pluck('codigo', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
         $users = \App\User::get()->pluck('email', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
 
@@ -198,5 +198,20 @@ class ScoresController extends Controller
         $score->forceDelete();
 
         return redirect()->route('admin.scores.index');
+    }
+
+    /**
+     * Display report scores.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function reportIndex()
+    {
+        if (! Gate::allows('score_access')) {
+            return abort(401);
+        }
+
+        return view('admin.scores.reportIndex');
+
     }
 }

@@ -119,6 +119,15 @@
                         </a>
                     </li>@endcan
 
+                        @can('score_access')
+                        <li>
+                            <a href="{{ route('admin.scores.reportIndex') }}">
+                                <i class="fa fa-asterisk"></i>
+                                <span>@lang('quickadmin.score.report')</span>
+                            </a>
+                        </li>
+                        @endcan
+
                     @can('score_access')
                     <li>
                         <a href="{{ route('admin.scores.index') }}">
