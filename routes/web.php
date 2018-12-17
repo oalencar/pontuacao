@@ -55,7 +55,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::delete('clientes_perma_del/{id}', ['uses' => 'Admin\ClientesController@perma_del', 'as' => 'clientes.perma_del']);
 
     Route::get('scores/report', ['uses' => 'Admin\ScoresController@report', 'as' => 'scores.report']);
-    Route::get('scores/report/{companyName}', ['uses' => 'Admin\ScoresController@reportByCompanyName', 'as' => 'scores.reportByCompanyName']);
+    Route::post('scores/report', ['uses' => 'Admin\ScoresController@reportByCompanyName', 'as' => 'scores.reportByCompanyName']);
+    Route::post('scores/report/detail/{id}', ['uses' => 'Admin\ScoresController@reportByCompanyName', 'as' => 'scores.report_detail']);
     Route::resource('scores', 'Admin\ScoresController');
     Route::post('scores_mass_destroy', ['uses' => 'Admin\ScoresController@massDestroy', 'as' => 'scores.mass_destroy']);
     Route::post('scores_restore/{id}', ['uses' => 'Admin\ScoresController@restore', 'as' => 'scores.restore']);

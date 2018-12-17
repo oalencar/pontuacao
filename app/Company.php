@@ -24,4 +24,8 @@ class Company extends Model
     public function awards() {
         return $this->hasMany(Award::class, 'company_id');
     }
+
+    public function partners() {
+        return $this->hasMany(Partner::class, 'company_id');
+    }
 }

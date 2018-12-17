@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @package App
  * @property string $codigo
  * @property string $descricao
+ * @property string $start_date
  * @property string $company
  * @property string $client
 */

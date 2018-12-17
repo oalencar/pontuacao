@@ -24,6 +24,7 @@ class Award extends Model
 
     protected $fillable = ['title', 'description', 'goal', 'start_date', 'finish_date', 'image', 'partner_type_id', 'company_id'];
     protected $hidden = [];
+    protected $with = ['partner_type', 'company'];
 
 
 

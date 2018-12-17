@@ -18,6 +18,7 @@ class Score extends Model
 
     protected $fillable = ['score', 'order_id', 'user_id'];
     protected $hidden = [];
+    protected $with = ['order'];
 
 
 

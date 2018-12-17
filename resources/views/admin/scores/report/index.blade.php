@@ -6,32 +6,27 @@
 
 
     <div class="row">
-        <div class="col-xs-12 col-md-6">
-            <form action="">
-                {{ @csrf_field() }}
+        <form method="POST" action="{{ route('admin.scores.reportByCompanyName') }}">
+            <div class="col-xs-10 col-md-6">
                 <div class="form-group">
-                    <select class="form-control">
+                    <select class="form-control" name="company">
                         <option>Selecione </option>
                         @foreach($companies as $company)
                             <option value="{{ $company->id }}">{{ $company->nome }}</option>
                         @endforeach
                     </select>
                 </div>
-            </form>
-        </div>
+            </div>
+            <div class="col-xs-2 col-md-2">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Filtrar</button>
+                </div>
+            </div>
+
+            {{ @csrf_field() }}
+        </form>
     </div>
 
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            @lang('quickadmin.qa_list')
-        </div>
-
-        <div class="panel-body">
-            @isset($company)
-                {{ $company->nome }}
-            @endisset
-        </div>
-    </div>
 @stop
 
 @section('javascript')

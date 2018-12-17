@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Company;
 use App\Partner;
 use App\Score;
+use App\Services\ScoreService;
+use function foo\func;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
@@ -19,11 +21,13 @@ class ScoresController extends Controller
     public function __construct(
         Company $company,
         Partner $partner,
-        Score $score
+        Score $score,
+        ScoreService $scoreService
     ) {
         $this->partner = $partner;
         $this->company = $company;
         $this->score = $score;
+        $this->scoreService = $scoreService;
     }
 
 
@@ -233,15 +237,49 @@ class ScoresController extends Controller
 
     }
 
-    public function reportByCompanyName($companyName) {
-        if (!$companyName) {
-            return abort(400, 'Necessário informar o nome da empresa');
+    public function reportByCompanyName(Request $request) {
+
+        $companyId = $request->get('company');
+
+        if (!$companyId) {
+            return abort(400, 'Necessário informar o id da empresa');
         }
 
-        $companies = $this->company->all();
-        $company = $this->company->where('nome', $companyName)->firstOrFail();
+        $companies = $this->company->get();
+        $company = $this->company->find($companyId);
+        $awards = $company->awards()->get();
 
-        return view('admin.scores.report.index', compact('companies', 'company'));
+        $awards->map(function ($award, $key) {
+            $partners = $this->partner::with('user')->where('partner_type_id', $award->partner_type_id)->get();
 
+            $partners->map(function($partner) use ($award) {
+                $scores = $this->scoreService->getAllScoresFromPartner($partner);
+
+                $scoresFiltereds = $this->scoreService->filterPartnerScoresOfAward($scores, $award);
+
+                $partner->totalScore = $this->scoreService->sumOfScores($scoresFiltereds);
+                $partner->scores = $scoresFiltereds;
+            });
+
+            $award->partners = $partners;
+        });
+
+        return view('admin.scores.report.company',
+            ['companies' => $companies, 'company' => $company, 'awards' => $awards]);
+
+    }
+
+    public function reportDetail($id)
+    {
+        if (! Gate::allows('score_view')) {
+            return abort(401);
+        }
+
+        $partner = $this->partner::findOrFail($id);
+
+        $scores = $this->scoreService->getAllScoresFromPartner($partner);
+
+
+        return view('admin.scores.report.detail', compact('partner', 'scores'));
     }
 }
