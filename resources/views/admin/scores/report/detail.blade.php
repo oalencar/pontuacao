@@ -2,78 +2,53 @@
 @extends('layouts.app')
 
 @section('content')
-    <h3 class="page-title">@lang('quickadmin.score.report')</h3>
-
+    <h3 class="page-title">@lang('quickadmin.score.partner_report')</h3>
 
     <div class="row">
-        <form method="POST" action="{{ route('admin.scores.reportByCompanyName') }}">
-            <div class="col-xs-10 col-md-6">
-                <div class="form-group">
-                    <select class="form-control" name="company">
-                        <option>Selecione </option>
-                        @foreach($companies as $c)
-                            @if(isset($company))
-                                <option {{ $company->id == $c->id ? 'selected' : '' }} value="{{ $c->id }}">{{ $c->nome }}</option>
-                            @else
-                                <option value="{{ $c->id }}">{{ $c->nome }}</option>
-                            @endif
-                        @endforeach
-                    </select>
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{ $partner->user->name }}</h3>
+                    <p>{{ $partner->user->email }}</p>
                 </div>
-            </div>
-            <div class="col-xs-2 col-md-2">
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Filtrar</button>
-                </div>
-            </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <th>Pedido</th>
+                            <th>Data</th>
+                            <th>Pontuação</th>
+                            <th>Empresa</th>
+                            <th style="width: 100px"></th>
+                        </tr>
 
-            {{ @csrf_field() }}
-        </form>
-    </div>
-
-    @foreach($awards as $award)
-
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="box">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">{{ $award->title }}</h3>
-                        <span class="label label-primary pull-right">{{ $award->partner_type->description }}</span>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        <table class="table">
-                            <tbody>
+                        @foreach($scores as $score)
                             <tr>
-                                <th>Nome</th>
-                                <th>Pontuação</th>
-                                <th style="width: 100px">Detalhes</th>
+                                <td>{{ $score->order->codigo }}</td>
+                                <td>{{ $score->order->start_date }}</td>
+                                <td>{{ $score->score }}</td>
+                                <td>{{ $company->nome }}</td>
+                                <td>
+                                    <a href="{{ route('admin.orders.edit', $score->order->id) }}"
+                                    class="btn btn-info btn-xs">Detalhe</a>
+                                </td>
                             </tr>
+                        @endforeach
 
-                            @foreach($award->partners as $partner)
-                                <tr>
-                                    <td>{{ $partner->user->name }}</td>
-                                    <td>{{ $partner->totalScore }}</td>
-                                    <td>detalhe</td>
-                                </tr>
-                            @endforeach
 
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- /.box-body -->
-                    <div class="box-footer clearfix">
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
-                <!-- /.box -->
-
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                </div>
             </div>
+            <!-- /.box -->
+
         </div>
-        <!-- /.row -->
-
-
-    @endforeach
+    </div>
+    <!-- /.row -->
 @stop
 
 @section('javascript')

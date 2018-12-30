@@ -38,7 +38,7 @@
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-header with-border">
-                        <h3 class="box-title">{{ $award->title }}</h3>
+                        <h3 class="box-title">{{ $award->title }} ({{ $award->start_date }} a {{ $award->finish_date }})</h3>
                         <span class="label label-primary pull-right">{{ $award->partner_type->description }}</span>
                     </div>
                     <!-- /.box-header -->
@@ -48,14 +48,22 @@
                             <tr>
                                 <th>Nome</th>
                                 <th>Pontuação</th>
-                                <th style="width: 100px">Detalhes</th>
+                                <th style="width: 100px"></th>
                             </tr>
 
                             @foreach($award->partners as $partner)
                                 <tr>
                                     <td>{{ $partner->user->name }}</td>
                                     <td>{{ $partner->totalScore }}</td>
-                                    <td><a href="{{ route('admin.scores.report_detail', ['id'=> $partner->user_id]) }}">Detalhe</a></td>
+                                    <td>
+                                        <a
+                                            href="{{ route('admin.scores.report_detail', [
+                                            'id' => $partner->user_id,
+                                            'company_id' => $company->id
+                                            ]) }}"
+                                            class="btn-info btn-xs btn"
+                                        >Detalhe</a>
+                                    </td>
                                 </tr>
                             @endforeach
 
