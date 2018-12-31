@@ -195,18 +195,7 @@ class OrdersController extends Controller
 
         $scoreScores->map(function ($score, $key) use ($scoreIds, $scoreUsersIds, $order) {
 
-            if (isset($scoreIds[$key])) {
-                $newScore['id'] = $scoreIds[$key];
-
-                $scoreSaved = $this->score->find($scoreIds[$key]);
-
-                $scoreSaved->score = $score;
-                $scoreSaved->user_id = $scoreUsersIds[$key];
-
-                $scoreSaved->save();
-
-            } else {
-
+            if (!isset($scoreIds[$key])) {
                 $newScore = new $this->score;
 
                 $newScore->score = $score;
@@ -214,7 +203,6 @@ class OrdersController extends Controller
                 $newScore->order_id = $order->id;
 
                 $newScore->save();
-
             }
 
         });

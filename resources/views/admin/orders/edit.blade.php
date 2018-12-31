@@ -125,6 +125,8 @@
                 locale: "{{ App::getLocale() }}",
             });
 
+            // $('.pontuacaoSelect').hide()
+
         });
     </script>
 @endsection
