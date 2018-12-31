@@ -2,7 +2,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h3 class="page-title">@lang('quickadmin.score.report')</h3>
+    <h3 class="page-title">@lang('quickadmin.score.report') @lang('quickadmin.award.title')</h3>
 
     <div class="panel panel-default">
         <div class="panel-heading">

@@ -2,14 +2,14 @@
 @extends('layouts.app')
 
 @section('content')
-    <h3 class="page-title">@lang('quickadmin.score.report')</h3>
+    <h3 class="page-title">@lang('quickadmin.score.report') @lang('quickadmin.award.title') @lang('quickadmin.award.fields.company')</h3>
 
 
     <div class="row">
-        <form method="POST" action="{{ route('admin.scores.reportByCompanyName') }}">
+        <form method="POST" action="{{ route('admin.scores.reportByCompanyName') }}" id="formulario-filtro">
             <div class="col-xs-10 col-md-6">
                 <div class="form-group">
-                    <select class="form-control" name="company">
+                    <select class="form-control" name="company" id="select-company">
                         <option>Selecione </option>
                         @foreach($companies as $c)
                             @if(isset($company))
@@ -23,7 +23,7 @@
             </div>
             <div class="col-xs-2 col-md-2">
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Filtrar</button>
+                    <button type="button" class="btn btn-primary" id="btn-filter">Filtrar</button>
                 </div>
             </div>
 
@@ -86,5 +86,13 @@
 
 @section('javascript')
     <script>
+        $('#btn-filter').on('click', (e) => {
+            let option = $('#select-company').val();
+            if (!option || option === undefined) {
+                alert('Necessário selecionar o campo');
+                return;
+            }
+            $('#formulario-filtro').submit();
+        })
     </script>
 @endsection
