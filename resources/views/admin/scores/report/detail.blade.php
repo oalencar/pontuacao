@@ -31,7 +31,7 @@
                                 <td>{{ $company->nome }}</td>
                                 <td>
                                     <a href="{{ route('admin.orders.edit', $score->order->id) }}"
-                                    class="btn btn-info btn-xs">Detalhe</a>
+                                    class="btn btn-info btn-xs">Detalhe do pedido</a>
                                 </td>
                             </tr>
                         @endforeach

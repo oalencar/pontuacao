@@ -58,7 +58,7 @@
                                     <td>
                                         <a
                                             href="{{ route('admin.scores.report_detail', [
-                                            'id' => $partner->user_id,
+                                            'id' => $partner->id,
                                             'company_id' => $company->id
                                             ]) }}"
                                             class="btn-info btn-xs btn"
