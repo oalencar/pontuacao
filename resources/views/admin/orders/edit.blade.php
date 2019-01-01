@@ -5,12 +5,12 @@
 
     {!! Form::model($order, ['method' => 'PUT', 'route' => ['admin.orders.update', $order->id]]) !!}
 
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <strong>Informações</strong>
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <h3 class="box-title">Informações</h3>
         </div>
 
-        <div class="panel-body">
+        <div class="box-body">
 
             <div class="row">
 
@@ -74,22 +74,25 @@
             </div>
 
         </div>
+
+        .
+
     </div>
 
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <strong>{{ trans('quickadmin.orders.fields.score') }}</strong>
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <h3 class="box-title">{{ trans('quickadmin.orders.fields.score') }}</h3>
         </div>
         <div class="panel-body">
             @include('admin.orders._score')
         </div>
     </div>
 
-    <div class="panel panel-default">
-        <div class="panel-heading">
+    <div class="box box-default">
+        <div class="box-header with-border">
             <strong>{{ trans('quickadmin.order-status.title') }}</strong>
         </div>
-        <div class="panel-body">
+        <div class="box-body">
             @include('admin.orders._orderstatus')
         </div>
     </div>
