@@ -6,6 +6,7 @@ use App\Order;
 use App\OrderStatus;
 use App\Partner;
 use App\Score;
+use App\Services\EmailMarketing;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -20,12 +21,14 @@ class OrdersController extends Controller
     public function __construct(
         OrderStatus $orderStatus,
         Score $score,
-        Partner $partner
+        Partner $partner,
+        EmailMarketing $emailMarketing
     )
     {
         $this->orderStatus = $orderStatus;
         $this->score = $score;
         $this->partner = $partner;
+        $this->emailMarketing = $emailMarketing;
     }
 
     /**
@@ -195,18 +198,7 @@ class OrdersController extends Controller
 
         $scoreScores->map(function ($score, $key) use ($scoreIds, $scoreUsersIds, $order) {
 
-            if (isset($scoreIds[$key])) {
-                $newScore['id'] = $scoreIds[$key];
-
-                $scoreSaved = $this->score->find($scoreIds[$key]);
-
-                $scoreSaved->score = $score;
-                $scoreSaved->user_id = $scoreUsersIds[$key];
-
-                $scoreSaved->save();
-
-            } else {
-
+            if (!isset($scoreIds[$key])) {
                 $newScore = new $this->score;
 
                 $newScore->score = $score;
@@ -214,7 +206,6 @@ class OrdersController extends Controller
                 $newScore->order_id = $order->id;
 
                 $newScore->save();
-
             }
 
         });
@@ -315,5 +306,11 @@ class OrdersController extends Controller
         $order->forceDelete();
 
         return redirect()->route('admin.orders.index');
+    }
+
+
+    public function sendEmailOrderRegister($order_id)
+    {
+        return $this->emailMarketing->sendOrderRegister($order_id);
     }
 }

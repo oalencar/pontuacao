@@ -115,6 +115,7 @@ return [
 	'score' => [
 		'title' => 'Pontuação',
         'report' => 'Relatório',
+        'partner_report' => 'Relatório do Parceiro',
 		'fields' => [
 			'order' => 'Order id',
 			'user' => 'Parceiro',

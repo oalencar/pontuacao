@@ -1,9 +1,5 @@
-<hr>
-
 <div class="row">
-    <div class="col-xs-12 col-md-6 form-group">
-        {!! Form::label('orderStatus', trans('quickadmin.order-status.title').'', ['class' => 'control-label']) !!}
-
+    <div class="col-xs-12 form-group">
         <table id="order-status-list" class="table">
             <thead>
             <tr>
@@ -15,14 +11,14 @@
                 @if(isset($orderStatuses))
                     @foreach($orderStatuses as $orderStatus)
                     <tr>
-                        <td>
+                        <td class="col-sm-8">
                             <input
-                                    type="text"
-                                    class="form-control"
-                                    name="order-status-observacao[]"
-                                    value="{{ $orderStatus->observacao }}"/>
+                                type="text"
+                                class="form-control"
+                                name="order-status-observacao[]"
+                                value="{{ $orderStatus->observacao }}"/>
                         </td>
-                        <td>
+                        <td class="col-sm-3">
                             <div class="input-group date">
                                 <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                                 <input
@@ -32,7 +28,7 @@
                                     value="{{ $orderStatus->data }}">
                             </div>
                         </td>
-                        <td>
+                        <td class="col-sm-1">
                             <button type="button" class="ibtnDel btn btn-md btn-danger">Delete</button>
                             <input type="hidden" name="order-status-id[]" value="{{ $orderStatus->id }}" class="edit-orderStatus"/>
                         </td>
@@ -40,14 +36,18 @@
                     @endforeach
                 @else
                     <tr>
-                        <td><input type="text" class="form-control" name="order-status-observacao[]"/></td>
-                        <td>
+                        <td class="col-sm-8">
+                            <input type="text" class="form-control" name="order-status-observacao[]"/>
+                        </td>
+                        <td class="col-sm-3">
                             <div class="input-group date">
                                 <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                                 <input type="text" class="form-control pull-right datepicker" name="order-status-data[]">
                             </div>
                         </td>
-                        <td><input type="button" class="ibtnDel btn btn-md btn-danger"  value="Delete"></td>
+                        <td class="col-sm-1">
+                            <input type="button" class="ibtnDel btn btn-md btn-danger"  value="Delete">
+                        </td>
                     </tr>
                 @endif
             </tbody>
@@ -70,5 +70,3 @@
         @endif
     </div>
 </div>
-
-<hr>

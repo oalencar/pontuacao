@@ -26,6 +26,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('users_mass_destroy', ['uses' => 'Admin\UsersController@massDestroy', 'as' => 'users.mass_destroy']);
 
     Route::resource('orders', 'Admin\OrdersController');
+    Route::get('orders/sendEmail/orderRegister/{order_id}', ['uses' => 'Admin\OrdersController@sendEmailOrderRegister', 'as' => 'orders.sendEmail.orderRegister']);
     Route::post('orders_mass_destroy', ['uses' => 'Admin\OrdersController@massDestroy', 'as' => 'orders.mass_destroy']);
     Route::post('orders_restore/{id}', ['uses' => 'Admin\OrdersController@restore', 'as' => 'orders.restore']);
     Route::delete('orders_perma_del/{id}', ['uses' => 'Admin\OrdersController@perma_del', 'as' => 'orders.perma_del']);
@@ -56,7 +57,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
 
     Route::get('scores/report', ['uses' => 'Admin\ScoresController@report', 'as' => 'scores.report']);
     Route::post('scores/report', ['uses' => 'Admin\ScoresController@reportByCompanyName', 'as' => 'scores.reportByCompanyName']);
-    Route::post('scores/report/detail/{id}', ['uses' => 'Admin\ScoresController@reportByCompanyName', 'as' => 'scores.report_detail']);
+    Route::get('scores/report/detail/{id}/company/{company_id}', ['uses' => 'Admin\ScoresController@reportDetail', 'as' => 'scores.report_detail']);
     Route::resource('scores', 'Admin\ScoresController');
     Route::post('scores_mass_destroy', ['uses' => 'Admin\ScoresController@massDestroy', 'as' => 'scores.mass_destroy']);
     Route::post('scores_restore/{id}', ['uses' => 'Admin\ScoresController@restore', 'as' => 'scores.restore']);

@@ -269,17 +269,18 @@ class ScoresController extends Controller
 
     }
 
-    public function reportDetail($id)
+    public function reportDetail($id, $company_id)
     {
         if (! Gate::allows('score_view')) {
             return abort(401);
         }
 
-        $partner = $this->partner::findOrFail($id);
+        $company = $this->company::findOrFail($company_id);
+
+        $partner = $this->partner::with('user')->findOrFail($id);
 
         $scores = $this->scoreService->getAllScoresFromPartner($partner);
 
-
-        return view('admin.scores.report.detail', compact('partner', 'scores'));
+        return view('admin.scores.report.detail', compact('partner', 'scores', 'company'));
     }
 }

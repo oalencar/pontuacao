@@ -1,18 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
-    <h3 class="page-title">@lang('quickadmin.orders.title')</h3>
+    <h3 class="page-title">@lang('quickadmin.orders.title') <small>@lang('quickadmin.qa_edit')</small></h3>
+
+
 
     {!! Form::model($order, ['method' => 'PUT', 'route' => ['admin.orders.update', $order->id]]) !!}
 
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            @lang('quickadmin.qa_edit')
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <h3 class="box-title">Informações</h3>
         </div>
 
-        <div class="panel-body">
+        <div class="box-body">
+
             <div class="row">
-                <div class="col-xs-12 form-group">
+
+                <div class="col-xs-6 form-group">
                     {!! Form::label('codigo', trans('quickadmin.orders.fields.codigo').'*', ['class' => 'control-label']) !!}
                     {!! Form::text('codigo', old('codigo'), ['class' => 'form-control', 'placeholder' => '', 'required' => '']) !!}
                     <p class="help-block"></p>
@@ -22,22 +26,8 @@
                         </p>
                     @endif
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 form-group">
-                    {!! Form::label('descricao', trans('quickadmin.orders.fields.descricao').'', ['class' => 'control-label']) !!}
-                    {!! Form::text('descricao', old('descricao'), ['class' => 'form-control', 'placeholder' => '']) !!}
-                    <p class="help-block"></p>
-                    @if($errors->has('descricao'))
-                        <p class="help-block">
-                            {{ $errors->first('descricao') }}
-                        </p>
-                    @endif
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-xs-12 form-group">
+                <div class="col-xs-6 form-group">
                     {!! Form::label('start_date', trans('quickadmin.award.fields.start-date').'*', ['class' => 'control-label']) !!}
                     {!! Form::text('start_date', old('start_date'), ['class' => 'form-control date', 'placeholder' => '', 'required' => '']) !!}
                     <p class="help-block"></p>
@@ -47,10 +37,8 @@
                         </p>
                     @endif
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="col-xs-12 form-group">
+                <div class="col-xs-6 form-group">
                     {!! Form::label('company_id', trans('quickadmin.orders.fields.company').'*', ['class' => 'control-label']) !!}
                     {!! Form::select('company_id', $companies, old('company_id'), ['class' => 'form-control select2', 'id' => 'companySelect', 'required' => '']) !!}
                     <p class="help-block"></p>
@@ -60,14 +48,8 @@
                         </p>
                     @endif
                 </div>
-            </div>
 
-            @include('admin.orders._score')
-
-            @include('admin.orders._orderstatus')
-
-            <div class="row">
-                <div class="col-xs-12 form-group">
+                <div class="col-xs-6 form-group">
                     {!! Form::label('client_id', trans('quickadmin.orders.fields.client').'', ['class' => 'control-label']) !!}
                     {!! Form::select('client_id', $clients, old('client_id'), ['class' => 'form-control select2']) !!}
                     <p class="help-block"></p>
@@ -77,8 +59,59 @@
                         </p>
                     @endif
                 </div>
+
             </div>
 
+            <div class="row">
+                <div class="col-xs-6 form-group">
+                    {!! Form::label('descricao', trans('quickadmin.orders.fields.descricao').'', ['class' => 'control-label']) !!}
+                    {!! Form::text('descricao', old('descricao'), ['class' => 'form-control', 'placeholder' => '']) !!}
+                    <p class="help-block"></p>
+                    @if($errors->has('descricao'))
+                        <p class="help-block">
+                            {{ $errors->first('descricao') }}
+                        </p>
+                    @endif
+                </div>
+
+                <div class="col-xs-6" style="margin-top: 20px">
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="finished" id="finished">
+                                Pedido Finalizado
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="box-footer">
+            <button type="button" class="btn btn-primary" id="btn-order-register-email">E-mail cadastro de pedido</button>
+            <button type="button" class="btn btn-primary">E-mail atualização de pedido</button>
+            <button type="button" class="btn btn-primary">E-mail finalização de pedido</button>
+        </div>
+
+
+    </div>
+
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <h3 class="box-title">{{ trans('quickadmin.orders.fields.score') }}</h3>
+        </div>
+        <div class="box-body">
+            @include('admin.orders._score')
+        </div>
+    </div>
+
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <strong>{{ trans('quickadmin.order-status.title') }}</strong>
+        </div>
+        <div class="box-body">
+            @include('admin.orders._orderstatus')
         </div>
     </div>
 
@@ -92,6 +125,8 @@
 
     <script src="{{ mix('js/modules/order/Order.js') }}"></script>
     <script>
+
+        window.order_id = {{ $order->id }};
 
         var partnersData = [
             @foreach ($partners as $partner)
@@ -110,6 +145,8 @@
         window.scores = scores;
 
 
+
+
         $(function() {
             moment.updateLocale('{{ App::getLocale() }}', {
                 week: { dow: 1 } // Monday is the first day of the week
@@ -125,6 +162,24 @@
                 locale: "{{ App::getLocale() }}",
             });
 
+            $('#btn-order-register-email').on('click', function (e) {
+                $.ajax(
+                    {
+                        url: `${window.appUrl}/admin/orders/sendEmail/orderRegister/${window.order_id}`,
+                        type: 'GET',
+                    }).done(function(res) {
+                    alert('email enviado');
+                    console.log(res)
+                })
+                .fail(function(err) {
+                    console.error(err);
+                    alert('Houve um erro ao excluir a pontuação');
+                });
+            })
+
         });
+
+
+
     </script>
 @endsection
