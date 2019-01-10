@@ -18,7 +18,9 @@ class EmailMarketingTest extends TestCase
     public function testSendTest()
     {
         $mailjetService = $this->app->make('App\Services\MailjetService');
-        $emailMkt = new EmailMarketing($mailjetService);
+        $orderService = $this->app->make('App\Services\OrderService');
+        $order = $this->app->make('App\Order');
+        $emailMkt = new EmailMarketing($mailjetService, $orderService, $order);
         $res = $emailMkt->sendTest();
         $this->assertTrue($res);
     }

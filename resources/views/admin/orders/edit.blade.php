@@ -3,6 +3,8 @@
 @section('content')
     <h3 class="page-title">@lang('quickadmin.orders.title') <small>@lang('quickadmin.qa_edit')</small></h3>
 
+
+
     {!! Form::model($order, ['method' => 'PUT', 'route' => ['admin.orders.update', $order->id]]) !!}
 
     <div class="box box-default">
@@ -61,7 +63,7 @@
             </div>
 
             <div class="row">
-                <div class="col-xs-12 form-group">
+                <div class="col-xs-6 form-group">
                     {!! Form::label('descricao', trans('quickadmin.orders.fields.descricao').'', ['class' => 'control-label']) !!}
                     {!! Form::text('descricao', old('descricao'), ['class' => 'form-control', 'placeholder' => '']) !!}
                     <p class="help-block"></p>
@@ -71,11 +73,27 @@
                         </p>
                     @endif
                 </div>
+
+                <div class="col-xs-6" style="margin-top: 20px">
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="finished" id="finished">
+                                Pedido Finalizado
+                            </label>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
 
-        .
+        <div class="box-footer">
+            <button type="button" class="btn btn-primary" id="btn-order-register-email">E-mail cadastro de pedido</button>
+            <button type="button" class="btn btn-primary">E-mail atualização de pedido</button>
+            <button type="button" class="btn btn-primary">E-mail finalização de pedido</button>
+        </div>
+
 
     </div>
 
@@ -83,7 +101,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">{{ trans('quickadmin.orders.fields.score') }}</h3>
         </div>
-        <div class="panel-body">
+        <div class="box-body">
             @include('admin.orders._score')
         </div>
     </div>
@@ -108,6 +126,8 @@
     <script src="{{ mix('js/modules/order/Order.js') }}"></script>
     <script>
 
+        window.order_id = {{ $order->id }};
+
         var partnersData = [
             @foreach ($partners as $partner)
             { 'id' : '{{$partner->user->id}}', 'name' : '{{ $partner->user->name }}' },
@@ -125,6 +145,8 @@
         window.scores = scores;
 
 
+
+
         $(function() {
             moment.updateLocale('{{ App::getLocale() }}', {
                 week: { dow: 1 } // Monday is the first day of the week
@@ -140,8 +162,24 @@
                 locale: "{{ App::getLocale() }}",
             });
 
-            // $('.pontuacaoSelect').hide()
+            $('#btn-order-register-email').on('click', function (e) {
+                $.ajax(
+                    {
+                        url: `${window.appUrl}/admin/orders/sendEmail/orderRegister/${window.order_id}`,
+                        type: 'GET',
+                    }).done(function(res) {
+                    alert('email enviado');
+                    console.log(res)
+                })
+                .fail(function(err) {
+                    console.error(err);
+                    alert('Houve um erro ao excluir a pontuação');
+                });
+            })
 
         });
+
+
+
     </script>
 @endsection

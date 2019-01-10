@@ -18,8 +18,9 @@ class Partner extends Model
 
     protected $fillable = ['company_id', 'user_id', 'partner_type_id'];
     protected $hidden = [];
-    
-    
+    protected $with = ['partner_type'];
+
+
 
     /**
      * Set to null if empty
@@ -47,20 +48,20 @@ class Partner extends Model
     {
         $this->attributes['partner_type_id'] = $input ? $input : null;
     }
-    
+
     public function company()
     {
         return $this->belongsTo(Company::class, 'company_id')->withTrashed();
     }
-    
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-    
+
     public function partner_type()
     {
         return $this->belongsTo(PartnerType::class, 'partner_type_id')->withTrashed();
     }
-    
+
 }

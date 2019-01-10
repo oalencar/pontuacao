@@ -26,6 +26,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('users_mass_destroy', ['uses' => 'Admin\UsersController@massDestroy', 'as' => 'users.mass_destroy']);
 
     Route::resource('orders', 'Admin\OrdersController');
+    Route::get('orders/sendEmail/orderRegister/{order_id}', ['uses' => 'Admin\OrdersController@sendEmailOrderRegister', 'as' => 'orders.sendEmail.orderRegister']);
     Route::post('orders_mass_destroy', ['uses' => 'Admin\OrdersController@massDestroy', 'as' => 'orders.mass_destroy']);
     Route::post('orders_restore/{id}', ['uses' => 'Admin\OrdersController@restore', 'as' => 'orders.restore']);
     Route::delete('orders_perma_del/{id}', ['uses' => 'Admin\OrdersController@perma_del', 'as' => 'orders.perma_del']);
