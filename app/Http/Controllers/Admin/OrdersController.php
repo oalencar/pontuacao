@@ -6,7 +6,7 @@ use App\Order;
 use App\OrderStatus;
 use App\Partner;
 use App\Score;
-use App\Services\EmailMarketing;
+use App\EmailMarketing;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreOrdersRequest;
 use App\Http\Requests\Admin\UpdateOrdersRequest;
-use function PHPSTORM_META\map;
 
 class OrdersController extends Controller
 {
