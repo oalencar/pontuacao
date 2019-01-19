@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Services;
+namespace App;
 
 use App\Order;
+use App\Services\MailjetService;
 use Mailjet\Resources;
 use App\Services\OrderService;
 
