@@ -59,27 +59,21 @@
                 <thead>
                 <tr>
                     <th>@lang('quickadmin.award.fields.title')</th>
-                        <th>@lang('quickadmin.award.fields.goal')</th>
-
-                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody id="award">
-                    @forelse(old('awards', []) as $index => $data)
-                        @include('admin.companies.awards_row', [
-                            'index' => $index
-                        ])
+                    @forelse ($company->awards as $item)
+                        <tr>
+                            <td>{{ $item->title }}</td>
+                        </tr>
                     @empty
-                        @foreach($company->awards as $item)
-                            @include('admin.companies.awards_row', [
-                                'index' => 'id-' . $item->id,
-                                'field' => $item
-                            ])
-                        @endforeach
+                        <tr>
+                            <td>Sem premiações vinculadas</td>
+                        </tr>
                     @endforelse
                 </tbody>
             </table>
-            <a href="#" class="btn btn-success pull-right add-new">@lang('quickadmin.qa_add_new')</a>
+            <a href="{{ route('admin.awards.create') }}" class="btn btn-success pull-right add-new">@lang('quickadmin.qa_add_new')</a>
         </div>
     </div>
 
@@ -88,30 +82,4 @@
 @stop
 
 @section('javascript')
-    @parent
-
-    <script type="text/html" id="award-template">
-        @include('admin.companies.awards_row',
-                [
-                    'index' => '_INDEX_',
-                ])
-               </script >
-
-            <script>
-        $('.add-new').click(function () {
-            var tableBody = $(this).parent().find('tbody');
-            var template = $('#' + tableBody.attr('id') + '-template').html();
-            var lastIndex = parseInt(tableBody.find('tr').last().data('index'));
-            if (isNaN(lastIndex)) {
-                lastIndex = 0;
-            }
-            tableBody.append(template.replace(/_INDEX_/g, lastIndex + 1));
-            return false;
-        });
-        $(document).on('click', '.remove', function () {
-            var row = $(this).parentsUntil('tr').parent();
-            row.remove();
-            return false;
-        });
-        </script>
 @stop

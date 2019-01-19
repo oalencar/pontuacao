@@ -81,9 +81,18 @@ class CompaniesController extends Controller
         if (! Gate::allows('company_edit')) {
             return abort(401);
         }
+
+        $partners = \App\Partner::where('company_id', $id)->get();
+        $partner_types = \App\PartnerType::where('company_id', $id)->get();
+        $orders = \App\Order::where('company_id', $id)->get();
+        $clientes = \App\Cliente::where('company_id', $id)->get();
+        $awards = \App\Award::where('company_id', $id)->get();
+
         $company = Company::findOrFail($id);
 
-        return view('admin.companies.edit', compact('company'));
+        return view('admin.companies.edit', compact('company', 'partners', 'partner_types', 'orders', 'clientes', 'awards'));
+
+        // return view('admin.companies.edit', compact('company'));
     }
 
     /**
@@ -135,7 +144,11 @@ class CompaniesController extends Controller
         if (! Gate::allows('company_view')) {
             return abort(401);
         }
-        $partners = \App\Partner::where('company_id', $id)->get();$partner_types = \App\PartnerType::where('company_id', $id)->get();$orders = \App\Order::where('company_id', $id)->get();$clientes = \App\Cliente::where('company_id', $id)->get();$awards = \App\Award::where('company_id', $id)->get();
+        $partners = \App\Partner::where('company_id', $id)->get();
+        $partner_types = \App\PartnerType::where('company_id', $id)->get();
+        $orders = \App\Order::where('company_id', $id)->get();
+        $clientes = \App\Cliente::where('company_id', $id)->get();
+        $awards = \App\Award::where('company_id', $id)->get();
 
         $company = Company::findOrFail($id);
 
