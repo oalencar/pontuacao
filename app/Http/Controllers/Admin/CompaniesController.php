@@ -91,8 +91,6 @@ class CompaniesController extends Controller
         $company = Company::findOrFail($id);
 
         return view('admin.companies.edit', compact('company', 'partners', 'partner_types', 'orders', 'clientes', 'awards'));
-
-        // return view('admin.companies.edit', compact('company'));
     }
 
     /**
