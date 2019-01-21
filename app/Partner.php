@@ -64,4 +64,9 @@ class Partner extends Model
         return $this->belongsTo(PartnerType::class, 'partner_type_id')->withTrashed();
     }
 
+    public function companies()
+    {
+        return $this->belongsToMany(Company::class, 'company_partner', 'partner_id','company_id' );
+    }
+
 }

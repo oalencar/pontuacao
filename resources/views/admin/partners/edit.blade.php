@@ -2,7 +2,7 @@
 
 @section('content')
     <h3 class="page-title">@lang('quickadmin.partner.title')</h3>
-    
+
     {!! Form::model($partner, ['method' => 'PUT', 'route' => ['admin.partners.update', $partner->id]]) !!}
 
     <div class="panel panel-default">
@@ -14,7 +14,14 @@
             <div class="row">
                 <div class="col-xs-12 form-group">
                     {!! Form::label('company_id', trans('quickadmin.partner.fields.company').'*', ['class' => 'control-label']) !!}
-                    {!! Form::select('company_id', $companies, old('company_id'), ['class' => 'form-control select2', 'required' => '']) !!}
+
+                    <select name="company_id[]" id="company_id" required class="form-control select2" multiple="multiple">
+                        <option value="">Selecione</option>
+                        @foreach($companies as $key => $companyName)
+                            <option value="{{ $key }}" {{  $partnerCompanies->contains('id', $key) ? 'selected' : '' }}>{{ $companyName }}</option>
+                        @endforeach
+                    </select>
+
                     <p class="help-block"></p>
                     @if($errors->has('company_id'))
                         <p class="help-block">
@@ -47,7 +54,7 @@
                     @endif
                 </div>
             </div>
-            
+
         </div>
     </div>
 

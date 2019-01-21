@@ -8,16 +8,23 @@
         <div class="panel-heading">
             @lang('quickadmin.qa_create')
         </div>
-        
+
         <div class="panel-body">
             <div class="row">
                 <div class="col-xs-12 form-group">
-                    {!! Form::label('company_id', trans('quickadmin.partner.fields.company').'*', ['class' => 'control-label']) !!}
-                    {!! Form::select('company_id', $companies, old('company_id'), ['class' => 'form-control select2', 'required' => '']) !!}
+                    {!! Form::label('company_id[]', trans('quickadmin.partner.fields.company').'*', ['class' => 'control-label']) !!}
+
+                    <select name="company_id[]" id="company_id" required class="form-control select2" multiple="multiple">
+                        <option value="">{{ trans('quickadmin.qa_please_select') }}</option>
+                        @foreach($companies as $company)
+                            <option value="{{ $company->id }}">{{ $company->nome }}</option>
+                        @endforeach
+                    </select>
+
                     <p class="help-block"></p>
-                    @if($errors->has('company_id'))
+                    @if($errors->has('company_id[]'))
                         <p class="help-block">
-                            {{ $errors->first('company_id') }}
+                            {{ $errors->first('company_id[]') }}
                         </p>
                     @endif
                 </div>
@@ -46,7 +53,7 @@
                     @endif
                 </div>
             </div>
-            
+
         </div>
     </div>
 

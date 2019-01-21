@@ -14,7 +14,12 @@
                     <table class="table table-bordered table-striped">
                         <tr>
                             <th>@lang('quickadmin.partner.fields.company')</th>
-                            <td field-key='company'>{{ $partner->company->nome or '' }}</td>
+                            <td field-key='company'>
+                                @foreach($partner->companies()->get() as $company)
+                                    {{$company->nome}}
+                                    @if(!$loop->last),@endif
+                                @endforeach
+                            </td>
                         </tr>
                         <tr>
                             <th>@lang('quickadmin.partner.fields.user')</th>

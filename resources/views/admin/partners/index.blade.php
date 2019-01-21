@@ -6,7 +6,7 @@
     @can('partner_create')
     <p>
         <a href="{{ route('admin.partners.create') }}" class="btn btn-success">@lang('quickadmin.qa_add_new')</a>
-        
+
     </p>
     @endcan
 
@@ -43,7 +43,7 @@
                         @endif
                     </tr>
                 </thead>
-                
+
                 <tbody>
                     @if (count($partners) > 0)
                         @foreach ($partners as $partner)
@@ -51,9 +51,13 @@
                                 @can('partner_delete')
                                     @if ( request('show_deleted') != 1 )<td></td>@endif
                                 @endcan
-
-                                <td field-key='company'>{{ $partner->company->nome or '' }}</td>
-                                <td field-key='user'>{{ $partner->user->name or '' }}</td>
+                                <td field-key='company'>
+                                    @foreach($partner->companies()->get() as $company)
+                                        {{$company->nome}}
+                                        @if(!$loop->last),@endif
+                                    @endforeach
+                                </td>
+                                <td field-key='user'>{{ $partner->user->name or '' }} - {{ $partner->user->email or '' }}</td>
                                 <td field-key='partner_type'>{{ $partner->partner_type->description or '' }}</td>
                                 @if( request('show_deleted') == 1 )
                                 <td>
@@ -108,7 +112,7 @@
     </div>
 @stop
 
-@section('javascript') 
+@section('javascript')
     <script>
         @can('partner_delete')
             @if ( request('show_deleted') != 1 ) window.route_mass_crud_entries_destroy = '{{ route('admin.partners.mass_destroy') }}'; @endif

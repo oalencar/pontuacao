@@ -45,8 +45,8 @@ class PartnersController extends Controller
         if (! Gate::allows('partner_create')) {
             return abort(401);
         }
-        
-        $companies = \App\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
+
+        $companies = \App\Company::get();
         $users = \App\User::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
         $partner_types = \App\PartnerType::get()->pluck('description', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
 
@@ -64,9 +64,8 @@ class PartnersController extends Controller
         if (! Gate::allows('partner_create')) {
             return abort(401);
         }
-        $partner = Partner::create($request->all());
-
-
+        $partner = Partner::create($request->except('company_id'));
+        $partner->companies()->sync($request->get('company_id'));
 
         return redirect()->route('admin.partners.index');
     }
@@ -83,14 +82,15 @@ class PartnersController extends Controller
         if (! Gate::allows('partner_edit')) {
             return abort(401);
         }
-        
-        $companies = \App\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
+
+        $companies = \App\Company::get()->pluck('nome', 'id');
         $users = \App\User::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
         $partner_types = \App\PartnerType::get()->pluck('description', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
 
         $partner = Partner::findOrFail($id);
+        $partnerCompanies = $partner->companies()->get();
 
-        return view('admin.partners.edit', compact('partner', 'companies', 'users', 'partner_types'));
+        return view('admin.partners.edit', compact('partner', 'companies', 'users', 'partner_types', 'partnerCompanies'));
     }
 
     /**
@@ -105,10 +105,11 @@ class PartnersController extends Controller
         if (! Gate::allows('partner_edit')) {
             return abort(401);
         }
+
         $partner = Partner::findOrFail($id);
-        $partner->update($request->all());
 
-
+        $partner->update($request->except('company_id'));
+        $partner->companies()->sync($request->get('company_id'));
 
         return redirect()->route('admin.partners.index');
     }
