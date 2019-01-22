@@ -16,7 +16,7 @@ class Partner extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['company_id', 'user_id', 'partner_type_id'];
+    protected $fillable = ['user_id', 'partner_type_id'];
     protected $hidden = [];
     protected $with = ['partner_type'];
 
@@ -47,11 +47,6 @@ class Partner extends Model
     public function setPartnerTypeIdAttribute($input)
     {
         $this->attributes['partner_type_id'] = $input ? $input : null;
-    }
-
-    public function company()
-    {
-        return $this->belongsTo(Company::class, 'company_id')->withTrashed();
     }
 
     public function user()

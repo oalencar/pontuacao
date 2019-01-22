@@ -22,8 +22,6 @@ class StorePartnersRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'company_id' => 'required',
-        ];
+        return [];
     }
 }

@@ -22,9 +22,6 @@ class UpdatePartnersRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            
-            'company_id' => 'required',
-        ];
+        return [];
     }
 }
