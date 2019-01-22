@@ -63,7 +63,12 @@
                                 <td field-key='start_date'>{{ $award->start_date }}</td>
                                 <td field-key='finish_date'>{{ $award->finish_date }}</td>
                                 <td field-key='image'>@if($award->image)<a href="{{ asset(env('UPLOAD_PATH').'/' . $award->image) }}" target="_blank"><img src="{{ asset(env('UPLOAD_PATH').'/thumb/' . $award->image) }}"/></a>@endif</td>
-                                <td field-key='partner_type'>{{ $award->partner_type->description or '' }}</td>
+                                <td field-key='partner_type'>
+                                    @foreach($award->partner_types()->get() as $partner_type)
+                                        {{ $partner_type->description }}
+                                        @if(!$loop->last),@endif
+                                    @endforeach
+                                </td>
                                 <td field-key='company'>{{ $award->company->nome or '' }}</td>
                                 @if( request('show_deleted') == 1 )
                                 <td>
@@ -88,9 +93,6 @@
                                 </td>
                                 @else
                                 <td>
-                                    @can('award_view')
-                                    <a href="{{ route('admin.awards.show',[$award->id]) }}" class="btn btn-xs btn-primary">@lang('quickadmin.qa_view')</a>
-                                    @endcan
                                     @can('award_edit')
                                     <a href="{{ route('admin.awards.edit',[$award->id]) }}" class="btn btn-xs btn-info">@lang('quickadmin.qa_edit')</a>
                                     @endcan

@@ -12,6 +12,11 @@ use App\Http\Controllers\Traits\FileUploadTrait;
 
 class AwardsController extends Controller
 {
+    public function __construct(Award $award)
+    {
+        $this->award = $award;
+    }
+
     use FileUploadTrait;
 
     /**
@@ -30,9 +35,9 @@ class AwardsController extends Controller
             if (! Gate::allows('award_delete')) {
                 return abort(401);
             }
-            $awards = Award::onlyTrashed()->get();
+            $awards = $this->award->onlyTrashed()->get();
         } else {
-            $awards = Award::all();
+            $awards = $this->award->all();
         }
 
         return view('admin.awards.index', compact('awards'));
@@ -49,7 +54,7 @@ class AwardsController extends Controller
             return abort(401);
         }
 
-        $partner_types = \App\PartnerType::get()->pluck('description', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
+        $partner_types = \App\PartnerType::get();
         $companies = \App\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
 
         return view('admin.awards.create', compact('partner_types', 'companies'));
@@ -67,9 +72,9 @@ class AwardsController extends Controller
             return abort(401);
         }
         $request = $this->saveFiles($request);
-        $award = Award::create($request->all());
 
-
+        $award = $this->award->create($request->except(['partner_type_id']));
+        $award->partner_types()->sync($request->get('partner_type_id'));
 
         return redirect()->route('admin.awards.index');
     }
@@ -87,12 +92,19 @@ class AwardsController extends Controller
             return abort(401);
         }
 
-        $partner_types = \App\PartnerType::get()->pluck('description', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
+        $partner_types = \App\PartnerType::get()->pluck('description', 'id');
         $companies = \App\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
 
-        $award = Award::findOrFail($id);
+        $award = $this->award->findOrFail($id);
+        $partnerTypesArwards = $award->partner_types()->get();
 
-        return view('admin.awards.edit', compact('award', 'partner_types', 'companies'));
+        return view(
+            'admin.awards.edit',
+            compact(
+            'award',
+            'partner_types',
+            'partnerTypesArwards',
+            'companies'));
     }
 
     /**
@@ -108,10 +120,9 @@ class AwardsController extends Controller
             return abort(401);
         }
         $request = $this->saveFiles($request);
-        $award = Award::findOrFail($id);
-        $award->update($request->all());
-
-
+        $award = $this->award->findOrFail($id);
+        $award->update($request->except(['partner_type_id']));
+        $award->partner_types()->sync($request->get('partner_type_id'));
 
         return redirect()->route('admin.awards.index');
     }
@@ -128,7 +139,7 @@ class AwardsController extends Controller
         if (! Gate::allows('award_view')) {
             return abort(401);
         }
-        $award = Award::findOrFail($id);
+        $award = $this->award->findOrFail($id);
 
         return view('admin.awards.show', compact('award'));
     }
@@ -145,7 +156,7 @@ class AwardsController extends Controller
         if (! Gate::allows('award_delete')) {
             return abort(401);
         }
-        $award = Award::findOrFail($id);
+        $award = $this->award->findOrFail($id);
         $award->delete();
 
         return redirect()->route('admin.awards.index');
@@ -162,7 +173,7 @@ class AwardsController extends Controller
             return abort(401);
         }
         if ($request->input('ids')) {
-            $entries = Award::whereIn('id', $request->input('ids'))->get();
+            $entries = $this->award->whereIn('id', $request->input('ids'))->get();
 
             foreach ($entries as $entry) {
                 $entry->delete();
@@ -182,7 +193,7 @@ class AwardsController extends Controller
         if (! Gate::allows('award_delete')) {
             return abort(401);
         }
-        $award = Award::onlyTrashed()->findOrFail($id);
+        $award = $this->award->onlyTrashed()->findOrFail($id);
         $award->restore();
 
         return redirect()->route('admin.awards.index');
@@ -199,7 +210,7 @@ class AwardsController extends Controller
         if (! Gate::allows('award_delete')) {
             return abort(401);
         }
-        $award = Award::onlyTrashed()->findOrFail($id);
+        $award = $this->award->onlyTrashed()->findOrFail($id);
         $award->forceDelete();
 
         return redirect()->route('admin.awards.index');

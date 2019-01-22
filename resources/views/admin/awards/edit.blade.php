@@ -92,7 +92,15 @@
             <div class="row">
                 <div class="col-xs-12 form-group">
                     {!! Form::label('partner_type_id', trans('quickadmin.award.fields.partner-type').'*', ['class' => 'control-label']) !!}
-                    {!! Form::select('partner_type_id', $partner_types, old('partner_type_id'), ['class' => 'form-control select2', 'required' => '']) !!}
+                    {{--{!! Form::select('partner_type_id', $partner_types, old('partner_type_id'), ['class' => 'form-control select2', 'required' => '']) !!}--}}
+
+                    <select name="partner_type_id[]" id="partner_type_id" required class="form-control select2" multiple="multiple">
+                        <option value="">{{ trans('quickadmin.qa_please_select') }}</option>
+                        @foreach($partner_types as $key => $partner_type_description)
+                            <option value="{{ $key }}" {{  $partnerTypesArwards->contains('id', $key) ? 'selected' : '' }}>{{ $partner_type_description }}</option>
+                        @endforeach
+                    </select>
+
                     <p class="help-block">Vincula premiação ao um tipo de parceiro. Ex: Consultor Empresa X</p>
                     @if($errors->has('partner_type_id'))
                         <p class="help-block">

@@ -34,7 +34,13 @@ class PartnerType extends Model
         return $this->belongsTo(Company::class, 'company_id')->withTrashed();
     }
 
-    public function awards() {
-        return $this->hasMany(Award::class, 'partner_type_id');
+//    public function awards() {
+//        return $this->hasMany(Award::class, 'partner_type_id');
+//    }
+
+    public function awards()
+    {
+//        return $this->belongsToMany(Company::class, 'company_partner', 'partner_id','company_id' );
+        return $this->belongsToMany(Award::class, 'award_partner_type', 'partner_type_id','award_id' );
     }
 }

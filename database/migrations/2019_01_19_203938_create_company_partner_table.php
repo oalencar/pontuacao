@@ -14,17 +14,11 @@ class CreateCompanyPartnerTable extends Migration
     public function up()
     {
         Schema::create('company_partner', function (Blueprint $table) {
-            $table->unsignedInteger('company_id')
-                ->foreign('company_id')
-                ->references('id')
-                ->on('companies')
-                ->onDelete('cascade');
+            $table->integer('company_id')->unsigned()->nullable();
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
 
-            $table->unsignedInteger('partner_id')
-                ->foreign('partner_id')
-                ->references('id')
-                ->on('partners')
-                ->onDelete('cascade');
+            $table->integer('partner_id')->unsigned()->nullable();
+            $table->foreign('partner_id')->references('id')->on('partners')->onDelete('cascade');
         });
     }
 
