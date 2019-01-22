@@ -27,7 +27,7 @@ class DeleteCompanyIdFromPartnersTable extends Migration
     public function down()
     {
         Schema::table('partners', function (Blueprint $table) {
-            if(!Schema::hasColumn('partners', 'company_id')) {
+            if(!Schema::hasColumn('company_id')) {
                 $table->integer('company_id')->unsigned()->nullable();
                 $table->foreign('company_id', '148721_5adf4514c1ebf')->after('deleted_at')->references('id')->on('companies')->onDelete('cascade');
             }
