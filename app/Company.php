@@ -26,6 +26,6 @@ class Company extends Model
     }
 
     public function partners() {
-        return $this->hasMany(Partner::class, 'company_id');
+        return $this->belongsToMany(Partner::class, 'company_partner', 'company_id', 'partner_id');
     }
 }

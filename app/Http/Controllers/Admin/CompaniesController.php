@@ -11,6 +11,11 @@ use App\Http\Requests\Admin\UpdateCompaniesRequest;
 
 class CompaniesController extends Controller
 {
+    public function __construct(Company $company)
+    {
+        $this->company = $company;
+    }
+
     /**
      * Display a listing of Company.
      *
@@ -27,9 +32,9 @@ class CompaniesController extends Controller
             if (! Gate::allows('company_delete')) {
                 return abort(401);
             }
-            $companies = Company::onlyTrashed()->get();
+            $companies = $this->company->onlyTrashed()->get();
         } else {
-            $companies = Company::all();
+            $companies = $this->company->all();
         }
 
         return view('admin.companies.index', compact('companies'));
@@ -59,13 +64,11 @@ class CompaniesController extends Controller
         if (! Gate::allows('company_create')) {
             return abort(401);
         }
-        $company = Company::create($request->all());
+        $company = $this->company->create($request->all());
 
         foreach ($request->input('awards', []) as $data) {
             $company->awards()->create($data);
         }
-
-
         return redirect()->route('admin.companies.index');
     }
 
@@ -82,13 +85,15 @@ class CompaniesController extends Controller
             return abort(401);
         }
 
-        $partners = \App\Partner::where('company_id', $id)->get();
         $partner_types = \App\PartnerType::where('company_id', $id)->get();
         $orders = \App\Order::where('company_id', $id)->get();
         $clientes = \App\Cliente::where('company_id', $id)->get();
         $awards = \App\Award::where('company_id', $id)->get();
 
-        $company = Company::findOrFail($id);
+        $company = $this->company->findOrFail($id);
+
+        $partners = $company->partners()->get();
+
 
         return view('admin.companies.edit', compact('company', 'partners', 'partner_types', 'orders', 'clientes', 'awards'));
     }
@@ -105,7 +110,7 @@ class CompaniesController extends Controller
         if (! Gate::allows('company_edit')) {
             return abort(401);
         }
-        $company = Company::findOrFail($id);
+        $company = $this->company->findOrFail($id);
         $company->update($request->all());
 
         $awards           = $company->awards;
@@ -142,15 +147,18 @@ class CompaniesController extends Controller
         if (! Gate::allows('company_view')) {
             return abort(401);
         }
-        $partners = \App\Partner::where('company_id', $id)->get();
         $partner_types = \App\PartnerType::where('company_id', $id)->get();
         $orders = \App\Order::where('company_id', $id)->get();
         $clientes = \App\Cliente::where('company_id', $id)->get();
         $awards = \App\Award::where('company_id', $id)->get();
 
-        $company = Company::findOrFail($id);
+        $company = $this->company->findOrFail($id);
+        $partners = $company->partners()->get();
 
-        return view('admin.companies.show', compact('company', 'partners', 'partner_types', 'orders', 'clientes', 'awards'));
+        return view(
+            'admin.companies.show',
+            compact('company', 'partners', 'partner_types', 'orders', 'clientes', 'awards')
+        );
     }
 
 
@@ -165,7 +173,7 @@ class CompaniesController extends Controller
         if (! Gate::allows('company_delete')) {
             return abort(401);
         }
-        $company = Company::findOrFail($id);
+        $company = $this->company->findOrFail($id);
         $company->delete();
 
         return redirect()->route('admin.companies.index');
@@ -182,7 +190,7 @@ class CompaniesController extends Controller
             return abort(401);
         }
         if ($request->input('ids')) {
-            $entries = Company::whereIn('id', $request->input('ids'))->get();
+            $entries = $this->company->whereIn('id', $request->input('ids'))->get();
 
             foreach ($entries as $entry) {
                 $entry->delete();
@@ -202,7 +210,7 @@ class CompaniesController extends Controller
         if (! Gate::allows('company_delete')) {
             return abort(401);
         }
-        $company = Company::onlyTrashed()->findOrFail($id);
+        $company = $this->company->onlyTrashed()->findOrFail($id);
         $company->restore();
 
         return redirect()->route('admin.companies.index');
@@ -219,7 +227,7 @@ class CompaniesController extends Controller
         if (! Gate::allows('company_delete')) {
             return abort(401);
         }
-        $company = Company::onlyTrashed()->findOrFail($id);
+        $company = $this->company->onlyTrashed()->findOrFail($id);
         $company->forceDelete();
 
         return redirect()->route('admin.companies.index');
