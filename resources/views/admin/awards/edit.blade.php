@@ -111,8 +111,15 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 form-group">
-                    {!! Form::label('company_id', trans('quickadmin.award.fields.company').'', ['class' => 'control-label']) !!}
-                    {!! Form::select('company_id', $companies, old('company_id'), ['class' => 'form-control select2']) !!}
+                    {!! Form::label('company_id', trans('quickadmin.award.fields.company').'*', ['class' => 'control-label']) !!}
+
+                    <select name="company_id[]" id="partner_type_id" required class="form-control select2" multiple="multiple">
+                        <option value="">{{ trans('quickadmin.qa_please_select') }}</option>
+                        @foreach($allCompanies as $key => $company_name)
+                            <option value="{{ $key }}" {{  $companies->contains('id', $key) ? 'selected' : '' }}>{{ $company_name }}</option>
+                        @endforeach
+                    </select>
+
                     <p class="help-block"></p>
                     @if($errors->has('company_id'))
                         <p class="help-block">

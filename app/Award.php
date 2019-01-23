@@ -22,7 +22,7 @@ class Award extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['title', 'description', 'goal', 'start_date', 'finish_date', 'image', 'company_id'];
+    protected $fillable = ['title', 'description', 'goal', 'start_date', 'finish_date', 'image'];
     protected $hidden = [];
     protected $with = ['partner_type', 'company'];
 
@@ -123,12 +123,16 @@ class Award extends Model
 
     public function company()
     {
-        return $this->belongsTo(Company::class, 'company_id')->withTrashed();
+         return $this->belongsTo(Company::class, 'company_id')->withTrashed();
+    }
+
+    public function companies()
+    {
+        return $this->belongsToMany(Company::class, 'award_company', 'award_id','company_id' );
     }
 
     public function partner_types()
     {
-//        return $this->belongsToMany(Company::class, 'company_partner', 'partner_id','company_id' );
         return $this->belongsToMany(PartnerType::class, 'award_partner_type', 'award_id','partner_type_id' );
     }
 

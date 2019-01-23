@@ -55,7 +55,7 @@ class AwardsController extends Controller
         }
 
         $partner_types = \App\PartnerType::get();
-        $companies = \App\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
+        $companies = \App\Company::get();
 
         return view('admin.awards.create', compact('partner_types', 'companies'));
     }
@@ -73,8 +73,9 @@ class AwardsController extends Controller
         }
         $request = $this->saveFiles($request);
 
-        $award = $this->award->create($request->except(['partner_type_id']));
+        $award = $this->award->create($request->except(['partner_type_id', 'company_id']));
         $award->partner_types()->sync($request->get('partner_type_id'));
+        $award->companies()->sync($request->get('company_id'));
 
         return redirect()->route('admin.awards.index');
     }
@@ -93,10 +94,11 @@ class AwardsController extends Controller
         }
 
         $partner_types = \App\PartnerType::get()->pluck('description', 'id');
-        $companies = \App\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
+        $allCompanies = \App\Company::get()->pluck('nome', 'id');
 
         $award = $this->award->findOrFail($id);
         $partnerTypesArwards = $award->partner_types()->get();
+        $companies = $award->companies()->get();
 
         return view(
             'admin.awards.edit',
@@ -104,7 +106,9 @@ class AwardsController extends Controller
             'award',
             'partner_types',
             'partnerTypesArwards',
-            'companies'));
+            'allCompanies',
+            'companies')
+        );
     }
 
     /**
@@ -121,8 +125,10 @@ class AwardsController extends Controller
         }
         $request = $this->saveFiles($request);
         $award = $this->award->findOrFail($id);
-        $award->update($request->except(['partner_type_id']));
+
+        $award->update($request->except(['partner_type_id', 'company_id']));
         $award->partner_types()->sync($request->get('partner_type_id'));
+        $award->companies()->sync($request->get('company_id'));
 
         return redirect()->route('admin.awards.index');
     }

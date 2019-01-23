@@ -69,7 +69,12 @@
                                         @if(!$loop->last),@endif
                                     @endforeach
                                 </td>
-                                <td field-key='company'>{{ $award->company->nome or '' }}</td>
+                                <td field-key='company'>
+                                    @foreach($award->companies()->get() as $company)
+                                        {{ $company->nome }}
+                                        @if(!$loop->last),@endif
+                                    @endforeach
+                                </td>
                                 @if( request('show_deleted') == 1 )
                                 <td>
                                     @can('award_delete')
