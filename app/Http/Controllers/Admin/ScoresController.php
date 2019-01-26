@@ -232,8 +232,9 @@ class ScoresController extends Controller
         }
 
         $companies = $this->company->all();
+        $partners = $this->partner::with('user')->get();
 
-        return view('admin.scores.report.index', compact('companies'));
+        return view('admin.scores.report.index', compact('companies', 'partners'));
 
     }
 
