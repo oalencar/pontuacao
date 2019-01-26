@@ -22,7 +22,8 @@ class Company extends Model
 
 
     public function awards() {
-        return $this->hasMany(Award::class, 'company_id');
+        return $this->belongsToMany(Award::class, 'award_company', 'company_id', 'award_id');
+
     }
 
     public function partners() {
