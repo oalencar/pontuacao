@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Award;
 use App\Company;
 use App\Partner;
 use App\Score;
@@ -22,12 +23,14 @@ class ScoresController extends Controller
         Company $company,
         Partner $partner,
         Score $score,
-        ScoreService $scoreService
+        ScoreService $scoreService,
+        Award $award
     ) {
         $this->partner = $partner;
         $this->company = $company;
         $this->score = $score;
         $this->scoreService = $scoreService;
+        $this->award = $award;
     }
 
 
@@ -295,6 +298,15 @@ class ScoresController extends Controller
 
         $scores = $this->scoreService->getAllScoresFromPartner($partner);
 
-        return view('admin.scores.report.partnerDetail', compact('partner', 'scores'));
+        $allAwards = $this->award::with('partner_types')->get();
+
+        $awards = $allAwards->filter( function ($award) use ($partner) {
+            $partner_types = collect($award->partner_types);
+            return $partner_types->contains(function ($partner_type) use ($partner) {
+                return $partner_type->id == $partner->partner_type->id;
+            } );
+        });
+
+        return view('admin.scores.report.partnerDetail', compact('partner', 'scores', 'awards'));
     }
 }
