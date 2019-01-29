@@ -61,7 +61,7 @@
                                         @else
                                             <td>
                                                 @can('score_view')
-                                                    <a href="{{ route('admin.scores.show',[$partner->id]) }}" class="btn btn-xs btn-primary">@lang('quickadmin.qa_view')</a>
+                                                    <a href="{{ route('admin.scores.report_partner_detail',[$partner->id]) }}" class="btn btn-xs btn-primary">@lang('quickadmin.qa_view')</a>
                                                 @endcan
                                             </td>
                                         @endif

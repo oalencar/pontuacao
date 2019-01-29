@@ -30,7 +30,7 @@ class ScoreService
         if (!$partner) {
             abort(500, 'Necessário passar Parceiro para getAllScoresFromPartner');
         }
-        return $this->score::where('user_id', $partner->user_id)->get();
+        return $this->score::with('order')->where('user_id', $partner->user_id)->get();
     }
 
     /**

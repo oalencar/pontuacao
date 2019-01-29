@@ -25,7 +25,15 @@ class PartnersController extends Controller
             abort(400, 'bad request.');
         }
 
-        $partners =  Partner::with('user')->where('company_id', $company_id)->get();
+        $allPartners =  Partner::with('user', 'companies')->get();
+
+        $partners = $allPartners->filter(function ($partner) use ($company_id) {
+            $companies = collect($partner->companies);
+            return $companies->contains(function ($company) use ($company_id) {
+                return $company->id == $company_id;
+            } );
+        });
+
 
         return collect($partners)->map(function($item) {
            return $item->user;

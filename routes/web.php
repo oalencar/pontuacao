@@ -58,6 +58,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::get('scores/report', ['uses' => 'Admin\ScoresController@report', 'as' => 'scores.report']);
     Route::post('scores/report', ['uses' => 'Admin\ScoresController@reportByCompanyName', 'as' => 'scores.reportByCompanyName']);
     Route::get('scores/report/detail/{id}/company/{company_id}', ['uses' => 'Admin\ScoresController@reportDetail', 'as' => 'scores.report_detail']);
+    Route::get('scores/report/detail/partner/{id}/', ['uses' => 'Admin\ScoresController@reportPartnerDetail', 'as' => 'scores.report_partner_detail']);
     Route::resource('scores', 'Admin\ScoresController');
     Route::post('scores_mass_destroy', ['uses' => 'Admin\ScoresController@massDestroy', 'as' => 'scores.mass_destroy']);
     Route::post('scores_restore/{id}', ['uses' => 'Admin\ScoresController@restore', 'as' => 'scores.restore']);

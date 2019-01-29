@@ -142,7 +142,7 @@ class OrdersController extends Controller
 
         $orderStatuses = $this->orderStatus::where('order_id', $order->id)->get();
         $scores = $this->score::where('order_id', $order->id)->get();
-        $partners = $this->partner::with('user')->where('company_id', $order->company_id)->get();
+        $partners = $this->partner::with('user')->get();
 
         return view('admin.orders.edit', compact('order', 'companies', 'clients', 'orderStatuses', 'scores', 'partners'));
     }
