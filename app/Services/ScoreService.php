@@ -26,7 +26,8 @@ class ScoreService
      * @param Partner
      * @return array Score
      */
-    public function getAllScoresFromPartner($partner) {
+    public function getAllScoresFromPartner($partner)
+    {
         if (!$partner) {
             abort(500, 'Necessário passar Parceiro para getAllScoresFromPartner');
         }
@@ -38,9 +39,10 @@ class ScoreService
      * @param $award Award
      * @return array Score
      */
-    public function filterPartnerScoresOfAward($scores, $award){
+    public function filterPartnerScoresOfAward($scores, $award)
+    {
         if (!$award) {
-            abort(500, 'Necessário passar Parceiro para filterScoresOfAward');
+            abort(500, 'Necessário passar Award para filterScoresOfAward');
         }
 
         return $scores->filter(function($item, $key) use ($award) {
@@ -55,12 +57,52 @@ class ScoreService
 
     /**
      * @param $scores array Score
+     * @param $awards Awards
+     * @return array Score
+     */
+    public function filterPartnerScoresOfAwards($scores, $awards)
+    {
+        if (!$awards) {
+            abort(500, 'Necessário passar Awards para filterScoresOfAward');
+        }
+
+        return $awards->map(function($award) use ($scores) {
+
+            return $scores->filter(function($score) use ($award) {
+
+                $orderStartDate = Carbon::createFromFormat(config('app.date_format'), $score->order->start_date);
+                $awardStartDate = Carbon::createFromFormat(config('app.date_format'), $award->start_date);
+                $awardFinishDate = Carbon::createFromFormat(config('app.date_format'), $award->finish_date);
+
+                return $orderStartDate->between($awardStartDate, $awardFinishDate);
+            });
+        });
+
+    }
+
+    /**
+     * @param $scores array Score
      * @return int
      */
-    public function sumOfScores($scores) {
+    public function sumOfScores($scores)
+    {
         if (!$scores) {
             abort(500, 'Necessário passar score para sumOfScores');
         }
         return $scores->sum('score');
+    }
+
+
+    /**
+     * @param $goal
+     * @param int $score
+     * @return int
+     */
+    public function getPercentReachedGoal($goal, $score)
+    {
+        if (!$score) {
+            abort(500, 'Necessário passar $score para sumOfScores');
+        }
+        return intval(($score/$goal)*100);
     }
 }
