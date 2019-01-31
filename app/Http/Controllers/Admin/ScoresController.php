@@ -307,6 +307,8 @@ class ScoresController extends Controller
             } );
         });
 
-        return view('admin.scores.report.partnerDetail', compact('partner', 'scores', 'awards'));
+        return view('admin.scores.report.partnerDetail',
+            compact('partner', 'scores', 'awards')
+        );
     }
 }

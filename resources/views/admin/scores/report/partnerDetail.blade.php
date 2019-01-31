@@ -1,4 +1,5 @@
 @inject('request', 'Illuminate\Http\Request')
+@inject('scoreService', '\App\Services\ScoreService')
 @extends('layouts.app')
 
 @section('content')
@@ -32,25 +33,51 @@
                         <tr>
                             <th>Premiação</th>
                             <th>Período</th>
-                            <th>Meta</th>
                             <th>Empresa</th>
-                            <th style="width: 100px"></th>
+                            <th>Meta</th>
+                            <th>Pontuação</th>
+                            <th style="width: 50px"></th>
                         </tr>
 
                         @foreach($awards as $award)
                             <tr>
                                 <td>{{ $award->title }}</td>
+
                                 <td>{{ $award->start_date }} a {{ $award->finish_date }}</td>
-                                <td>{{ $award->goal }}</td>
                                 <td>
                                     @foreach($award->companies as $aw_comp )
                                         {{ $aw_comp->nome }}
                                         @if(!$loop->last),@endif
                                     @endforeach
                                 </td>
+                                <td>{{ $award->goal }}</td>
                                 <td>
-                                    {{--<a href="{{ route('admin.orders.edit', $award->order->id) }}"--}}
-                                       {{--class="btn btn-info btn-xs">Detalhe do pedido</a>--}}
+                                    <span class="pull-left" style="display: inline-block; margin-right: 10px">
+                                        {{ $scoreService->filterPartnerScoresOfAward($scores, $award)->sum('score') }}
+                                    </span>
+
+                                    <div class="progress progress-bar-background-darker" style="margin-top: 0">
+                                        @php
+                                            $percentGoal = $scoreService->getPercentReachedGoal(
+                                                $award->goal,
+                                                $scoreService->filterPartnerScoresOfAward($scores, $award)->sum('score'))
+                                        @endphp
+
+                                        <div
+                                                class="progress-bar progress-bar-success "
+                                                role="progressbar" aria-valuenow="40"
+                                                aria-valuemin="0" aria-valuemax="100" style="width:{{$percentGoal}}%">
+                                            {{ $percentGoal }}%
+                                        </div>
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+
+                                    <a href="{{ '' }}"
+                                       class="btn btn-info btn-xs pull-right" style="width: 30px"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
                         @endforeach
@@ -89,7 +116,7 @@
                                 <td>{{ $score->order->codigo }}</td>
                                 <td>{{ $score->order->start_date }}</td>
                                 <td>{{ $score->score }}</td>
-                                <td>{{ $score->order->company_id }}</td>
+                                <td>{{ $score->order->company->nome }}</td>
                                 <td>
                                     <a href="{{ route('admin.orders.edit', $score->order->id) }}"
                                     class="btn btn-info btn-xs">Detalhe do pedido</a>
