@@ -3,7 +3,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h3 class="page-title">@lang('quickadmin.score.partner_report')</h3>
+    <h3 class="page-title">Detalhe da Premiação do Parceiro</h3>
 
     <div class="row">
         <div class="col-md-12">
