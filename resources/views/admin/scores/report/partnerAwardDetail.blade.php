@@ -3,7 +3,6 @@
 @extends('layouts.app')
 
 @section('content')
-
     <h3 class="page-title">@lang('quickadmin.score.partner_report')</h3>
 
     <div class="row">
@@ -24,7 +23,7 @@
 
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Premiações</h3>
+                    <h3 class="box-title">{{ $award->title }}</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -32,56 +31,44 @@
                     <table class="table">
                         <tbody>
                         <tr>
-                            <th>Premiação</th>
                             <th>Período</th>
                             <th>Empresa</th>
                             <th>Meta</th>
                             <th>Pontuação</th>
-                            <th style="width: 50px"></th>
                         </tr>
 
-                        @foreach($awards as $award)
-                            <tr>
-                                <td>{{ $award->title }}</td>
+                        <tr>
 
-                                <td>{{ $award->start_date }} a {{ $award->finish_date }}</td>
-                                <td>
-                                    @foreach($award->companies as $aw_comp )
-                                        {{ $aw_comp->nome }}
-                                        @if(!$loop->last),@endif
-                                    @endforeach
-                                </td>
-                                <td>{{ $award->goal }}</td>
-                                <td>
+                            <td>{{ $award->start_date }} a {{ $award->finish_date }}</td>
+                            <td>
+                                @foreach($award->companies as $aw_comp )
+                                    {{ $aw_comp->nome }}
+                                    @if(!$loop->last),@endif
+                                @endforeach
+                            </td>
+                            <td>{{ $award->goal }}</td>
+                            <td>
                                     <span class="pull-left" style="display: inline-block; margin-right: 10px">
                                         {{ $scoreService->filterPartnerScoresOfAward($scores, $award)->sum('score') }}
                                     </span>
 
-                                    <div class="progress progress-bar-background-darker" style="margin-top: 0">
-                                        @php
-                                            $percentGoal = $scoreService->getPercentReachedGoal(
-                                                $award->goal,
-                                                $scoreService->filterPartnerScoresOfAward($scores, $award)->sum('score'))
-                                        @endphp
+                                <div class="progress progress-bar-background-darker" style="margin-top: 0">
+                                    @php
+                                        $percentGoal = $scoreService->getPercentReachedGoal(
+                                            $award->goal,
+                                            $scoreService->filterPartnerScoresOfAward($scores, $award)->sum('score'))
+                                    @endphp
 
-                                        <div
-                                                class="progress-bar progress-bar-success "
-                                                role="progressbar" aria-valuenow="40"
-                                                aria-valuemin="0" aria-valuemax="100" style="width:{{$percentGoal}}%">
-                                            {{ $percentGoal }}%
-                                        </div>
+                                    <div
+                                            class="progress-bar progress-bar-success "
+                                            role="progressbar" aria-valuenow="40"
+                                            aria-valuemin="0" aria-valuemax="100" style="width:{{$percentGoal}}%">
+                                        {{ $percentGoal }}%
                                     </div>
+                                </div>
 
-                                </td>
-
-
-                                <td>
-
-                                    <a href="{{ route('admin.scores.report_partner_award_detail', ['id' => $partner->id, 'id_award' => $award->id]) }}"
-                                       class="btn btn-info btn-xs pull-right" style="width: 30px"><i class="fa fa-eye"></i></a>
-                                </td>
-                            </tr>
-                        @endforeach
+                            </td>
+                        </tr>
 
 
                         </tbody>
@@ -98,7 +85,6 @@
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title">Pedidos</h3>
-                    <p></p>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">

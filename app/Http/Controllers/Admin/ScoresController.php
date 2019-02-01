@@ -311,4 +311,23 @@ class ScoresController extends Controller
             compact('partner', 'scores', 'awards')
         );
     }
+
+    public function reportPartnerAwardDetail($id, $id_award) {
+
+        if (! Gate::allows('score_view')) {
+            return abort(401);
+        }
+
+        $partner = $this->partner::with('user', 'companies', 'partner_type')->findOrFail($id);
+
+        $award = $this->award::findOrFail($id_award);
+
+        $allScores = $this->scoreService->getAllScoresFromPartner($partner);
+
+        $scores = $this->scoreService->filterPartnerScoresOfAward($allScores, $award);
+
+        return view('admin.scores.report.partnerAwardDetail',
+            compact('partner', 'scores', 'award')
+        );
+    }
 }
