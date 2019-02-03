@@ -13,48 +13,48 @@ $(document).ready(function () {
         "iDisplayLength": 100,
         "aaSorting": [],
         buttons: [
-            {
-                extend: 'copy',
-                text: window.copyButtonTrans,
-                exportOptions: {
-                    columns: ':visible'
-                }
-            },
-            {
-                extend: 'csv',
-                text: window.csvButtonTrans,
-                exportOptions: {
-                    columns: ':visible'
-                }
-            },
-            {
-                extend: 'excel',
-                text: window.excelButtonTrans,
-                exportOptions: {
-                    columns: ':visible'
-                }
-            },
-            {
-                extend: 'pdf',
-                text: window.pdfButtonTrans,
-                exportOptions: {
-                    columns: ':visible'
-                }
-            },
-            {
-                extend: 'print',
-                text: window.printButtonTrans,
-                exportOptions: {
-                    columns: ':visible'
-                }
-            },
-            {
-                extend: 'colvis',
-                text: window.colvisButtonTrans,
-                exportOptions: {
-                    columns: ':visible'
-                }
-            },
+            // {
+            //     extend: 'copy',
+            //     text: window.copyButtonTrans,
+            //     exportOptions: {
+            //         columns: ':visible'
+            //     }
+            // },
+            // {
+            //     extend: 'csv',
+            //     text: window.csvButtonTrans,
+            //     exportOptions: {
+            //         columns: ':visible'
+            //     }
+            // },
+            // {
+            //     extend: 'excel',
+            //     text: window.excelButtonTrans,
+            //     exportOptions: {
+            //         columns: ':visible'
+            //     }
+            // },
+            // {
+            //     extend: 'pdf',
+            //     text: window.pdfButtonTrans,
+            //     exportOptions: {
+            //         columns: ':visible'
+            //     }
+            // },
+            // {
+            //     extend: 'print',
+            //     text: window.printButtonTrans,
+            //     exportOptions: {
+            //         columns: ':visible'
+            //     }
+            // },
+            // {
+            //     extend: 'colvis',
+            //     text: window.colvisButtonTrans,
+            //     exportOptions: {
+            //         columns: ':visible'
+            //     }
+            // },
         ]
     };
     $('.datatable').each(function () {
