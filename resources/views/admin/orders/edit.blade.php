@@ -173,7 +173,7 @@
                 })
                 .fail(function(err) {
                     console.error(err);
-                    alert('Houve um erro ao excluir a pontuação');
+                    alert('Houve um erro ao enviar o email');
                 });
             })
 

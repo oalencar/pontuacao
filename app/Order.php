@@ -21,7 +21,7 @@ class Order extends Model
 
     protected $fillable = ['codigo', 'descricao', 'start_date', 'company_id', 'client_id'];
     protected $hidden = [];
-    protected $with = ['company'];
+    protected $with = ['company', 'client'];
 
     /**
      * Set to null if empty

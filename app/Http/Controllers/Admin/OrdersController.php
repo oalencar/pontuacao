@@ -6,7 +6,7 @@ use App\Order;
 use App\OrderStatus;
 use App\Partner;
 use App\Score;
-use App\EmailMarketing;
+use App\Services\EmailMarketingService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -21,7 +21,7 @@ class OrdersController extends Controller
         OrderStatus $orderStatus,
         Score $score,
         Partner $partner,
-        EmailMarketing $emailMarketing
+        EmailMarketingService $emailMarketing
     )
     {
         $this->orderStatus = $orderStatus;
