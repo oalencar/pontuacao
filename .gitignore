@@ -13,5 +13,4 @@ yarn-error.log
 .env
 /public/node_modules/
 
-.htaccess
 .env.swp
