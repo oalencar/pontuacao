@@ -17,7 +17,34 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $image
  * @property string $partner_type
  * @property string $company
-*/
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Company[] $companies
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\PartnerType[] $partner_types
+ * @property-write mixed $company_id
+ * @property-write mixed $partner_type_id
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Award newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Award newQuery()
+ * @method static \Illuminate\Database\Query\Builder|\App\Award onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Award query()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Award whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Award whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Award whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Award whereFinishDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Award whereGoal($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Award whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Award whereImage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Award whereStartDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Award whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Award whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Award withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Award withoutTrashed()
+ * @mixin \Eloquent
+ */
 class Award extends Model
 {
     use SoftDeletes;

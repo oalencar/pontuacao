@@ -14,7 +14,33 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $start_date
  * @property string $company
  * @property string $client
-*/
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $deleted_at
+ * @property int|null $company_id
+ * @property int|null $client_id
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\OrderStatus[] $order_statuses
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Score[] $scores
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Order newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Order newQuery()
+ * @method static \Illuminate\Database\Query\Builder|\App\Order onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Order query()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Order whereClientId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Order whereCodigo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Order whereCompanyId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Order whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Order whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Order whereDescricao($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Order whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Order whereStartDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Order whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Order withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Order withoutTrashed()
+ * @mixin \Eloquent
+ */
 class Order extends Model
 {
     use SoftDeletes;

@@ -10,7 +10,28 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @package App
  * @property string $description
  * @property string $company
-*/
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $deleted_at
+ * @property int|null $company_id
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Award[] $awards
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\PartnerType newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\PartnerType newQuery()
+ * @method static \Illuminate\Database\Query\Builder|\App\PartnerType onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\PartnerType query()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\PartnerType whereCompanyId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\PartnerType whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\PartnerType whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\PartnerType whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\PartnerType whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\PartnerType whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\PartnerType withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\PartnerType withoutTrashed()
+ * @mixin \Eloquent
+ */
 class PartnerType extends Model
 {
     use SoftDeletes;

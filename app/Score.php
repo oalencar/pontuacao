@@ -11,7 +11,29 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $order
  * @property string $user
  * @property integer $score
-*/
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $deleted_at
+ * @property int|null $order_id
+ * @property int|null $user_id
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Score newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Score newQuery()
+ * @method static \Illuminate\Database\Query\Builder|\App\Score onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Score query()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Score whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Score whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Score whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Score whereOrderId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Score whereScore($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Score whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Score whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Score withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Score withoutTrashed()
+ * @mixin \Eloquent
+ */
 class Score extends Model
 {
     use SoftDeletes;

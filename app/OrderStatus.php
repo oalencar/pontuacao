@@ -11,7 +11,29 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @package App
  * @property text $observacao
  * @property string $data
-*/
+ * @property int $id
+ * @property int|null $order_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $deleted_at
+ * @property-read \App\Order|null $order
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\OrderStatus newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\OrderStatus newQuery()
+ * @method static \Illuminate\Database\Query\Builder|\App\OrderStatus onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\OrderStatus query()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\OrderStatus whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\OrderStatus whereData($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\OrderStatus whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\OrderStatus whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\OrderStatus whereObservacao($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\OrderStatus whereOrderId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\OrderStatus whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\OrderStatus withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\OrderStatus withoutTrashed()
+ * @mixin \Eloquent
+ */
 class OrderStatus extends Model
 {
     use SoftDeletes;
