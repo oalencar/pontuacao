@@ -3,18 +3,25 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Award;
+use App\PartnerType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreAwardsRequest;
 use App\Http\Requests\Admin\UpdateAwardsRequest;
 use App\Http\Controllers\Traits\FileUploadTrait;
+use App\Company;
 
 class AwardsController extends Controller
 {
-    public function __construct(Award $award)
-    {
+    public function __construct(
+        Award $award,
+        PartnerType $partnerType,
+        Company $company
+    ) {
         $this->award = $award;
+        $this->partnerType = $partnerType;
+        $this->company = $company;
     }
 
     use FileUploadTrait;
@@ -54,8 +61,8 @@ class AwardsController extends Controller
             return abort(401);
         }
 
-        $partner_types = \App\PartnerType::get();
-        $companies = \App\Company::get();
+        $partner_types = $this->partnerType->get();
+        $companies = $this->award->getCompanies();
 
         return view('admin.awards.create', compact('partner_types', 'companies'));
     }
@@ -75,7 +82,7 @@ class AwardsController extends Controller
 
         $award = $this->award->create($request->except(['partner_type_id', 'company_id']));
         $award->partner_types()->sync($request->get('partner_type_id'));
-        $award->companies()->sync($request->get('company_id'));
+        // $award->companies()->sync($request->get('company_id'));
 
         return redirect()->route('admin.awards.index');
     }
@@ -93,12 +100,13 @@ class AwardsController extends Controller
             return abort(401);
         }
 
-        $partner_types = \App\PartnerType::get()->pluck('description', 'id');
-        $allCompanies = \App\Company::get()->pluck('nome', 'id');
+        // $partner_types = $this->partnerType->get()->pluck('description', 'id');
+        $partner_types = $this->partnerType->get();
+        $allCompanies = $this->company->get()->pluck('nome', 'id');
 
         $award = $this->award->findOrFail($id);
         $partnerTypesArwards = $award->partner_types()->get();
-        $companies = $award->companies()->get();
+        $companies = $award->getCompanies();
 
         return view(
             'admin.awards.edit',
@@ -128,7 +136,6 @@ class AwardsController extends Controller
 
         $award->update($request->except(['partner_type_id', 'company_id']));
         $award->partner_types()->sync($request->get('partner_type_id'));
-        $award->companies()->sync($request->get('company_id'));
 
         return redirect()->route('admin.awards.index');
     }

@@ -70,7 +70,7 @@
                                     @endforeach
                                 </td>
                                 <td field-key='company'>
-                                    @foreach($award->companies()->get() as $company)
+                                    @foreach($award->getCompanies() as $company)
                                         {{ $company->nome }}
                                         @if(!$loop->last),@endif
                                     @endforeach
@@ -78,7 +78,7 @@
                                 @if( request('show_deleted') == 1 )
                                 <td>
                                     @can('award_delete')
-                                                                        {!! Form::open(array(
+                                    {!! Form::open(array(
                                         'style' => 'display: inline-block;',
                                         'method' => 'POST',
                                         'onsubmit' => "return confirm('".trans("quickadmin.qa_are_you_sure")."');",

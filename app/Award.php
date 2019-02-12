@@ -153,9 +153,11 @@ class Award extends Model
          return $this->belongsTo(Company::class, 'company_id')->withTrashed();
     }
 
-    public function companies()
+    public function getCompanies()
     {
-        return $this->belongsToMany(Company::class, 'award_company', 'award_id','company_id' );
+         $companies = $this->partner_types()->with('company')->get();
+
+         return $companies->pluck('company');
     }
 
     public function partner_types()
