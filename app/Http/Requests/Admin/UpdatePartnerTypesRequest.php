@@ -24,7 +24,7 @@ class UpdatePartnerTypesRequest extends FormRequest
     {
         return [
 
-            'description' => 'min:3|required|unique:partner_types,description,'.$this->route('partner_type'),
+            'description' => 'min:3|required',
             'company_id' => 'required',
             'awards.*.title' => 'required',
             'awards.*.goal' => 'max:2147483647|required|numeric',
