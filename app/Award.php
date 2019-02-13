@@ -51,7 +51,7 @@ class Award extends Model
 
     protected $fillable = ['title', 'description', 'goal', 'start_date', 'finish_date', 'image'];
     protected $hidden = [];
-    protected $with = ['partner_type', 'company'];
+    protected $with = ['partner_type'];
 
 
 
@@ -148,16 +148,14 @@ class Award extends Model
         return $this->belongsTo(PartnerType::class, 'partner_type_id')->withTrashed();
     }
 
-    public function company()
-    {
-         return $this->belongsTo(Company::class, 'company_id')->withTrashed();
-    }
-
     public function getCompanies()
     {
-         $companies = $this->partner_types()->with('company')->get();
-
-         return $companies->pluck('company');
+        $companies = $this->partner_types()
+                                ->with('company')
+                                ->get()
+                                ->pluck('company')
+                                ->unique('id');
+        return $companies;
     }
 
     public function partner_types()

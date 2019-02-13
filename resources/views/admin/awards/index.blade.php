@@ -65,7 +65,7 @@
                                 <td field-key='image'>@if($award->image)<a href="{{ asset(env('UPLOAD_PATH').'/' . $award->image) }}" target="_blank"><img src="{{ asset(env('UPLOAD_PATH').'/thumb/' . $award->image) }}"/></a>@endif</td>
                                 <td field-key='partner_type'>
                                     @foreach($award->partner_types()->get() as $partner_type)
-                                        {{ $partner_type->description }}
+                                        {{ $partner_type->getFullDescription() }}
                                         @if(!$loop->last),@endif
                                     @endforeach
                                 </td>

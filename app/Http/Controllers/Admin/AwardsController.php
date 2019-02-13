@@ -37,7 +37,6 @@ class AwardsController extends Controller
             return abort(401);
         }
 
-
         if (request('show_deleted') == 1) {
             if (! Gate::allows('award_delete')) {
                 return abort(401);
