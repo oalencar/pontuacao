@@ -34,11 +34,9 @@
                         @endcan
 
                         <th>@lang('quickadmin.award.fields.title')</th>
-                        <th>@lang('quickadmin.award.fields.description')</th>
                         <th>@lang('quickadmin.award.fields.goal')</th>
                         <th>@lang('quickadmin.award.fields.start-date')</th>
                         <th>@lang('quickadmin.award.fields.finish-date')</th>
-                        <th>@lang('quickadmin.award.fields.image')</th>
                         <th>@lang('quickadmin.award.fields.partner-type')</th>
                         <th>@lang('quickadmin.award.fields.company')</th>
                         @if( request('show_deleted') == 1 )
@@ -56,13 +54,10 @@
                                 @can('award_delete')
                                     @if ( request('show_deleted') != 1 )<td></td>@endif
                                 @endcan
-
                                 <td field-key='title'>{{ $award->title }}</td>
-                                <td field-key='description'>{!! $award->description !!}</td>
                                 <td field-key='goal'>{{ $award->goal }}</td>
                                 <td field-key='start_date'>{{ $award->start_date }}</td>
                                 <td field-key='finish_date'>{{ $award->finish_date }}</td>
-                                <td field-key='image'>@if($award->image)<a href="{{ asset(env('UPLOAD_PATH').'/' . $award->image) }}" target="_blank"><img src="{{ asset(env('UPLOAD_PATH').'/thumb/' . $award->image) }}"/></a>@endif</td>
                                 <td field-key='partner_type'>
                                     @foreach($award->partner_types()->get() as $partner_type)
                                         {{ $partner_type->getFullDescription() }}
