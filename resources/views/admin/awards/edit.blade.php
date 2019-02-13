@@ -96,7 +96,7 @@
                     <select name="partner_type_id[]" id="partner_type_id" required class="form-control select2" multiple="multiple">
                         <option value="">{{ trans('quickadmin.qa_please_select') }}</option>
                         @foreach($partner_types as $key => $partnerType)
-                            <option value="{{ $key }}" {{  $partnerTypesArwards->contains('id', $key) ? 'selected' : '' }}>{{ $partnerType->getFullDescription() }}</option>
+                            <option value="{{ $partnerType->id }}" {{  $partnerTypesArwards->contains('id', $key) ? 'selected' : '' }}>{{ $partnerType->getFullDescription() }}</option>
                         @endforeach
                     </select>
 
