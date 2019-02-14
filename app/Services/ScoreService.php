@@ -100,7 +100,7 @@ class ScoreService
      */
     public function getPercentReachedGoal($goal, $score)
     {
-        if (!$score) {
+        if ($score === null) {
             abort(500, 'Necessário passar $score para sumOfScores');
         }
         return intval(($score/$goal)*100);
