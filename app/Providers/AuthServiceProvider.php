@@ -170,6 +170,11 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         // Auth gates for: Score
+        Gate::define('report_access', function ($user) {
+            return in_array($user->role_id, [1, 2]);
+        });
+
+        // Auth gates for: Score
         Gate::define('score_access', function ($user) {
             return in_array($user->role_id, [1, 2]);
         });

@@ -5,14 +5,44 @@
     <section class="sidebar">
         <ul class="sidebar-menu">
 
-
-
             <li class="{{ $request->segment(1) == 'home' ? 'active' : '' }}">
                 <a href="{{ url('/') }}">
                     <i class="fa fa-wrench"></i>
                     <span class="title">@lang('quickadmin.qa_dashboard')</span>
                 </a>
             </li>
+
+            @can('gestão_de_pedido_access')
+                @can('order_access')
+                    <li>
+                        <a href="{{ route('admin.orders.index') }}">
+                            <i class="fa fa-shopping-bag"></i>
+                            <span>@lang('quickadmin.orders.title')</span>
+                        </a>
+                    </li>
+                @endcan
+            @endcan
+
+
+            @can('report_access')
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-bar-chart"></i>
+                        <span>Relatórios</span>
+                        <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="{{ route('admin.scores.report') }}">
+                                <span>Parceiros</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+            @endcan
 
             @can('user_management_access')
             <li class="treeview">
@@ -40,27 +70,6 @@
                         </a>
                     </li>@endcan
 
-                </ul>
-            </li>@endcan
-
-            @can('gestão_de_pedido_access')
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-gears"></i>
-                    <span>@lang('quickadmin.gestao-de-pedidos.title')</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    @can('order_access')
-                    <li>
-                        <a href="{{ route('admin.orders.index') }}">
-                            <i class="fa fa-gears"></i>
-                            <span>@lang('quickadmin.orders.title')</span>
-                        </a>
-                    </li>
-                    @endcan
                 </ul>
             </li>@endcan
 
@@ -118,15 +127,6 @@
                             <span>@lang('quickadmin.award.title')</span>
                         </a>
                     </li>@endcan
-
-                        @can('score_access')
-                        <li>
-                            <a href="{{ route('admin.scores.report') }}">
-                                <i class="fa fa-asterisk"></i>
-                                <span>@lang('quickadmin.score.report')</span>
-                            </a>
-                        </li>
-                        @endcan
 
                     @can('score_access')
                     <li>
