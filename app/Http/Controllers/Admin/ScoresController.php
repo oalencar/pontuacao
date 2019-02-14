@@ -95,47 +95,6 @@ class ScoresController extends Controller
 
 
     /**
-     * Show the form for editing Score.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        if (! Gate::allows('score_edit')) {
-            return abort(401);
-        }
-
-        $orders = \App\Order::get()->pluck('codigo', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
-        $users = \App\User::get()->pluck('email', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
-
-        $score = Score::findOrFail($id);
-
-        return view('admin.scores.edit', compact('score', 'orders', 'users'));
-    }
-
-    /**
-     * Update Score in storage.
-     *
-     * @param  \App\Http\Requests\UpdateScoresRequest  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateScoresRequest $request, $id)
-    {
-        if (! Gate::allows('score_edit')) {
-            return abort(401);
-        }
-        $score = Score::findOrFail($id);
-        $score->update($request->all());
-
-
-
-        return redirect()->route('admin.scores.index');
-    }
-
-
-    /**
      * Display Score.
      *
      * @param  int  $id

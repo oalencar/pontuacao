@@ -15,7 +15,7 @@
                         {{ $partner->user->name }}</h3>
                     <h5 class="widget-user-desc" style="margin-left: 0">
                         {{ $partner->user->email }}</h5>
-                    <span class="badge bg-grey">{{ $partner->partner_type->description }}</span>
+                    <span class="badge bg-grey">{{ $partner->partner_type->getFullDescription() }}</span>
                 </div>
             </div>
         </div>
@@ -46,7 +46,7 @@
 
                                 <td>{{ $award->start_date }} a {{ $award->finish_date }}</td>
                                 <td>
-                                    @foreach($award->companies as $aw_comp )
+                                    @foreach($award->getCompanies() as $aw_comp )
                                         {{ $aw_comp->nome }}
                                         @if(!$loop->last),@endif
                                     @endforeach
