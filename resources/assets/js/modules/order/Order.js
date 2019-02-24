@@ -224,14 +224,18 @@ export class Order {
         var newRow = $("<tr>");
 
         const templateRow = `
-        <td><select name="score-user-id[]" class="form-control pontuacaoSelect" /></td>
-        <td><input type="number" class="form-control" name="score-score[]"/></td>
-        <td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>`;
+        <td class="col-sm-6"><select name="score-user-id[]" class="form-control pontuacaoSelect" /></td>
+        <td class="col-sm-5"><input type="number" class="form-control" name="score-score[]"/></td>
+        <td class="col-sm-1"><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>`;
 
         newRow.append(templateRow);
 
         $("table#score-list").append(newRow);
 
+    }
+
+    removeAllScoreRows() {
+        $("table#score-list tbody tr").remove();
     }
 
 

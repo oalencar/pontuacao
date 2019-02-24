@@ -2,10 +2,11 @@
     <div class="col-xs-12 form-group">
         <table id="score-list" class="table">
             <thead>
-            <tr>
-                <td>Parceiro</td>
-                <td>Pontos</td>
-            </tr>
+                <tr>
+                    <th>Parceiro</th>
+                    <th>Pontos</th>
+                    <th></th>
+                </tr>
             </thead>
             <tbody>
             @if(isset($scores))

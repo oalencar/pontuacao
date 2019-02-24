@@ -25,6 +25,8 @@ $('#companySelect').on('select2:select', function (e) {
     if (!data.id) return;
     order.getPartnersCompany(data.id).subscribe(res => {
         const partnersDataTransformed = order.transformResponseToSelectData(res);
+        order.removeAllScoreRows();
+        order.addScoreRow();
         order.createSelect(partnersDataTransformed);
         selectPartnersData = partnersDataTransformed;
     });
