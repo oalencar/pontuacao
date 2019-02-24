@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <h3 class="page-title">@lang('quickadmin.orders.title') <small>@lang('quickadmin.qa_edit')</small></h3>
-
-
+    <h3 class="page-title">@lang('quickadmin.orders.title')
+        <small>@lang('quickadmin.qa_edit')</small>
+    </h3>
 
     {!! Form::model($order, ['method' => 'PUT', 'route' => ['admin.orders.update', $order->id]]) !!}
 
@@ -40,7 +40,11 @@
 
                 <div class="col-xs-6 form-group">
                     {!! Form::label('company_id', trans('quickadmin.orders.fields.company').'*', ['class' => 'control-label']) !!}
-                    {!! Form::select('company_id', $companies, old('company_id'), ['class' => 'form-control select2', 'id' => 'companySelect', 'required' => '']) !!}
+
+                    <select name="company_id" class="form-control" readonly>
+                        <option value="{{ $order->company_id }}">{{ $order->company->nome }}</option>
+                    </select>
+
                     <p class="help-block"></p>
                     @if($errors->has('company_id'))
                         <p class="help-block">
@@ -51,7 +55,11 @@
 
                 <div class="col-xs-6 form-group">
                     {!! Form::label('client_id', trans('quickadmin.orders.fields.client').'', ['class' => 'control-label']) !!}
-                    {!! Form::select('client_id', $clients, old('client_id'), ['class' => 'form-control select2']) !!}
+
+                    <select name="client_id" class="form-control" readonly>
+                        <option value="{{ $order->client_id }}">{{ $order->client->name }}</option>
+                    </select>
+
                     <p class="help-block"></p>
                     @if($errors->has('client_id'))
                         <p class="help-block">
@@ -89,7 +97,8 @@
         </div>
 
         <div class="box-footer">
-            <button type="button" class="btn btn-primary" id="btn-order-register-email">E-mail cadastro de pedido</button>
+            <button type="button" class="btn btn-primary" id="btn-order-register-email">E-mail cadastro de pedido
+            </button>
             <button type="button" class="btn btn-primary">E-mail atualização de pedido</button>
             <button type="button" class="btn btn-primary">E-mail finalização de pedido</button>
         </div>
@@ -129,8 +138,10 @@
         window.order_id = {{ $order->id }};
 
         var partnersData = [
-            @foreach ($partners as $partner)
-            { 'id' : '{{$partner->user->id}}', 'name' : '{{ $partner->user->name }}' },
+                @foreach ($partners as $partner)
+            {
+                'id': '{{$partner->user->id}}', 'name': '{{ $partner->user->name }}'
+            },
             @endforeach
         ];
 
@@ -138,18 +149,17 @@
 
         var scores = [
                 @foreach ($scores as $score)
-            { 'user_id' : {{$score->user_id}} },
+            {
+                'user_id': {{$score->user_id}} },
             @endforeach
         ];
 
         window.scores = scores;
 
 
-
-
-        $(function() {
+        $(function () {
             moment.updateLocale('{{ App::getLocale() }}', {
-                week: { dow: 1 } // Monday is the first day of the week
+                week: {dow: 1} // Monday is the first day of the week
             });
 
             $('.datepicker').datetimepicker({
@@ -167,18 +177,17 @@
                     {
                         url: `${window.appUrl}/admin/orders/sendEmail/orderRegister/${window.order_id}`,
                         type: 'GET',
-                    }).done(function(res) {
+                    }).done(function (res) {
                     alert('email enviado');
                     console.log(res)
                 })
-                .fail(function(err) {
-                    console.error(err);
-                    alert('Houve um erro ao enviar o email');
-                });
+                    .fail(function (err) {
+                        console.error(err);
+                        alert('Houve um erro ao enviar o email');
+                    });
             })
 
         });
-
 
 
     </script>

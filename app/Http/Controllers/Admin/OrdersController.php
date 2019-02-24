@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Cliente;
+use App\Company;
 use App\Order;
 use App\OrderStatus;
 use App\Partner;
@@ -17,17 +19,58 @@ use App\Http\Requests\Admin\UpdateOrdersRequest;
 
 class OrdersController extends Controller
 {
+    /**
+     * @var Order
+     */
+    private $order;
+
+    /**
+     * @var OrderStatus
+     */
+    private $orderStatus;
+
+    /**
+     * @var Score
+     */
+    private $score;
+
+    /**
+     * @var Partner
+     */
+    private $partner;
+
+    /**
+     * @var EmailMarketingService
+     */
+    private $emailMarketing;
+
+    /**
+     * @var Company
+     */
+    private $company;
+
+    /**
+     * @var Cliente
+     */
+    private $client;
+
     public function __construct(
+        Order $order,
         OrderStatus $orderStatus,
         Score $score,
         Partner $partner,
-        EmailMarketingService $emailMarketing
+        EmailMarketingService $emailMarketing,
+        Cliente $client,
+        Company $company
     )
     {
+        $this->order = $order;
         $this->orderStatus = $orderStatus;
         $this->score = $score;
         $this->partner = $partner;
         $this->emailMarketing = $emailMarketing;
+        $this->client = $client;
+        $this->company = $company;
     }
 
     /**
@@ -46,9 +89,9 @@ class OrdersController extends Controller
             if (! Gate::allows('order_delete')) {
                 return abort(401);
             }
-            $orders = Order::onlyTrashed()->get();
+            $orders = $this->order::onlyTrashed()->get();
         } else {
-            $orders = Order::all();
+            $orders = $this->order::all();
         }
 
         return view('admin.orders.index', compact('orders'));
@@ -65,10 +108,9 @@ class OrdersController extends Controller
             return abort(401);
         }
 
-        $companies = \App\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
-        $clients = \App\Cliente::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
+        $companies = $this->company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
 
-        return view('admin.orders.create', compact('companies', 'clients'));
+        return view('admin.orders.create', compact('companies'));
     }
 
     /**
@@ -84,7 +126,7 @@ class OrdersController extends Controller
             return abort(401);
         }
 
-        $order = Order::create($request->all());
+        $order = $this->order::create($request->all());
 
         // ORDERSTATUS LOGIC
         $orderStatusObservacao = collect($request->get('order-status-observacao'));
@@ -135,16 +177,13 @@ class OrdersController extends Controller
             return abort(401);
         }
 
-        $companies = \App\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
-        $clients = \App\Cliente::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
-
-        $order = Order::findOrFail($id);
+        $order = $this->order::findOrFail($id);
 
         $orderStatuses = $this->orderStatus::where('order_id', $order->id)->get();
         $scores = $this->score::where('order_id', $order->id)->get();
         $partners = $this->partner::with('user')->get();
 
-        return view('admin.orders.edit', compact('order', 'companies', 'clients', 'orderStatuses', 'scores', 'partners'));
+        return view('admin.orders.edit', compact('order', 'orderStatuses', 'scores', 'partners'));
     }
 
     /**
@@ -159,16 +198,14 @@ class OrdersController extends Controller
         if (! Gate::allows('order_edit')) {
             return abort(401);
         }
-        $order = Order::findOrFail($id);
+        $order = $this->order::findOrFail($id);
 
         // ORDERSTATUS LOGIC
         $orderStatusIds = collect($request->get('order-status-id'));
         $orderStatusObservacao = collect($request->get('order-status-observacao'));
         $orderStatusData = collect($request->get('order-status-data'));
 
-
         $orderStatusData->map(function ($data, $key) use ($orderStatusIds, $orderStatusObservacao, $order) {
-
 
             if (isset($orderStatusIds[$key])) {
 
@@ -209,7 +246,7 @@ class OrdersController extends Controller
 
         });
 
-        $order->update($request->all());
+        $order->update($request->except(['company_id', 'client_id']));
 
         return redirect()->route('admin.orders.index');
     }
@@ -227,10 +264,10 @@ class OrdersController extends Controller
             return abort(401);
         }
 
-        $companies = \App\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
-        $clients = \App\Cliente::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');$scores = \App\Score::where('order_id', $id)->get();
+        $companies = $this->company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
+        $clients = $this->client::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');$scores = \App\Score::where('order_id', $id)->get();
 
-        $order = Order::findOrFail($id);
+        $order = $this->order::findOrFail($id);
 
         return view('admin.orders.show', compact('order', 'scores'));
     }
@@ -247,7 +284,7 @@ class OrdersController extends Controller
         if (! Gate::allows('order_delete')) {
             return abort(401);
         }
-        $order = Order::findOrFail($id);
+        $order = $this->order::findOrFail($id);
         $order->delete();
 
         return redirect()->route('admin.orders.index');
@@ -264,7 +301,7 @@ class OrdersController extends Controller
             return abort(401);
         }
         if ($request->input('ids')) {
-            $entries = Order::whereIn('id', $request->input('ids'))->get();
+            $entries = $this->order::whereIn('id', $request->input('ids'))->get();
 
             foreach ($entries as $entry) {
                 $entry->delete();
@@ -284,7 +321,7 @@ class OrdersController extends Controller
         if (! Gate::allows('order_delete')) {
             return abort(401);
         }
-        $order = Order::onlyTrashed()->findOrFail($id);
+        $order = $this->order::onlyTrashed()->findOrFail($id);
         $order->restore();
 
         return redirect()->route('admin.orders.index');
@@ -301,7 +338,7 @@ class OrdersController extends Controller
         if (! Gate::allows('order_delete')) {
             return abort(401);
         }
-        $order = Order::onlyTrashed()->findOrFail($id);
+        $order = $this->order::onlyTrashed()->findOrFail($id);
         $order->forceDelete();
 
         return redirect()->route('admin.orders.index');

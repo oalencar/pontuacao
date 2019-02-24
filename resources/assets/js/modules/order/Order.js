@@ -190,6 +190,19 @@ export class Order {
 
     /**
      *
+     * @param companyId
+     * @returns { Observable }
+     */
+    getClientsCompany(companyId) {
+        if (!companyId) return;
+
+        return fromPromise(
+            $.get( `${window.appUrl}/api/v1/clientes/company/${companyId}`)
+        );
+    }
+
+    /**
+     *
      * @param data
      * @returns {array}
      */
@@ -205,8 +218,8 @@ export class Order {
         return newData;
     }
 
-    createSelect(data) {
-        $('.pontuacaoSelect').select2({
+    createSelect(selector, data) {
+        $(selector).select2({
             data: data
         })
     }

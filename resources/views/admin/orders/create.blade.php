@@ -47,7 +47,7 @@
 
                 <div class="col-xs-12 col-md-6 form-group">
                     {!! Form::label('client_id', trans('quickadmin.orders.fields.client').'', ['class' => 'control-label']) !!}
-                    {!! Form::select('client_id', $clients, old('client_id'), ['class' => 'form-control select2']) !!}
+                    {!! Form::select('client_id', [], old('client_id'), ['id'=>'clientsSelect', 'class' => 'form-control select2']) !!}
                     <p class="help-block"></p>
                     @if($errors->has('client_id'))
                         <p class="help-block">

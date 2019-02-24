@@ -14,6 +14,8 @@ Route::group(['prefix' => '/v1', 'namespace' => 'Api\V1', 'as' => 'api.'], funct
 
         Route::resource('clientes', 'ClientesController', ['except' => ['create', 'edit']]);
 
+        Route::get('clientes/company/{companyId}', 'ClientesController@clientsFromCompany');
+
         Route::resource('scores', 'ScoresController', ['except' => ['create', 'edit']]);
 
         Route::resource('partner_types', 'PartnerTypesController', ['except' => ['create', 'edit']]);

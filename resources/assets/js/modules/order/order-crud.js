@@ -23,34 +23,20 @@ $('#companySelect').on('select2:select', function (e) {
     const self = this;
     var data = e.params.data;
     if (!data.id) return;
+
     order.getPartnersCompany(data.id).subscribe(res => {
         const partnersDataTransformed = order.transformResponseToSelectData(res);
         order.removeAllScoreRows();
         order.addScoreRow();
-        order.createSelect(partnersDataTransformed);
+        order.createSelect('.pontuacaoSelect', partnersDataTransformed);
         selectPartnersData = partnersDataTransformed;
     });
-});
 
-$(document).ready(function () {
-    const self = this;
-    const companyId = $('#companySelect').val();
-
-    if (!companyId) return;
-
-    order.getPartnersCompany(companyId).subscribe(res => {
-        const partnersDataTransformed = order.transformResponseToSelectData(res);
-        order.createSelect(partnersDataTransformed);
-        selectPartnersData = partnersDataTransformed;
-
-        const objs = $('.pontuacaoSelect');
-
-        window.scores.map((item, key) => {
-            order.updateSelectValue(item, key, objs);
-        })
-    });
-
-
+    order.getClientsCompany(data.id).subscribe(res => {
+        $('#clientsSelect').empty();
+        const clientsData = order.transformResponseToSelectData(res);
+        order.createSelect('#clientsSelect', clientsData);
+    })
 
 });
 
