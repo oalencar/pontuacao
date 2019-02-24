@@ -35,6 +35,25 @@ class ScoreService
     }
 
     /**
+     * Return All Scores From A Partner
+     *
+     * @param Partner
+     * @return array Score
+     */
+    public function getAllScoresFromPartnerWithOrder($partner)
+    {
+        if (!$partner) {
+            abort(500, 'Necessário passar Parceiro para getAllScoresFromPartner');
+        }
+        return $this->score::with('order')
+            ->where('user_id', $partner->user_id)
+            ->get()
+            ->filter(function ($score){
+                return $score->order != null;
+            });
+    }
+
+    /**
      * @param $scores array Score
      * @param $award Award
      * @return array Score
@@ -45,8 +64,7 @@ class ScoreService
             abort(500, 'Necessário passar Award para filterScoresOfAward');
         }
 
-        return $scores->filter(function($item, $key) use ($award) {
-
+        return $scores->filter(function($item) use ($award) {
             $orderStartDate = Carbon::createFromFormat(config('app.date_format'), $item->order->start_date);
             $awardStartDate = Carbon::createFromFormat(config('app.date_format'), $award->start_date);
             $awardFinishDate = Carbon::createFromFormat(config('app.date_format'), $award->finish_date);

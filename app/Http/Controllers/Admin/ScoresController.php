@@ -255,7 +255,7 @@ class ScoresController extends Controller
 
         $partner = $this->partner::with('user', 'companies', 'partner_type')->findOrFail($id);
 
-        $scores = $this->scoreService->getAllScoresFromPartner($partner);
+        $scores = $this->scoreService->getAllScoresFromPartnerWithOrder($partner);
 
         $allAwards = $this->award::with('partner_types')->get();
 
