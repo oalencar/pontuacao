@@ -8,14 +8,24 @@ use App\Http\Controllers\Controller;
 
 class PartnersController extends Controller
 {
+    /**
+     * @var Partner
+     */
+    private $partner;
+
+    public function __construct(Partner $partner)
+    {
+        $this->partner = $partner;
+    }
+
     public function index()
     {
-        return Partner::all();
+        return $this->partner::all();
     }
 
     public function show($id)
     {
-        return Partner::findOrFail($id);
+        return $this->partner::findOrFail($id);
     }
 
     public function findByCompany($id) {
@@ -25,18 +35,13 @@ class PartnersController extends Controller
             abort(400, 'bad request.');
         }
 
-        $allPartners =  Partner::with('user', 'companies')->get();
+        $allPartners =  $this->partner::with('user', 'companies', 'partner_type')->get();
 
-        $partners = $allPartners->filter(function ($partner) use ($company_id) {
+        return $partners = $allPartners->filter(function ($partner) use ($company_id) {
             $companies = collect($partner->companies);
             return $companies->contains(function ($company) use ($company_id) {
                 return $company->id == $company_id;
             } );
-        });
-
-
-        return collect($partners)->map(function($item) {
-           return $item->user;
         });
 
     }

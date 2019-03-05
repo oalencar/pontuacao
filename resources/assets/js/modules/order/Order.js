@@ -210,7 +210,7 @@ export class Order {
 
         const newData = $.map(data, function (obj) {
             obj.id = obj.id;
-            obj.text = obj.name + ' (' + obj.email + ')';
+            obj.text = `${obj.partner_type.description} - ${obj.user.name} (${obj.user.email})`;
 
             return obj;
         });
@@ -237,8 +237,8 @@ export class Order {
         var newRow = $("<tr>");
 
         const templateRow = `
-        <td class="col-sm-6"><select name="score-user-id[]" class="form-control pontuacaoSelect" /></td>
-        <td class="col-sm-5"><input type="number" class="form-control" name="score-score[]"/></td>
+        <td class="col-sm-8"><select name="score-user-id[]" class="form-control pontuacaoSelect" /></td>
+        <td class="col-sm-3"><input type="number" class="form-control" name="score-score[]"/></td>
         <td class="col-sm-1"><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>`;
 
         newRow.append(templateRow);
