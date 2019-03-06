@@ -25,7 +25,7 @@ $('#companySelect').on('select2:select', function (e) {
     if (!data.id) return;
 
     order.getPartnersCompany(data.id).subscribe(res => {
-        const partnersDataTransformed = order.transformResponseToSelectData(res);
+        const partnersDataTransformed = order.transformResponseToSelectScorePartner(res);
         order.removeAllScoreRows();
         order.addScoreRow();
         order.createSelect('.pontuacaoSelect', partnersDataTransformed);
@@ -34,7 +34,7 @@ $('#companySelect').on('select2:select', function (e) {
 
     order.getClientsCompany(data.id).subscribe(res => {
         $('#clientsSelect').empty();
-        const clientsData = order.transformResponseToSelectData(res);
+        const clientsData = order.transformResponseToSelectClient(res);
         order.createSelect('#clientsSelect', clientsData);
     })
 
