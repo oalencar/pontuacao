@@ -11,6 +11,15 @@ use App\Http\Requests\Admin\UpdatePartnersRequest;
 
 class PartnersController extends Controller
 {
+    private $partner;
+    /**
+     * PartnersController constructor.
+     */
+    public function __construct(Partner $partner)
+    {
+        $this->partner = $partner;
+    }
+
     /**
      * Display a listing of Partner.
      *
@@ -27,9 +36,9 @@ class PartnersController extends Controller
             if (! Gate::allows('partner_delete')) {
                 return abort(401);
             }
-            $partners = Partner::onlyTrashed()->get();
+            $partners = $this->partner::onlyTrashed()->get();
         } else {
-            $partners = Partner::all();
+            $partners = $this->partner::all();
         }
 
         return view('admin.partners.index', compact('partners'));
@@ -64,7 +73,7 @@ class PartnersController extends Controller
         if (! Gate::allows('partner_create')) {
             return abort(401);
         }
-        $partner = Partner::create($request->except('company_id'));
+        $partner = $this->partner::create($request->except('company_id'));
         $partner->companies()->sync($request->get('company_id'));
 
         return redirect()->route('admin.partners.index');
@@ -87,7 +96,7 @@ class PartnersController extends Controller
         $users = \App\User::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
         $partner_types = \App\PartnerType::get()->pluck('description', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
 
-        $partner = Partner::findOrFail($id);
+        $partner = $this->partner::findOrFail($id);
         $partnerCompanies = $partner->companies()->get();
 
         return view('admin.partners.edit', compact('partner', 'companies', 'users', 'partner_types', 'partnerCompanies'));
@@ -106,7 +115,7 @@ class PartnersController extends Controller
             return abort(401);
         }
 
-        $partner = Partner::findOrFail($id);
+        $partner = $this->partner::findOrFail($id);
 
         $partner->update($request->except('company_id'));
         $partner->companies()->sync($request->get('company_id'));
@@ -126,7 +135,7 @@ class PartnersController extends Controller
         if (! Gate::allows('partner_view')) {
             return abort(401);
         }
-        $partner = Partner::findOrFail($id);
+        $partner = $this->partner::findOrFail($id);
 
         return view('admin.partners.show', compact('partner'));
     }
@@ -143,7 +152,7 @@ class PartnersController extends Controller
         if (! Gate::allows('partner_delete')) {
             return abort(401);
         }
-        $partner = Partner::findOrFail($id);
+        $partner = $this->partner::findOrFail($id);
         $partner->delete();
 
         return redirect()->route('admin.partners.index');
@@ -160,7 +169,7 @@ class PartnersController extends Controller
             return abort(401);
         }
         if ($request->input('ids')) {
-            $entries = Partner::whereIn('id', $request->input('ids'))->get();
+            $entries = $this->partner::whereIn('id', $request->input('ids'))->get();
 
             foreach ($entries as $entry) {
                 $entry->delete();
@@ -180,7 +189,7 @@ class PartnersController extends Controller
         if (! Gate::allows('partner_delete')) {
             return abort(401);
         }
-        $partner = Partner::onlyTrashed()->findOrFail($id);
+        $partner = $this->partner::onlyTrashed()->findOrFail($id);
         $partner->restore();
 
         return redirect()->route('admin.partners.index');
@@ -197,7 +206,7 @@ class PartnersController extends Controller
         if (! Gate::allows('partner_delete')) {
             return abort(401);
         }
-        $partner = Partner::onlyTrashed()->findOrFail($id);
+        $partner = $this->partner::onlyTrashed()->findOrFail($id);
         $partner->forceDelete();
 
         return redirect()->route('admin.partners.index');
