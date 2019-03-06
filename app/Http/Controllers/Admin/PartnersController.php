@@ -12,11 +12,27 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StorePartnersRequest;
 use App\Http\Requests\Admin\UpdatePartnersRequest;
 
+/**
+ * Class PartnersController
+ * @package App\Http\Controllers\Admin
+ */
 class PartnersController extends Controller
 {
+    /**
+     * @var Partner
+     */
     private $partner;
+    /**
+     * @var Company
+     */
     private $company;
+    /**
+     * @var User
+     */
     private $user;
+    /**
+     * @var PartnerType
+     */
     private $partnerType;
 
     /**
