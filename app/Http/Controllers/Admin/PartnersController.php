@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Company;
 use App\Partner;
+use App\PartnerType;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
@@ -12,12 +15,24 @@ use App\Http\Requests\Admin\UpdatePartnersRequest;
 class PartnersController extends Controller
 {
     private $partner;
+    private $company;
+    private $user;
+    private $partnerType;
+
     /**
      * PartnersController constructor.
      */
-    public function __construct(Partner $partner)
+    public function __construct(
+        Partner $partner,
+        Company $company,
+        User $user,
+        PartnerType $partnerType
+    )
     {
         $this->partner = $partner;
+        $this->company = $company;
+        $this->user = $user;
+        $this->partnerType = $partnerType;
     }
 
     /**
@@ -55,9 +70,9 @@ class PartnersController extends Controller
             return abort(401);
         }
 
-        $companies = \App\Company::get();
-        $users = \App\User::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
-        $partner_types = \App\PartnerType::get()->pluck('description', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
+        $companies = $this->company::get();
+        $users = $this->user::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
+        $partner_types = $this->partnerType::get()->pluck('description', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
 
         return view('admin.partners.create', compact('companies', 'users', 'partner_types'));
     }
@@ -92,9 +107,9 @@ class PartnersController extends Controller
             return abort(401);
         }
 
-        $companies = \App\Company::get()->pluck('nome', 'id');
-        $users = \App\User::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
-        $partner_types = \App\PartnerType::get()->pluck('description', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
+        $companies = $this->company::get()->pluck('nome', 'id');
+        $users = $this->user::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
+        $partner_types = $this->partnerType::get()->pluck('description', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
 
         $partner = $this->partner::findOrFail($id);
         $partnerCompanies = $partner->companies()->get();
