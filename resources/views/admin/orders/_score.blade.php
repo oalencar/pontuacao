@@ -18,7 +18,7 @@
                             </select>
                         </td>
                         <td class="col-sm-3">
-                            <input type="number" name="score-score[]" class="form-control" value="{{ $score->score }}" readonly />
+                            <input type="text" name="score-score[]" class="form-control score-mask" value="{{ $score->score }}" readonly />
                         </td>
                         <td class="col-sm-1">
                             <button type="button" class="ibtnDel btn btn-md btn-danger">Delete</button>
@@ -33,7 +33,7 @@
                         <select name="score-user-id[]" class="form-control pontuacaoSelect" />
                     </td>
                     <td class="col-sm-3">
-                        <input type="number" name="score-score[]" class="form-control"/>
+                        <input type="text" name="score-score[]" class="form-control score-mask"/>
                     </td>
                     <td class="col-sm-1">
                         <input type="button" class="ibtnDel btn btn-md btn-danger"  value="Delete">

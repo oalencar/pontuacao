@@ -250,7 +250,7 @@ export class Order {
 
         const templateRow = `
         <td class="col-sm-8"><select name="score-user-id[]" class="form-control pontuacaoSelect" /></td>
-        <td class="col-sm-3"><input type="number" class="form-control" name="score-score[]"/></td>
+        <td class="col-sm-3"><input type="text" class="form-control score-mask" name="score-score[]"/></td>
         <td class="col-sm-1"><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>`;
 
         newRow.append(templateRow);
