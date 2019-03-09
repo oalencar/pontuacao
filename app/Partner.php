@@ -39,9 +39,9 @@ class Partner extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['user_id', 'partner_type_id'];
+    protected $fillable = ['user_id', 'partner_type_id', 'company_id'];
     protected $hidden = [];
-    protected $with = ['partner_type'];
+    protected $with = ['partner_type', 'company'];
 
 
 
@@ -79,12 +79,12 @@ class Partner extends Model
 
     public function partner_type()
     {
-        return $this->belongsTo(PartnerType::class, 'partner_type_id')->withTrashed();
+        return $this->belongsTo(PartnerType::class, 'partner_type_id');
     }
 
-    public function companies()
+    public function company()
     {
-        return $this->belongsToMany(Company::class, 'company_partner', 'partner_id','company_id' );
+        return $this->belongsTo(Company::class, 'company_id');
     }
 
 }

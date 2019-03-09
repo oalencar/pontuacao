@@ -5,12 +5,17 @@ namespace App\Http\Controllers\Admin;
 use App\Company;
 use App\Partner;
 use App\PartnerType;
+use App\Score;
+use App\Services\PartnerService;
 use App\User;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StorePartnersRequest;
 use App\Http\Requests\Admin\UpdatePartnersRequest;
+
+define("PARTNER_ROLE_ID", 3);
 
 /**
  * Class PartnersController
@@ -36,19 +41,33 @@ class PartnersController extends Controller
     private $partnerType;
 
     /**
+    * @var Score
+    */
+    private $score;
+
+    /**
+     * @var PartnerService
+     */
+    private $partnerService;
+
+    /**
      * PartnersController constructor.
      */
     public function __construct(
         Partner $partner,
         Company $company,
         User $user,
-        PartnerType $partnerType
+        PartnerType $partnerType,
+        Score $score,
+        PartnerService $partnerService
     )
     {
         $this->partner = $partner;
         $this->company = $company;
         $this->user = $user;
         $this->partnerType = $partnerType;
+        $this->score = $score;
+        $this->partnerService = $partnerService;
     }
 
     /**
@@ -86,17 +105,18 @@ class PartnersController extends Controller
             return abort(401);
         }
 
-        $companies = $this->company::get();
         $users = $this->user::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
-        $partner_types = $this->partnerType::get()->pluck('description', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
+        $partner_types = $this->partnerType::get();
 
-        return view('admin.partners.create', compact('companies', 'users', 'partner_types'));
+        $partner_role_id = PARTNER_ROLE_ID;
+
+        return view('admin.partners.create', compact('users', 'partner_types', 'partner_role_id'));
     }
 
     /**
      * Store a newly created Partner in storage.
      *
-     * @param  \App\Http\Requests\StorePartnersRequest  $request
+     * @param  \App\Http\Requests\Admin\StorePartnersRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(StorePartnersRequest $request)
@@ -104,8 +124,23 @@ class PartnersController extends Controller
         if (! Gate::allows('partner_create')) {
             return abort(401);
         }
-        $partner = $this->partner::create($request->except('company_id'));
-        $partner->companies()->sync($request->get('company_id'));
+
+        try {
+            $newUser = $this->user::create($request->all());
+        }
+        catch (\Exception $e){
+             return $e;
+        }
+
+        $partner_type = $this->partnerType::find($request->get('partner_type_id'));
+
+        $partnerData = [
+            'partner_type_id' => $request->get('partner_type_id'),
+            'user_id' => $newUser->id,
+            'company_id' => $partner_type->company_id
+        ];
+
+        $partner = $this->partner::create($partnerData);
 
         return redirect()->route('admin.partners.index');
     }
@@ -123,21 +158,20 @@ class PartnersController extends Controller
             return abort(401);
         }
 
-        $companies = $this->company::get()->pluck('nome', 'id');
-        $users = $this->user::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
-        $partner_types = $this->partnerType::get()->pluck('description', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
-
         $partner = $this->partner::findOrFail($id);
-        $partnerCompanies = $partner->companies()->get();
 
-        return view('admin.partners.edit', compact('partner', 'companies', 'users', 'partner_types', 'partnerCompanies'));
+        $partner_types = $this->partnerType::get();
+
+        $partner_role_id = PARTNER_ROLE_ID;
+
+        return view('admin.partners.edit', compact('partner', 'partner_types', 'partner_role_id'));
     }
 
     /**
      * Update Partner in storage.
      *
-     * @param  \App\Http\Requests\UpdatePartnersRequest  $request
-     * @param  int  $id
+     * @param UpdatePartnersRequest $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(UpdatePartnersRequest $request, $id)
@@ -148,8 +182,15 @@ class PartnersController extends Controller
 
         $partner = $this->partner::findOrFail($id);
 
+        try {
+            $partner->user()->update($request->all());
+        }
+        catch (QueryException $e){
+            return 'erro ao criar usuário';
+        }
+
+
         $partner->update($request->except('company_id'));
-        $partner->companies()->sync($request->get('company_id'));
 
         return redirect()->route('admin.partners.index');
     }
@@ -175,16 +216,20 @@ class PartnersController extends Controller
     /**
      * Remove Partner from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy($id)
     {
         if (! Gate::allows('partner_delete')) {
             return abort(401);
         }
+
         $partner = $this->partner::findOrFail($id);
         $partner->delete();
+        $this->partnerService->deleteAllPartnerScores($partner);
+        $partner->user()->delete();
 
         return redirect()->route('admin.partners.index');
     }

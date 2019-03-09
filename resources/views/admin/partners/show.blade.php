@@ -15,15 +15,12 @@
                         <tr>
                             <th>@lang('quickadmin.partner.fields.company')</th>
                             <td field-key='company'>
-                                @foreach($partner->companies()->get() as $company)
-                                    {{$company->nome}}
-                                    @if(!$loop->last),@endif
-                                @endforeach
+                               {{ $partner->company->nome }}
                             </td>
                         </tr>
                         <tr>
                             <th>@lang('quickadmin.partner.fields.user')</th>
-                            <td field-key='user'>{{ $partner->user->name or '' }}</td>
+                            <td field-key='user'>{{ $partner->user->name }} ( {{ $partner->user->email }} )</td>
                         </tr>
                         <tr>
                             <th>@lang('quickadmin.partner.fields.partner-type')</th>

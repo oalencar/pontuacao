@@ -1,6 +1,7 @@
 <?php
 namespace App;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Auth\Notifications\ResetPassword;
@@ -35,12 +36,13 @@ use Hash;
  */
 class User extends Authenticatable
 {
+    use SoftDeletes;
     use Notifiable;
     protected $fillable = ['name', 'email', 'password', 'remember_token', 'role_id'];
     protected $hidden = ['password', 'remember_token'];
-    
-    
-    
+
+
+
     /**
      * Hash password
      * @param $input
@@ -50,7 +52,7 @@ class User extends Authenticatable
         if ($input)
             $this->attributes['password'] = app('hash')->needsRehash($input) ? Hash::make($input) : $input;
     }
-    
+
 
     /**
      * Set to null if empty
@@ -60,14 +62,14 @@ class User extends Authenticatable
     {
         $this->attributes['role_id'] = $input ? $input : null;
     }
-    
+
     public function role()
     {
         return $this->belongsTo(Role::class, 'role_id');
     }
-    
-    
-    
+
+
+
 
     public function sendPasswordResetNotification($token)
     {

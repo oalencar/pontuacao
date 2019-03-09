@@ -11,33 +11,39 @@
         </div>
 
         <div class="panel-body">
+
             <div class="row">
                 <div class="col-xs-12 form-group">
-                    {!! Form::label('company_id', trans('quickadmin.partner.fields.company').'*', ['class' => 'control-label']) !!}
-
-                    <select name="company_id[]" id="company_id" required class="form-control select2" multiple="multiple">
-                        <option value="">Selecione</option>
-                        @foreach($companies as $key => $companyName)
-                            <option value="{{ $key }}" {{  $partnerCompanies->contains('id', $key) ? 'selected' : '' }}>{{ $companyName }}</option>
-                        @endforeach
-                    </select>
-
+                    {!! Form::label('name', trans('quickadmin.users.fields.name').'*', ['class' => 'control-label']) !!}
+                    {!! Form::text('name', $partner->user->name, ['class' => 'form-control', 'placeholder' => '', 'required' => '']) !!}
                     <p class="help-block"></p>
-                    @if($errors->has('company_id'))
+                    @if($errors->has('name'))
                         <p class="help-block">
-                            {{ $errors->first('company_id') }}
+                            {{ $errors->first('name') }}
                         </p>
                     @endif
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12 form-group">
-                    {!! Form::label('user_id', trans('quickadmin.partner.fields.user').'', ['class' => 'control-label']) !!}
-                    {!! Form::select('user_id', $users, old('user_id'), ['class' => 'form-control select2']) !!}
-                    <p class="help-block">Vincula a um usuário do sistema</p>
-                    @if($errors->has('user_id'))
+                    {!! Form::label('email', trans('quickadmin.users.fields.email').'*', ['class' => 'control-label']) !!}
+                    {!! Form::email('email', $partner->user->email, ['class' => 'form-control', 'placeholder' => '', 'required' => '']) !!}
+                    <p class="help-block"></p>
+                    @if($errors->has('email'))
                         <p class="help-block">
-                            {{ $errors->first('user_id') }}
+                            {{ $errors->first('email') }}
+                        </p>
+                    @endif
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 form-group">
+                    {!! Form::label('password', trans('quickadmin.users.fields.password'), ['class' => 'control-label']) !!}
+                    {!! Form::password('password', ['class' => 'form-control']) !!}
+                    <p class="help-block"></p>
+                    @if($errors->has('password'))
+                        <p class="help-block">
+                            {{ $errors->first('password') }}
                         </p>
                     @endif
                 </div>
@@ -45,8 +51,12 @@
             <div class="row">
                 <div class="col-xs-12 form-group">
                     {!! Form::label('partner_type_id', trans('quickadmin.partner.fields.partner-type').'', ['class' => 'control-label']) !!}
-                    {!! Form::select('partner_type_id', $partner_types, old('partner_type_id'), ['class' => 'form-control select2']) !!}
-                    <p class="help-block"></p>
+                    <select name="partner_type_id" id="partner_type_id" class="form-control" readonly>
+                        <option value="{{ $partner->partner_type_id }}" selected>
+                            {{ $partner->partner_type->getFullDescription() }}
+                        </option>
+                    </select>
+                    <p class="help-block">Este campo não pode ser alterado</p>
                     @if($errors->has('partner_type_id'))
                         <p class="help-block">
                             {{ $errors->first('partner_type_id') }}
@@ -54,6 +64,8 @@
                     @endif
                 </div>
             </div>
+
+            {{ Form::hidden('role_id', $partner_role_id) }}
 
         </div>
     </div>

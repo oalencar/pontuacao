@@ -41,14 +41,11 @@ class Company extends Model
     protected $fillable = ['nome', 'endereco', 'telefone'];
     protected $hidden = [];
 
-
-
     public function awards() {
         return $this->belongsToMany(Award::class, 'award_company', 'company_id', 'award_id');
-
     }
 
     public function partners() {
-        return $this->belongsToMany(Partner::class, 'company_partner', 'company_id', 'partner_id');
+        return $this->hasMany(Partner::class,  'company_id');
     }
 }

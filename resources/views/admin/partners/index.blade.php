@@ -32,10 +32,9 @@
                         @can('partner_delete')
                             @if ( request('show_deleted') != 1 )<th style="text-align:center;"><input type="checkbox" id="select-all" /></th>@endif
                         @endcan
-
-                        <th>@lang('quickadmin.partner.fields.company')</th>
                         <th>@lang('quickadmin.partner.fields.user')</th>
                         <th>@lang('quickadmin.partner.fields.partner-type')</th>
+                        <th>@lang('quickadmin.partner.fields.company')</th>
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
                         @else
@@ -51,14 +50,11 @@
                                 @can('partner_delete')
                                     @if ( request('show_deleted') != 1 )<td></td>@endif
                                 @endcan
-                                <td field-key='company'>
-                                    @foreach($partner->companies()->get() as $company)
-                                        {{$company->nome}}
-                                        @if(!$loop->last),@endif
-                                    @endforeach
-                                </td>
                                 <td field-key='user'>{{ $partner->user->name or '' }} - {{ $partner->user->email or '' }}</td>
                                 <td field-key='partner_type'>{{ $partner->partner_type->description or '' }}</td>
+                                <td field-key='company'>
+                                    {{ $partner->company->nome }}
+                                </td>
                                 @if( request('show_deleted') == 1 )
                                 <td>
                                     @can('partner_delete')
