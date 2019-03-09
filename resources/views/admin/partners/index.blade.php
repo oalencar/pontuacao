@@ -88,7 +88,7 @@
 {!! Form::open(array(
                                         'style' => 'display: inline-block;',
                                         'method' => 'DELETE',
-                                        'onsubmit' => "return confirm('".trans("quickadmin.qa_are_you_sure")."');",
+                                        'onsubmit' => "return confirm('Toda a pontuação relacionada ao parceiro também será excluída! ".trans("quickadmin.qa_are_you_sure")."');",
                                         'route' => ['admin.partners.destroy', $partner->id])) !!}
                                     {!! Form::submit(trans('quickadmin.qa_delete'), array('class' => 'btn btn-xs btn-danger')) !!}
                                     {!! Form::close() !!}
