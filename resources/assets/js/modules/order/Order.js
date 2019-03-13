@@ -207,7 +207,7 @@ export class Order {
      * @returns {array}
      */
     transformResponseToSelectScorePartner(data) {
-
+        debugger;
         const newData = $.map(data, function (obj) {
             obj.id = obj.id;
             obj.text = `${obj.partner_type.description} - ${obj.user.name} (${obj.user.email})`;
@@ -219,7 +219,6 @@ export class Order {
     }
 
     transformResponseToSelectClient(data) {
-
         const newData = $.map(data, function (obj) {
             obj.id = obj.id;
             obj.text = `${obj.name} (${obj.email})`;

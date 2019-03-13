@@ -181,7 +181,10 @@ class OrdersController extends Controller
 
         $orderStatuses = $this->orderStatus::where('order_id', $order->id)->get();
         $scores = $this->score::where('order_id', $order->id)->get();
-        $partners = $this->partner::with('user')->get();
+        $allPartners = $this->partner::with('user', 'partner_type', 'company')->get();
+        $partners = $allPartners->filter(function ($partner) use ($order) {
+            return $partner->company->id == $order->company_id;
+        })->toJson();
 
         return view('admin.orders.edit', compact('order', 'orderStatuses', 'scores', 'partners'));
     }

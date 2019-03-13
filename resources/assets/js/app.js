@@ -26,5 +26,7 @@ window.appUrl = appUrl.content;
 
 window.imask = require('imask');
 window.fromPromise = require('rxjs/internal/observable/fromPromise');
+window.order = require('./modules/order/Order');
+
 
 
