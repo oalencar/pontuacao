@@ -9,6 +9,7 @@ use App\OrderStatus;
 use App\Partner;
 use App\Score;
 use App\Services\EmailMarketingService;
+use App\Services\ScoreService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -54,6 +55,8 @@ class OrdersController extends Controller
      */
     private $client;
 
+    private $scoreService;
+
     public function __construct(
         Order $order,
         OrderStatus $orderStatus,
@@ -61,7 +64,8 @@ class OrdersController extends Controller
         Partner $partner,
         EmailMarketingService $emailMarketing,
         Cliente $client,
-        Company $company
+        Company $company,
+        ScoreService $scoreService
     )
     {
         $this->order = $order;
@@ -71,6 +75,7 @@ class OrdersController extends Controller
         $this->emailMarketing = $emailMarketing;
         $this->client = $client;
         $this->company = $company;
+        $this->scoreService = $scoreService;
     }
 
     /**
@@ -121,7 +126,6 @@ class OrdersController extends Controller
      */
     public function store(StoreOrdersRequest $request)
     {
-        //dd($request->all());
         if (! Gate::allows('order_create')) {
             return abort(401);
         }
@@ -151,7 +155,7 @@ class OrdersController extends Controller
         $scoresToSave = $scoreScores->map(function ($score, $key) use ($scoreUsersIds, $order) {
             $newScore = new $this->score;
 
-            $newScore->score = $score;
+            $newScore->score = str_replace('.', '', $score);
             $newScore->user_id = $scoreUsersIds[$key];
             $newScore->order_id = $order->id;
 
@@ -235,12 +239,12 @@ class OrdersController extends Controller
         $scoreUsersIds = collect($request->get('score-user-id'));
         $scoreScores = collect($request->get('score-score'));
 
-        $scoreScores->map(function ($score, $key) use ($scoreIds, $scoreUsersIds, $order) {
+        $scoreScores->each(function ($score, $key) use ($scoreIds, $scoreUsersIds, $order) {
 
             if (!isset($scoreIds[$key])) {
                 $newScore = new $this->score;
 
-                $newScore->score = $score;
+                $newScore->score = str_replace('.', '', $score);
                 $newScore->user_id = $scoreUsersIds[$key];
                 $newScore->order_id = $order->id;
 

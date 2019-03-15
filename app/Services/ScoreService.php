@@ -123,4 +123,8 @@ class ScoreService
         }
         return intval(($score/$goal)*100);
     }
+
+    public function updateScores() {
+
+    }
 }
