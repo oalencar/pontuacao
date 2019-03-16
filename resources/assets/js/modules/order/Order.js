@@ -207,19 +207,16 @@ export class Order {
      * @returns {array}
      */
     transformResponseToSelectScorePartner(data) {
-
         const newData = $.map(data, function (obj) {
-            obj.id = obj.id;
+            obj.id = obj.user_id;
             obj.text = `${obj.partner_type.description} - ${obj.user.name} (${obj.user.email})`;
 
             return obj;
         });
-
         return newData;
     }
 
     transformResponseToSelectClient(data) {
-
         const newData = $.map(data, function (obj) {
             obj.id = obj.id;
             obj.text = `${obj.name} (${obj.email})`;
@@ -231,6 +228,7 @@ export class Order {
     }
 
     createSelect(selector, data) {
+        debugger;
         $(selector).select2({
             data: data
         })

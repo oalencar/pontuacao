@@ -1,4 +1,4 @@
-import {Order} from "./Order";
+import { Order } from "./Order";
 
 let empresaId = null;
 let selectPartnersData = [];
@@ -12,7 +12,11 @@ const order = new Order();
 
 $("#addScore").on("click", function () {
     order.addScoreRow();
-    order.createSelect(selectPartnersData);
+    if (selectPartnersData.length > 0) {
+        order.createSelect('.pontuacaoSelect', selectPartnersData);
+        return;
+    }
+    order.createSelect('.pontuacaoSelect', window.selectPartnersData);
 });
 
 $("table#score-list").on("click", ".ibtnDel", function (event) {
@@ -26,10 +30,10 @@ $('#companySelect').on('select2:select', function (e) {
 
     order.getPartnersCompany(data.id).subscribe(res => {
         const partnersDataTransformed = order.transformResponseToSelectScorePartner(res);
+        selectPartnersData = partnersDataTransformed;
         order.removeAllScoreRows();
         order.addScoreRow();
-        order.createSelect('.pontuacaoSelect', partnersDataTransformed);
-        selectPartnersData = partnersDataTransformed;
+        order.createSelect('.pontuacaoSelect', selectPartnersData);
     });
 
     order.getClientsCompany(data.id).subscribe(res => {

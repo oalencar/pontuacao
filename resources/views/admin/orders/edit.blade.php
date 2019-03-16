@@ -135,17 +135,13 @@
     <script src="{{ mix('js/modules/order/Order.js') }}"></script>
     <script>
 
+        var order  = new window.order.Order;
+
         window.order_id = {{ $order->id }};
 
-        var partnersData = [
-                @foreach ($partners as $partner)
-            {
-                'id': '{{$partner->user->id}}', 'name': '{{ $partner->user->name }}'
-            },
-            @endforeach
-        ];
+        var selectPartnersData = {!! $partners  !!};
 
-        window.partnersData = partnersData;
+        window.selectPartnersData = order.transformResponseToSelectScorePartner(selectPartnersData);
 
         var scores = [
                 @foreach ($scores as $score)

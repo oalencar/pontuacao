@@ -14,7 +14,7 @@
                     <tr>
                         <td class="col-sm-8">
                             <select name="score-user-id[]" class="form-control" readonly >
-                                <option value="{{ $score->score }}">{{ $score->user->name }} ( {{ $score->user->email }} )</option>
+                                <option value="{{ $score->user->id }}">{{ $score->user->name }} ( {{ $score->user->email }} )</option>
                             </select>
                         </td>
                         <td class="col-sm-3">
