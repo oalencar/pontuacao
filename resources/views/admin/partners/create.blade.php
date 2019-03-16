@@ -1,6 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
+
+    <!-- Modal -->
+    <div class="modal fade in" id="selectModal" tabindex="-1" role="dialog" aria-labelledby="selectModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="selectModalLabel">Selecione Usuário Existente</h4>
+                </div>
+                <div class="modal-body">
+                    <select id="userSelect" class="w-100"></select>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <h3 class="page-title">@lang('quickadmin.partner.title')</h3>
     {!! Form::open(['method' => 'POST', 'route' => ['admin.partners.store']]) !!}
 
@@ -10,6 +26,20 @@
         </div>
 
         <div class="panel-body">
+
+            <div class="row">
+                <div class="col-xs-12 text-right">
+                    <!-- Button trigger modal -->
+                    <button
+                        type="button"
+                        class="btn btn-primary btn-sm"
+                        data-toggle="modal"
+                        data-target="#selectModal">
+                        <i class="fa fa-user-plus"></i>
+                        Associar a usuário existente
+                    </button>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-xs-12 form-group">
                     {!! Form::label('name', trans('quickadmin.users.fields.name').'*', ['class' => 'control-label']) !!}
@@ -72,4 +102,48 @@
     {!! Form::submit(trans('quickadmin.qa_save'), ['class' => 'btn btn-danger']) !!}
     {!! Form::close() !!}
 @stop
+
+@section('javascript')
+    <script type="text/javascript">
+
+        var allUsers =  [
+            @foreach ($users as $user)
+                {!! $user !!},
+            @endforeach
+        ];
+
+        var usersSelectData = [
+            @foreach ($users as $user)
+                {
+                    'id': {{$user->id}},
+                    'text' : '{{ $user->name }} ({{ $user->email }})'
+                },
+            @endforeach
+        ];
+
+        $(function () {
+
+            var inputName = $('input[name=name]');
+            var inputEmail = $('input[name=email]');
+
+           $('#userSelect').select2({
+               data : usersSelectData
+           });
+
+            $('#userSelect').on('select2:select', function (e) {
+                var selectedId = e.params.data.id;
+
+                var user = allUsers.find( function (item) {
+                    return item.id === parseInt(selectedId);
+                });
+
+                if (user != undefined) {
+                    inputName.val(user.name);
+                    inputEmail.val(user.email);
+                }
+                $('#selectModal').modal('hide');
+            });
+        });
+    </script>
+@endsection
 

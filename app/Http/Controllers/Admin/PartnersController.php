@@ -105,7 +105,8 @@ class PartnersController extends Controller
             return abort(401);
         }
 
-        $users = $this->user::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
+        $users = $this->user::where('role_id', PARTNER_ROLE_ID)->get();
+
         $partner_types = $this->partnerType::get();
 
         $partner_role_id = PARTNER_ROLE_ID;
