@@ -41,7 +41,7 @@ class Partner extends Model
 
     protected $fillable = ['user_id', 'partner_type_id', 'company_id'];
     protected $hidden = [];
-    protected $with = ['partner_type', 'company'];
+    protected $with = ['partner_type', 'company', 'user'];
 
 
 
@@ -85,6 +85,11 @@ class Partner extends Model
     public function company()
     {
         return $this->belongsTo(Company::class, 'company_id');
+    }
+
+    public function scores()
+    {
+        return $this->hasMany(Score::class, 'score_id');
     }
 
 }

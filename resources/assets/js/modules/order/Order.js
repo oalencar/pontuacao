@@ -208,7 +208,7 @@ export class Order {
      */
     transformResponseToSelectScorePartner(data) {
         const newData = $.map(data, function (obj) {
-            obj.id = obj.user_id;
+            obj.id = obj.id;
             obj.text = `${obj.partner_type.description} - ${obj.user.name} (${obj.user.email})`;
 
             return obj;
@@ -228,7 +228,6 @@ export class Order {
     }
 
     createSelect(selector, data) {
-        debugger;
         $(selector).select2({
             data: data
         })
@@ -247,7 +246,7 @@ export class Order {
         var newRow = $("<tr>");
 
         const templateRow = `
-        <td class="col-sm-8"><select name="score-user-id[]" class="form-control pontuacaoSelect" /></td>
+        <td class="col-sm-8"><select name="score-partner-id[]" class="form-control pontuacaoSelect" /></td>
         <td class="col-sm-3"><input type="text" class="form-control score-mask" name="score-score[]"/></td>
         <td class="col-sm-1"><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>`;
 

@@ -13,8 +13,8 @@
                 @foreach($scores as $score)
                     <tr>
                         <td class="col-sm-8">
-                            <select name="score-user-id[]" class="form-control" readonly >
-                                <option value="{{ $score->user->id }}">{{ $score->user->name }} ( {{ $score->user->email }} )</option>
+                            <select name="score-partner-id[]" class="form-control" readonly >
+                                <option value="{{ $score->partner_id }}">{{ $score->partner->user->name }} ( {{ $score->partner->user->email }} )</option>
                             </select>
                         </td>
                         <td class="col-sm-3">
@@ -30,7 +30,7 @@
             @else
                 <tr>
                     <td class="col-sm-8">
-                        <select name="score-user-id[]" class="form-control pontuacaoSelect" />
+                        <select name="score-partner-id[]" class="form-control pontuacaoSelect" />
                     </td>
                     <td class="col-sm-3">
                         <input type="text" name="score-score[]" class="form-control score-mask"/>

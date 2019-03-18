@@ -149,14 +149,14 @@ class OrdersController extends Controller
         $order->order_statuses()->saveMany($orderStatuses);
 
         // SCORE LOGIC
-        $scoreUsersIds = collect($request->get('score-user-id'));
+        $scorePartnersIds = collect($request->get('score-partner-id'));
         $scoreScores = collect($request->get('score-score'));
 
-        $scoresToSave = $scoreScores->map(function ($score, $key) use ($scoreUsersIds, $order) {
+        $scoresToSave = $scoreScores->map(function ($score, $key) use ($scorePartnersIds, $order) {
             $newScore = new $this->score;
 
             $newScore->score = str_replace('.', '', $score);
-            $newScore->user_id = $scoreUsersIds[$key];
+            $newScore->partner_id = $scorePartnersIds[$key];
             $newScore->order_id = $order->id;
 
             return $newScore;
@@ -236,16 +236,16 @@ class OrdersController extends Controller
 
         // SCORE LOGIC
         $scoreIds = collect($request->get('score-id'));
-        $scoreUsersIds = collect($request->get('score-user-id'));
+        $scorePartnersIds = collect($request->get('score-partner-id'));
         $scoreScores = collect($request->get('score-score'));
 
-        $scoreScores->each(function ($score, $key) use ($scoreIds, $scoreUsersIds, $order) {
+        $scoreScores->each(function ($score, $key) use ($scoreIds, $scorePartnersIds, $order) {
 
             if (!isset($scoreIds[$key])) {
                 $newScore = new $this->score;
 
                 $newScore->score = str_replace('.', '', $score);
-                $newScore->user_id = $scoreUsersIds[$key];
+                $newScore->partner_id = $scorePartnersIds[$key];
                 $newScore->order_id = $order->id;
 
                 $newScore->save();

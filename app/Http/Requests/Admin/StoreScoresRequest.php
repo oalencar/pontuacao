@@ -24,7 +24,7 @@ class StoreScoresRequest extends FormRequest
     {
         return [
             'order_id' => 'required',
-            'user_id' => 'required',
+            'partner_id' => 'required',
             'score' => 'max:2147483647|required|numeric',
         ];
     }

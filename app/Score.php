@@ -38,9 +38,9 @@ class Score extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['score', 'order_id', 'user_id'];
+    protected $fillable = ['score', 'partner_id', 'user_id'];
     protected $hidden = [];
-    protected $with = ['order'];
+    protected $with = ['order', 'partner'];
 
 
 
@@ -76,9 +76,9 @@ class Score extends Model
         return $this->belongsTo(Order::class, 'order_id');
     }
 
-    public function user()
+    public function partner()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(Partner::class, 'partner_id');
     }
 
 }

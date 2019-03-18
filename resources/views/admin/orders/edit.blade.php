@@ -146,7 +146,7 @@
         var scores = [
                 @foreach ($scores as $score)
             {
-                'user_id': {{$score->user_id}} },
+                'partner_id': {{ $score->partner_id }} },
             @endforeach
         ];
 
