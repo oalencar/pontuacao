@@ -99,10 +99,9 @@
         <div class="box-footer">
             <button type="button" class="btn btn-primary" id="btn-order-register-email">E-mail cadastro de pedido
             </button>
-            <button type="button" class="btn btn-primary">E-mail atualização de pedido</button>
+            <button type="button" class="btn btn-primary" id="btn-order-update-email">E-mail atualização de pedido</button>
             <button type="button" class="btn btn-primary">E-mail finalização de pedido</button>
         </div>
-
 
     </div>
 
@@ -172,6 +171,20 @@
                 $.ajax(
                     {
                         url: `${window.appUrl}/admin/orders/sendEmail/orderRegister/${window.order_id}`,
+                        type: 'GET',
+                    }).done(function (res) {
+                    alert('email enviado');
+                    console.log(res)
+                })
+                    .fail(function (err) {
+                        console.error(err);
+                        alert('Houve um erro ao enviar o email');
+                    });
+            })
+            $('#btn-order-update-email').on('click', function (e) {
+                $.ajax(
+                    {
+                        url: `${window.appUrl}/admin/orders/sendEmail/orderUpdate/${window.order_id}`,
                         type: 'GET',
                     }).done(function (res) {
                     alert('email enviado');

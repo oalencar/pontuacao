@@ -33,7 +33,9 @@ class EmailMarketingService
 
     /**
      * EmailMarketingService constructor.
-     * @param $mailjet MailJet
+     * @param \App\Services\MailjetService $mailjetService
+     * @param \App\Services\OrderService $orderService
+     * @param Order $order
      */
     public function __construct(
         MailjetService $mailjetService,
@@ -46,32 +48,6 @@ class EmailMarketingService
         $this->order = $order;
     }
 
-    public function sendTest()
-    {
-
-        $body = [
-            'Messages' => [
-                [
-                    'From' => [
-                        'Email' => "contato@celmarbelem.com.br",
-                        'Name' => "Mailjet Pilot"
-                    ],
-                    'To' => [
-                        [
-                            'Email' => "oscar.alencar@gmail.com",
-                            'Name' => "passenger 1"
-                        ]
-                    ],
-                    'Subject' => "Your email flight plan!",
-                    'TextPart' => "Dear passenger 1, welcome to Mailjet! May the delivery force be with you!",
-                    'HTMLPart' => "<h3>Dear passenger 1, welcome to Mailjet!</h3><br />May the delivery force be with you!"
-                ]
-            ]
-        ];
-        $response = $this->mailService->getClient()->post(Resources::$Email, ['body' => $body]);
-        return $response->success();
-    }
-
     /**
      * @param $contato Partner|Cliente
      * @return string
@@ -80,47 +56,58 @@ class EmailMarketingService
     {
         /*  O template do mailjet está configurado para receber 'cliente' ou 'profissional'para
         renderizar as mensagens de email de acordo com o perfil do destinatário */
-        if (!$contato->partner_type) {
+        if (!isset($contato->partner_type)) {
             return 'cliente';
         }
         return 'profissional';
     }
 
+
+    /**
+     * @param $contato Partner | Cliente
+     * @param $parameter
+     * @return mixed
+     */
     public function getContatoParameter($contato, $parameter)
     {
         if ($this->returnTypeClientOrPartner($contato) === 'cliente') {
-            return $contato[$parameter];
+            return $contato->$parameter;
         }
-        return $contato->user[$parameter];
+        return $contato->user->$parameter;
+    }
+
+    public function getContatosDoPedido($order_id, $client)
+    {
+        $partnersOfOrder = $this->orderService->getAllPartnersOfOrder($order_id);
+        $contatosDoPedido = $partnersOfOrder->push($client);
+        return $contatosDoPedido;
     }
 
     /**
      * Send Order Register Email
      * @param $order_id int
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse|string
      */
     public function sendOrderRegister($order_id)
     {
 
         $order = $this->order->with('client')->findOrFail($order_id);
 
-        $client = $this->orderService->getOrderClient($order_id);
+        $client = $this->orderService->getOrderClient($order->id);
 
-        $subject = 'Celmar Belém - Cadastro de Pedido';
+        $subject = $order->company->nome. ' - Cadastro de Pedido';
         $to = $client->email;
-
 
         $cliente_display_name = $client->name;
         $cliente_display_name != '' ?: $cliente_display_name = '';
 
+        if (!$to) {
+            return "É necessário ter um cliente associado ao pedido. Verifique se o pedido foi salvo após o cliente ter sido selecionado.";
+        }
+
         $cc = $client->email_alternative;
 
-        $partnersOfOrder = $this->orderService->getAllPartnersOfOrder($order_id)->toArray();
-        array_unshift($partnersOfOrder, $client);
-        $contatosDoPedido = $partnersOfOrder;
-
-        $pedido = $order;
-
+        $contatosDoPedido = $this->getContatosDoPedido($order->id, $client);
 
         foreach ($contatosDoPedido as $key => $contato) {
 
@@ -129,7 +116,7 @@ class EmailMarketingService
                 "cliente": "' . $order->client->name . '",
                 "pedido_id": "' . $order->codigo . '",
                 "destinatario_tipo": "' . $this->returnTypeClientOrPartner($contato) . '",
-                "data_entrega" : "' . $order->start_date . '"
+                "data_entrega" : ""
             }';
 
 
@@ -150,7 +137,7 @@ class EmailMarketingService
                         'TemplateLanguage' => true,
                         'Subject' => $subject,
                         'TemplateErrorReporting' => [
-                            "Name" => "Celmar - Mailjet",
+                            "Name" => "RelApp - Mailjet",
                             "Email" => "oscar.apps@gmail.com"
                         ],
                         'TemplateErrorDeliver' => true,
@@ -182,7 +169,7 @@ class EmailMarketingService
         $order = $this->order->with('client')->findOrFail($order_id);
         $client = $this->orderService->getOrderClient($order_id);
 
-        $subject = 'Celmar Belém - Pedido #' . $order->codigo . ' atualizado';
+        $subject = $order->company->nome . ' - Pedido #' . $order->codigo . ' atualizado';
 
         $to = $client->email;
 
@@ -196,11 +183,7 @@ class EmailMarketingService
 
         $cc = $client->email_alternative;
 
-        $contatosDoPedido = $this->orderService->getAllPartnersOfOrder($order_id);
-
-
-        $pedido = $order;
-
+        $contatosDoPedido = $this->getContatosDoPedido($order->id, $client);
 
         foreach ($contatosDoPedido as $key => $contato) {
 
@@ -208,18 +191,10 @@ class EmailMarketingService
                 "pedido_descricao": "' . $order->descricao . '",
                 "cliente": "' . $order->client->name . '",
                 "pedido_id": "' . $order->codigo . '",
-                "destinatario_tipo": "' . $order->codigo . '",
-                "data_entrega" : "' . $order->start_date . '"
+                "destinatario_tipo": "' . $this->returnTypeClientOrPartner($contato) . '",
+                "data" : "' . $order->start_date . '",
+                "status" : '.json_encode($order->order_statuses).'               
             }';
-
-//            '{
-//                        "pedido_descricao": "'.$fields['descricao']['value'].'",
-//                        "cliente": "'.$cliente_display_name.'",
-//                        "pedido_id": "'.get_the_title($post_id).'",
-//                        "destinatario_tipo": "'.$key.'",
-//                        "status" : '.json_encode($pedido['status']).',
-//                        "data": '.json_encode($pedido['data']).'
-//                    }'
 
             $body = [
                 'Messages' => [
@@ -230,15 +205,15 @@ class EmailMarketingService
                         ],
                         'To' => [
                             [
-                                'Email' => $contato->user->email,
-                                'Name' => $contato->user->name
+                                'Email' => $this->getContatoParameter($contato, 'email'),
+                                'Name' => $this->getContatoParameter($contato, 'name')
                             ]
                         ],
                         'TemplateID' => 302272,
                         'TemplateLanguage' => true,
-                        'Subject' => "Atualização de status do seu pedido na Celmar",
+                        'Subject' => $subject,
                         'TemplateErrorReporting' => [
-                            "Name" => "Celmar - Mailjet",
+                            "Name" => "RelApp - Mailjet",
                             "Email" => "oscar.apps@gmail.com"
                         ],
                         'Variables' => json_decode($emailVars, true)
@@ -246,19 +221,23 @@ class EmailMarketingService
                 ]
             ];
 
-            $response1 = $mj1->post(Resources::$Email, ['body' => $body]);
+            $response = $this->mailService->getClient()->post(Resources::$Email, ['body' => $body]);
 
-            if ($response1->success() == true) {
-                $statusMensagemRetorno[] = $key . ' [ ' . $contato . ' ] Email enviado com sucesso';
-            } else {
-                $statusMensagemRetorno[] = $response1->getData();
+            if (!$response->success()) {
+                return response()->json(
+                    array(
+                        'success' => false,
+                        'message' => $response->getReasonPhrase()
+                    ), $response->getStatus());
             }
 
         }
 
-        foreach ($statusMensagemRetorno as $m) {
-            echo $m;
-        };
+        return response()->json(
+            array(
+                'success' => true,
+                'message' => 'Email enviado com sucesso'
+            ), 200);
 
     }
 
