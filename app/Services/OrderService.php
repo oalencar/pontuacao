@@ -27,11 +27,11 @@ class OrderService
 
     public function getAllPartnersOfOrder($order_id)
     {
-        $scores = $this->score::with('user')->where('order_id', $order_id)->get();
+        $scores = $this->score::with('partner')->where('order_id', $order_id)->get();
 
-        $usersIds = $scores->unique('user_id')->pluck('user_id')->all();
+        $partnersIds = $scores->unique('partner_id')->pluck('partner_id')->all();
 
-        $partners = $this->partner::with('user')->whereIn('user_id', $usersIds)->get();
+        $partners = $this->partner::with('user')->whereIn('id', $partnersIds)->get();
 
         return $partners;
     }
