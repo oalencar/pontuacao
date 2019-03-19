@@ -25,6 +25,11 @@ class OrderService
         $this->score = $score;
     }
 
+
+    /**
+     * @param $order_id
+     * @return Partner[]|\Illuminate\Database\Eloquent\Collection
+     */
     public function getAllPartnersOfOrder($order_id)
     {
         $scores = $this->score::with('partner')->where('order_id', $order_id)->get();
