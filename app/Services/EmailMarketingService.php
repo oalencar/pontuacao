@@ -76,6 +76,11 @@ class EmailMarketingService
         return $contato->user->$parameter;
     }
 
+    /**
+     * @param $order_id
+     * @param $client
+     * @return Partner[]|\Illuminate\Database\Eloquent\Collection
+     */
     public function getContatosDoPedido($order_id, $client)
     {
         $partnersOfOrder = $this->orderService->getAllPartnersOfOrder($order_id);
@@ -85,7 +90,7 @@ class EmailMarketingService
 
     /**
      * Send Order Register Email
-     * @param $order_id int
+     * @param $order_id integer
      * @return \Illuminate\Http\JsonResponse|string
      */
     public function sendOrderRegister($order_id)
@@ -166,6 +171,11 @@ class EmailMarketingService
     }
 
 
+    /**
+     * Send order update email
+     * @param $order_id integer
+     * @return \Illuminate\Http\JsonResponse|string
+     */
     public function sendOrderUpdate($order_id)
     {
         $order = $this->order->with('client')->findOrFail($order_id);
@@ -212,6 +222,86 @@ class EmailMarketingService
                             ]
                         ],
                         'TemplateID' => 302272,
+                        'TemplateLanguage' => true,
+                        'Subject' => $subject,
+                        'TemplateErrorReporting' => [
+                            "Name" => "RelApp - Mailjet",
+                            "Email" => "oscar.apps@gmail.com"
+                        ],
+                        'Variables' => json_decode($emailVars, true)
+                    ]
+                ]
+            ];
+
+            $response = $this->mailService->getClient()->post(Resources::$Email, ['body' => $body]);
+
+            if (!$response->success()) {
+                return response()->json(
+                    array(
+                        'success' => false,
+                        'message' => $response->getReasonPhrase()
+                    ), $response->getStatus());
+            }
+
+        }
+
+        return response()->json(
+            array(
+                'success' => true,
+                'message' => 'Email enviado com sucesso'
+            ), 200);
+
+    }
+
+    /**
+     * @param $order_id integer
+     * @return \Illuminate\Http\JsonResponse|string
+     */
+    public function sendOrderFinished($order_id)
+    {
+        $order = $this->order->with('client')->findOrFail($order_id);
+        $client = $this->orderService->getOrderClient($order_id);
+
+        $subject = $order->company->nome . ' - Pedido #' . $order->codigo . ' finalizado';
+
+        $to = $client->email;
+
+        $cliente_display_name = $client->name;
+        $cliente_display_name != '' ?: $cliente_display_name = '';
+
+        if (!$to) {
+            return "É necessário ter um cliente associado ao pedido. Verifique se o pedido foi salvo após o cliente ter sido selecionado.";
+        }
+
+        $cc = $client->email_alternative;
+
+        $contatosDoPedido = $this->getContatosDoPedido($order->id, $client);
+
+        foreach ($contatosDoPedido as $key => $contato) {
+
+            $emailVars = '{
+                "pedido_descricao": "' . $order->descricao . '",
+                "cliente": "' . $order->client->name . '",
+                "pedido_id": "' . $order->codigo . '",
+                "destinatario_tipo": "' . $this->returnTypeClientOrPartner($contato) . '",
+                "data" : "' . $order->start_date . '",
+                "status" : '.json_encode($order->order_statuses).'               
+            }';
+
+            $body = [
+                'Messages' => [
+                    [
+                        'From' => [
+                            'Email' => "contato@celmarbelem.com.br",
+                            'Name' => "Celmar Belém"
+                        ],
+                        'To' => [
+                            [
+                                'Email' => $this->getContatoParameter($contato, 'email'),
+                                'Name' => $this->getContatoParameter($contato, 'name')
+                            ]
+                        ],
+                        'TemplateID' => 149667,
                         'TemplateLanguage' => true,
                         'Subject' => $subject,
                         'TemplateErrorReporting' => [

@@ -361,4 +361,9 @@ class OrdersController extends Controller
     {
         return $this->emailMarketing->sendOrderUpdate($order_id);
     }
+
+    public function sendEmailOrderFinish($order_id)
+    {
+        return $this->emailMarketing->sendOrderFinished($order_id);
+    }
 }

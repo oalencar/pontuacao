@@ -100,7 +100,7 @@
             <button type="button" class="btn btn-primary" id="btn-order-register-email">E-mail cadastro de pedido
             </button>
             <button type="button" class="btn btn-primary" id="btn-order-update-email">E-mail atualização de pedido</button>
-            <button type="button" class="btn btn-primary">E-mail finalização de pedido</button>
+            <button type="button" class="btn btn-primary" id="btn-order-finish-email">E-mail finalização de pedido</button>
         </div>
 
     </div>
@@ -180,7 +180,8 @@
                         console.error(err);
                         alert('Houve um erro ao enviar o email');
                     });
-            })
+            });
+
             $('#btn-order-update-email').on('click', function (e) {
                 $.ajax(
                     {
@@ -194,7 +195,22 @@
                         console.error(err);
                         alert('Houve um erro ao enviar o email');
                     });
-            })
+            });
+
+            $('#btn-order-finish-email').on('click', function (e) {
+                $.ajax(
+                    {
+                        url: `${window.appUrl}/admin/orders/sendEmail/orderFinish/${window.order_id}`,
+                        type: 'GET',
+                    }).done(function (res) {
+                    alert('email enviado');
+                    console.log(res)
+                })
+                    .fail(function (err) {
+                        console.error(err);
+                        alert('Houve um erro ao enviar o email');
+                    });
+            });
 
         });
 
