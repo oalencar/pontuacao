@@ -12,20 +12,20 @@
 
 <script src="{{ asset('js/app.js') }}"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+<script src="{{ asset('js/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+<script src="{{ asset('js/libs/bootstrap-datepicker/bootstrap-datepicker.pt-BR.min.js') }}"></script>
 
-<script src="//cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
-<script src="//cdn.datatables.net/buttons/1.2.4/js/dataTables.buttons.min.js"></script>
-<script src="//cdn.datatables.net/buttons/1.2.4/js/buttons.flash.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
-<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
-<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.print.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.colVis.min.js"></script>
-<script src="https://cdn.datatables.net/select/1.2.0/js/dataTables.select.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+<script src="{{ asset('js/libs/jquery-datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('js/libs/jquery-datatables/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('js/libs/jquery-datatables/buttons.flash.min.js') }}"></script>
+<script src="{{ asset('js/libs/jszip/jszip.min.js') }}"></script>
+<script src="{{ asset('js/libs/pdfmake/pdfmake.min.js') }}"></script>
+<script src="{{ asset('js/libs/pdfmake/vfs_fonts.js') }}"></script>
+<script src="{{ asset('js/libs/buttons/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('js/libs/buttons/buttons.print.min.js') }}"></script>
+<script src="{{ asset('js/libs/buttons/buttons.colVis.min.js') }}"></script>
+<script src="{{ asset('js/libs/select-datatables/dataTables.select.min.js') }}"></script>
+<script src="{{ asset('js/libs/jquery-masky/jquery.mask.min.js') }}"></script>
 
 <script src="{{ url('adminlte/js') }}/bootstrap.min.js"></script>
 <script src="{{ url('adminlte/js') }}/select2.full.min.js"></script>
@@ -41,7 +41,7 @@
 <script>
     $.extend(true, $.fn.dataTable.defaults, {
         "language": {
-            "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json"
+            "url": "{{ asset('js/libs/jquery-datatables/Portuguese-Brasil.json') }}"
         }
     });
 
