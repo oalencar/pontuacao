@@ -125,6 +125,25 @@
 
     {!! Form::submit(trans('quickadmin.qa_update'), ['class' => 'btn btn-danger']) !!}
     {!! Form::close() !!}
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalEmailResponse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @stop
 
 @section('javascript')
@@ -151,8 +170,18 @@
 
         window.scores = scores;
 
+        setEmailModalResponseText = function(text, modal) {
+            $(modal).find('.modal-body').text(text);
+        };
+
+        showEmailModalResponse = function(text, modal) {
+            var newModal = $('#'+ modal).modal();
+            setEmailModalResponseText(text, newModal);
+            newModal.show();
+        };
 
         $(function () {
+
             moment.updateLocale('{{ App::getLocale() }}', {
                 week: {dow: 1} // Monday is the first day of the week
             });
@@ -173,8 +202,7 @@
                         url: `${window.appUrl}/admin/orders/sendEmail/orderRegister/${window.order_id}`,
                         type: 'GET',
                     }).done(function (res) {
-                    alert('email enviado');
-                    console.log(res)
+                    showEmailModalResponse('Email enviado com sucesso!', 'modalEmailResponse');
                 })
                     .fail(function (err) {
                         console.error(err);
@@ -187,9 +215,8 @@
                     {
                         url: `${window.appUrl}/admin/orders/sendEmail/orderUpdate/${window.order_id}`,
                         type: 'GET',
-                    }).done(function (res) {
-                    alert('email enviado');
-                    console.log(res)
+                    }).done(function (res) {1
+                    showEmailModalResponse('Email enviado com sucesso!', 'modalEmailResponse');
                 })
                     .fail(function (err) {
                         console.error(err);
@@ -203,7 +230,7 @@
                         url: `${window.appUrl}/admin/orders/sendEmail/orderFinish/${window.order_id}`,
                         type: 'GET',
                     }).done(function (res) {
-                    alert('email enviado');
+                    showEmailModalResponse('Email enviado com sucesso!', 'modalEmailResponse');
                     console.log(res)
                 })
                     .fail(function (err) {
@@ -211,6 +238,8 @@
                         alert('Houve um erro ao enviar o email');
                     });
             });
+
+
 
         });
 
