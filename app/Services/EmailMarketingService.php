@@ -155,12 +155,14 @@ class EmailMarketingService
                         'message' => $response->getReasonPhrase()
                     ), $response->getStatus());
             }
-            return response()->json(
-                array(
-                    'success' => true,
-                    'message' => $response->getBody()
-                ), $response->getStatus());
         }
+
+        return response()->json(
+            array(
+                'success' => true,
+                'message' => 'Email enviado com sucesso'
+            ), 200);
+
     }
 
 
