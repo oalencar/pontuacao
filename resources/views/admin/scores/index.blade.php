@@ -53,7 +53,7 @@
                                 @endcan
 
                                 <td field-key='order'>{{ $score->order->codigo or '' }}</td>
-                                <td field-key='user'>{{ $score->user->email or '' }}</td>
+                                <td field-key='user'>{{ $score->partner->user->name or '' }} - {{ $score->partner->user->email or '' }}</td>
                                 <td field-key='score'>{{ $score->score }}</td>
                                 @if( request('show_deleted') == 1 )
                                 <td>
@@ -67,7 +67,7 @@
                                     {!! Form::close() !!}
                                 @endcan
                                     @can('score_delete')
-                                                                        {!! Form::open(array(
+                                    {!! Form::open(array(
                                         'style' => 'display: inline-block;',
                                         'method' => 'DELETE',
                                         'onsubmit' => "return confirm('".trans("quickadmin.qa_are_you_sure")."');",

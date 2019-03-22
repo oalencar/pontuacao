@@ -41,7 +41,7 @@
 
                             <td>{{ $award->start_date }} a {{ $award->finish_date }}</td>
                             <td>
-                                @foreach($award->companies as $aw_comp )
+                                @foreach($award->getCompanies() as $aw_comp )
                                     {{ $aw_comp->nome }}
                                     @if(!$loop->last),@endif
                                 @endforeach

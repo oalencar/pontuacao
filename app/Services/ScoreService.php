@@ -31,7 +31,7 @@ class ScoreService
         if (!$partner) {
             abort(500, 'Necessário passar Parceiro para getAllScoresFromPartner');
         }
-        return $this->score::with('order')->where('user_id', $partner->user_id)->get();
+        return $this->score::with('order')->where('partner_id', $partner->partner_ids)->get();
     }
 
     /**
@@ -46,7 +46,7 @@ class ScoreService
             abort(500, 'Necessário passar Parceiro para getAllScoresFromPartner');
         }
         return $this->score::with('order')
-            ->where('user_id', $partner->user_id)
+            ->where('partner_id', $partner->id)
             ->get()
             ->filter(function ($score){
                 return $score->order != null;

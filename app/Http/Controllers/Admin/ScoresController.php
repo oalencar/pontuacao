@@ -16,8 +16,35 @@ use App\Http\Requests\Admin\UpdateScoresRequest;
 
 class ScoresController extends Controller
 {
+
+    /**
+     * @var Partner
+     */
+    private $partner;
+    /**
+     * @var Company
+     */
+    private $company;
+    /**
+     * @var Score
+     */
+    private $score;
+    /**
+     * @var ScoreService
+     */
+    private $scoreService;
+    /**
+     * @var Award
+     */
+    private $award;
+
     /**
      * ScoresController constructor.
+     * @param Company $company
+     * @param Partner $partner
+     * @param Score $score
+     * @param ScoreService $scoreService
+     * @param Award $award
      */
     public function __construct(
         Company $company,
@@ -253,7 +280,7 @@ class ScoresController extends Controller
             return abort(401);
         }
 
-        $partner = $this->partner::with('user', 'companies', 'partner_type')->findOrFail($id);
+        $partner = $this->partner::with('user', 'company', 'partner_type')->findOrFail($id);
 
         $scores = $this->scoreService->getAllScoresFromPartnerWithOrder($partner);
 
@@ -277,7 +304,7 @@ class ScoresController extends Controller
             return abort(401);
         }
 
-        $partner = $this->partner::with('user', 'companies', 'partner_type')->findOrFail($id);
+        $partner = $this->partner::with('user', 'company', 'partner_type')->findOrFail($id);
 
         $award = $this->award::findOrFail($id_award);
 
