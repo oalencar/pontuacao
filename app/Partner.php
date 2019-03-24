@@ -89,7 +89,7 @@ class Partner extends Model
 
     public function scores()
     {
-        return $this->hasMany(Score::class, 'score_id');
+        return $this->hasMany(Score::class, 'partner_id');
     }
 
 }

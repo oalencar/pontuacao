@@ -2,19 +2,28 @@
 
 namespace App\Services;
 
+use App\Award;
 use App\Company;
+use App\PartnerType;
 
 class CompanyService
 {
+    private $company;
+    private $partner_type;
+    private $award;
 
     /**
      * CompanyService constructor.
      * @param Company $company
      */
     public function __construct(
-        Company $company
+        Company $company,
+        PartnerType $partner_type,
+        Award $award
     ) {
         $this->company = $company;
+        $this->partner_type = $partner_type;
+        $this->award = $award;
     }
 
 
@@ -28,4 +37,17 @@ class CompanyService
         }
         return $this->company->find($id);
     }
+
+    /**
+     * @param $company Company
+     * @return Award[]|[]
+     */
+    public function getAwards($company) {
+        $awards = $this->award::with('partner_types')->get();
+
+        return $awards->filter(function ($item) use ($company) {
+            return $item->partner_types->contains('company_id', $company->id);
+        });
+    }
+
 }

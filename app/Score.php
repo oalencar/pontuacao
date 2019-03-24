@@ -38,7 +38,7 @@ class Score extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['score', 'partner_id', 'user_id'];
+    protected $fillable = ['score', 'partner_id'];
     protected $hidden = [];
     protected $with = ['order', 'partner'];
 

@@ -6,6 +6,7 @@ use App\Award;
 use App\Partner;
 use App\Score;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 
 class ScoreService
 {
@@ -74,8 +75,8 @@ class ScoreService
     }
 
     /**
-     * @param $scores array Score
-     * @param $awards Awards
+     * @param $scores Score[]|Collection
+     * @param $awards Award[]|Collection
      * @return array Score
      */
     public function filterPartnerScoresOfAwards($scores, $awards)
@@ -121,7 +122,9 @@ class ScoreService
         if ($score === null) {
             abort(500, 'Necessário passar $score para sumOfScores');
         }
-        return intval(($score/$goal)*100);
+        $resultado = intval(($score/$goal)*100);
+        if ($resultado > 100) return 100;
+        return $resultado;
     }
 
     public function updateScores() {

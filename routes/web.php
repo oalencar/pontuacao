@@ -62,19 +62,17 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::get('scores/report/detail/{id}/company/{company_id}', ['uses' => 'Admin\ScoresController@reportDetail', 'as' => 'scores.report_detail']);
     Route::get('scores/report/detail/partner/{id}/', ['uses' => 'Admin\ScoresController@reportPartnerDetail', 'as' => 'scores.report_partner_detail']);
     Route::get('scores/report/detail/partner/{id}/award/{id_award}', ['uses' => 'Admin\ScoresController@reportPartnerAwardDetail', 'as' => 'scores.report_partner_award_detail']);
+    Route::get('scores/report/company/top10', ['uses' => 'Admin\ScoresController@reportCompanyTop10', 'as' => 'scores.report_company_top_10.index']);
+    Route::get('scores/report/company/top10/{company_id}', ['uses' => 'Admin\ScoresController@reportCompanyTop10Detail', 'as' => 'scores.report_company_top_10.detail']);
 
     Route::resource('scores', 'Admin\ScoresController');
     Route::post('scores_mass_destroy', ['uses' => 'Admin\ScoresController@massDestroy', 'as' => 'scores.mass_destroy']);
     Route::post('scores_restore/{id}', ['uses' => 'Admin\ScoresController@restore', 'as' => 'scores.restore']);
     Route::delete('scores_perma_del/{id}', ['uses' => 'Admin\ScoresController@perma_del', 'as' => 'scores.perma_del']);
 
-
     Route::resource('partner_types', 'Admin\PartnerTypesController');
     Route::post('partner_types_mass_destroy', ['uses' => 'Admin\PartnerTypesController@massDestroy', 'as' => 'partner_types.mass_destroy']);
     Route::post('partner_types_restore/{id}', ['uses' => 'Admin\PartnerTypesController@restore', 'as' => 'partner_types.restore']);
     Route::delete('partner_types_perma_del/{id}', ['uses' => 'Admin\PartnerTypesController@perma_del', 'as' => 'partner_types.perma_del']);
-
-
-
 
 });

@@ -1,0 +1,136 @@
+<?php
+
+namespace App;
+
+use App\Company;
+use App\Partner;
+use App\Award;
+use App\Score;
+use App\Services\ScoreService;
+
+
+/**
+ * Class ReportCompanyTop10
+ * @package App
+ */
+class Report
+{
+
+    /**
+     * @var Company
+     */
+    private $company;
+    /**
+     * @var Partner
+     */
+    private $partners;
+    /**
+     * @var Award
+     */
+    private $awards;
+    /**
+     * @var Score
+     */
+    private $scores;
+    /**
+     * @var ScoreService
+     */
+    private $scoreService;
+
+    /**
+     * ReportCompanyTop10 constructor.
+     * @param Company $company
+     * @param \App\Partner $partners
+     * @param \App\Award $awards
+     * @param \App\Score $scores
+     * @param ScoreService $scoreService
+     */
+    public function __construct(Company $company, Partner $partners, Award $awards, Score $scores, ScoreService $scoreService)
+    {
+        $this->company = $company;
+        $this->partners = $partners;
+        $this->awards = $awards;
+        $this->scores = $scores;
+        $this->scoreService = $scoreService;
+    }
+
+    /**
+     * @return \App\Company
+     */
+    public function getCompany(): \App\Company
+    {
+        return $this->company;
+    }
+
+    /**
+     * @param \App\Company $company
+     */
+    public function setCompany(\App\Company $company): void
+    {
+        $this->company = $company;
+    }
+
+    /**
+     * @return \App\Partner
+     */
+    public function getPartners(): \App\Partner
+    {
+        return $this->partners;
+    }
+
+    /**
+     * @param \App\Partner $partners
+     */
+    public function setPartners(\App\Partner $partners): void
+    {
+        $this->partners = $partners;
+    }
+
+    /**
+     * @return \App\Award
+     */
+    public function getAwards(): \App\Award
+    {
+        return $this->awards;
+    }
+
+    /**
+     * @param \App\Award $awards
+     */
+    public function setAwards(\App\Award $awards): void
+    {
+        $this->awards = $awards;
+    }
+
+    /**
+     * @return \App\Score
+     */
+    public function getScores(): \App\Score
+    {
+        return $this->scores;
+    }
+
+    /**
+     * @param \App\Score $scores
+     */
+    public function setScores(\App\Score $scores): void
+    {
+        $this->scores = $scores;
+    }
+
+    /**
+     * @return ScoreService
+     */
+    public function getScoreService(): ScoreService
+    {
+        return $this->scoreService;
+    }
+
+    /**
+     * @param ScoreService $scoreService
+     */
+    public function setScoreService(ScoreService $scoreService): void
+    {
+        $this->scoreService = $scoreService;
+    }
+}

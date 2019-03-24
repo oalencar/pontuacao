@@ -39,6 +39,11 @@
                                 <span>Parceiros</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ route('admin.scores.report_company_top_10.index') }}">
+                                <span>Top 10 Parceiros</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 

@@ -6,13 +6,17 @@ use App\Award;
 use App\Company;
 use App\Partner;
 use App\Score;
+use App\Services\AwardService;
+use App\Services\CompanyService;
 use App\Services\ScoreService;
 use function foo\func;
+use function GuzzleHttp\Promise\all;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreScoresRequest;
 use App\Http\Requests\Admin\UpdateScoresRequest;
+
 
 class ScoresController extends Controller
 {
@@ -39,25 +43,41 @@ class ScoresController extends Controller
     private $award;
 
     /**
+     * @var CompanyService
+     */
+    private $companyService;
+
+    /**
+     * @var AwardService
+     */
+    private $awardService;
+
+    /**
      * ScoresController constructor.
      * @param Company $company
      * @param Partner $partner
      * @param Score $score
      * @param ScoreService $scoreService
      * @param Award $award
+     * @param CompanyService $companyService
+     * @param AwardService $awardService
      */
     public function __construct(
         Company $company,
         Partner $partner,
         Score $score,
         ScoreService $scoreService,
-        Award $award
+        Award $award,
+        CompanyService $companyService,
+        AwardService $awardService
     ) {
         $this->partner = $partner;
         $this->company = $company;
         $this->score = $score;
         $this->scoreService = $scoreService;
         $this->award = $award;
+        $this->companyService = $companyService;
+        $this->awardService = $awardService;
     }
 
 
@@ -227,7 +247,8 @@ class ScoresController extends Controller
 
     }
 
-    public function reportByCompanyName(Request $request) {
+    public function reportByCompanyName(Request $request)
+    {
 
         $companyId = $request->get('company');
 
@@ -274,7 +295,8 @@ class ScoresController extends Controller
         return view('admin.scores.report.detail', compact('partner', 'scores', 'company'));
     }
 
-    public function reportPartnerDetail($id) {
+    public function reportPartnerDetail($id)
+    {
 
         if (! Gate::allows('score_view')) {
             return abort(401);
@@ -298,7 +320,8 @@ class ScoresController extends Controller
         );
     }
 
-    public function reportPartnerAwardDetail($id, $id_award) {
+    public function reportPartnerAwardDetail($id, $id_award)
+    {
 
         if (! Gate::allows('score_view')) {
             return abort(401);
@@ -315,5 +338,30 @@ class ScoresController extends Controller
         return view('admin.scores.report.partnerAwardDetail',
             compact('partner', 'scores', 'award')
         );
+    }
+
+    public function reportCompanyTop10()
+    {
+        $companies = $this->company::all();
+
+        return view('admin.scores.report.companyTop10.index',
+            compact('companies')
+        );
+    }
+
+    public function reportCompanyTop10Detail($empresa_id)
+    {
+        $company = $this->company::findOrFail($empresa_id);
+        $partners = $this->partner::with('scores')->where('company_id', $company->id)->get();
+        $awards = $this->companyService->getAwards($company);
+
+
+        return view('admin.scores.report.companyTop10.detail')
+                    ->with(['company' => $company,
+                            'awards' => $awards,
+                            'partners' => $partners,
+                            'awardService' => $this->awardService,
+                            'scoreService' => $this->scoreService
+                        ]);
     }
 }
