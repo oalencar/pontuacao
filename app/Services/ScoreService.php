@@ -127,7 +127,13 @@ class ScoreService
         return $resultado;
     }
 
-    public function updateScores() {
 
+    /**
+     * Formata pontuação para XXX.XXXs
+     * @param $numero
+     * @return string
+     */
+    public function formataPontuacao($numero) {
+        return number_format($numero,0,'','.');
     }
 }

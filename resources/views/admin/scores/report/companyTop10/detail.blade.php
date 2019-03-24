@@ -31,7 +31,9 @@
                                     @foreach($awardService->getPartnerAwards($partner) as $award)
                                         <div>
                                             <strong>
-                                                {{ $scoreService->sumOfScores($scoreService->filterPartnerScoresOfAward($partner->scores, $award)) }}
+                                                {{ $scoreService->formataPontuacao(
+                                                        $scoreService->sumOfScores($scoreService->filterPartnerScoresOfAward($partner->scores, $award))
+                                                )}}
                                                 ({{ $scoreService->getPercentReachedGoal($award->goal, $scoreService->sumOfScores($partner->scores)) }}%)
                                             </strong>
                                             -
@@ -39,7 +41,7 @@
                                         </div>
                                     @endforeach
                                 </td>
-                                <td>{{ $scoreService->sumOfScores($partner->scores) }}</td>
+                                <td>{{ $scoreService->formataPontuacao( $scoreService->sumOfScores($partner->scores) ) }}</td>
                             </tr>
                         @endforeach
                         </tbody>
