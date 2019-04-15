@@ -84,7 +84,7 @@ class ReportsController extends Controller
      */
     public function report()
     {
-        if (! Gate::allows('score_access')) {
+        if (!Gate::allows('score_access')) {
             return abort(401);
         }
 
@@ -111,7 +111,7 @@ class ReportsController extends Controller
         $awards->map(function ($award, $key) {
             $partners = $this->partner::with('user')->where('partner_type_id', $award->partner_type_id)->get();
 
-            $partners->map(function($partner) use ($award) {
+            $partners->map(function ($partner) use ($award) {
                 $scores = $this->scoreService->getAllScoresFromPartner($partner);
 
                 $scoresFiltereds = $this->scoreService->filterPartnerScoresOfAward($scores, $award);
@@ -130,7 +130,7 @@ class ReportsController extends Controller
 
     public function reportDetail($id, $company_id)
     {
-        if (! Gate::allows('score_view')) {
+        if (!Gate::allows('score_view')) {
             return abort(401);
         }
 
@@ -146,7 +146,7 @@ class ReportsController extends Controller
     public function reportPartnerDetail($id)
     {
 
-        if (! Gate::allows('score_view')) {
+        if (!Gate::allows('score_view')) {
             return abort(401);
         }
 
@@ -156,11 +156,11 @@ class ReportsController extends Controller
 
         $allAwards = $this->award::with('partner_types')->get();
 
-        $awards = $allAwards->filter( function ($award) use ($partner) {
+        $awards = $allAwards->filter(function ($award) use ($partner) {
             $partner_types = collect($award->partner_types);
             return $partner_types->contains(function ($partner_type) use ($partner) {
                 return $partner_type->id == $partner->partner_type->id;
-            } );
+            });
         });
 
         return view('admin.scores.report.partnerDetail',
@@ -171,7 +171,7 @@ class ReportsController extends Controller
     public function reportPartnerAwardDetail($id, $id_award)
     {
 
-        if (! Gate::allows('score_view')) {
+        if (!Gate::allows('score_view')) {
             return abort(401);
         }
 
@@ -211,5 +211,10 @@ class ReportsController extends Controller
                 'awardService' => $this->awardService,
                 'scoreService' => $this->scoreService
             ]);
+    }
+
+    public function reportAwardIndex()
+    {
+
     }
 }
