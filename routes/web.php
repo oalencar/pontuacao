@@ -57,13 +57,15 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('clientes_restore/{id}', ['uses' => 'Admin\ClientesController@restore', 'as' => 'clientes.restore']);
     Route::delete('clientes_perma_del/{id}', ['uses' => 'Admin\ClientesController@perma_del', 'as' => 'clientes.perma_del']);
 
-    Route::get('scores/report', ['uses' => 'Admin\ReportsController@report', 'as' => 'scores.report']);
-    Route::post('scores/report', ['uses' => 'Admin\ReportsController@reportByCompanyName', 'as' => 'scores.reportByCompanyName']);
-    Route::get('scores/report/detail/{id}/company/{company_id}', ['uses' => 'Admin\ReportsController@reportDetail', 'as' => 'scores.report_detail']);
-    Route::get('scores/report/detail/partner/{id}/', ['uses' => 'Admin\ReportsController@reportPartnerDetail', 'as' => 'scores.report_partner_detail']);
-    Route::get('scores/report/detail/partner/{id}/award/{id_award}', ['uses' => 'Admin\ReportsController@reportPartnerAwardDetail', 'as' => 'scores.report_partner_award_detail']);
-    Route::get('scores/report/company/top10', ['uses' => 'Admin\ReportsController@reportCompanyTop10', 'as' => 'scores.report_company_top_10.index']);
-    Route::get('scores/report/company/top10/{company_id}', ['uses' => 'Admin\ReportsController@reportCompanyTop10Detail', 'as' => 'scores.report_company_top_10.detail']);
+    Route::get('reports', ['uses' => 'Admin\ReportsController@report', 'as' => 'scores.report']);
+    Route::post('reports', ['uses' => 'Admin\ReportsController@reportByCompanyName', 'as' => 'scores.reportByCompanyName']);
+    Route::get('reports/detail/{id}/company/{company_id}', ['uses' => 'Admin\ReportsController@reportDetail', 'as' => 'scores.report_detail']);
+    Route::get('reports/detail/partner/{id}/', ['uses' => 'Admin\ReportsController@reportPartnerDetail', 'as' => 'scores.report_partner_detail']);
+    Route::get('reports/detail/partner/{id}/award/{id_award}', ['uses' => 'Admin\ReportsController@reportPartnerAwardDetail', 'as' => 'scores.report_partner_award_detail']);
+    Route::get('reports/company/top10', ['uses' => 'Admin\ReportsController@reportCompanyTop10', 'as' => 'scores.report_company_top_10.index']);
+    Route::get('reports/company/top10/{company_id}', ['uses' => 'Admin\ReportsController@reportCompanyTop10Detail', 'as' => 'scores.report_company_top_10.detail']);
+    Route::get('reports/awards', ['uses' => 'Admin\ReportsController@reportByAwardIndex', 'as' => 'reports.award.index']);
+    Route::get('reports/awards/{id}', ['uses' => 'Admin\ReportsController@reportByAwardDetail', 'as' => 'reports.award.detail']);
 
     Route::resource('scores', 'Admin\ScoresController');
     Route::post('scores_mass_destroy', ['uses' => 'Admin\ScoresController@massDestroy', 'as' => 'scores.mass_destroy']);

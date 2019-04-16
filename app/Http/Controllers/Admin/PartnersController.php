@@ -125,9 +125,15 @@ class PartnersController extends Controller
         if (! Gate::allows('partner_create')) {
             return abort(401);
         }
-
         try {
-            $newUser = $this->user::create($request->all());
+            $user = $this->user::where('email', $request->get('email'))->get();
+
+            if (count($user) > 0) {
+                $newUser = $user[0];
+            } else {
+                $newUser = $this->user::create($request->all());
+
+            }
         }
         catch (\Exception $e){
              return $e;

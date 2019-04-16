@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Award;
 use App\Company;
+use App\Models\DTO\ReportAwardDTO;
 use App\Partner;
 use App\Score;
 use App\Services\AwardService;
 use App\Services\CompanyService;
+use App\Services\PartnerService;
+use App\Services\PartnerTypeService;
 use App\Services\ScoreService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -47,6 +50,11 @@ class ReportsController extends Controller
      */
     private $awardService;
 
+    /**
+     * @var PartnerTypeService
+     */
+    private $partnerTypeService;
+
 
     /**
      * ReportsController constructor.
@@ -57,6 +65,7 @@ class ReportsController extends Controller
      * @param Award $award
      * @param CompanyService $companyService
      * @param AwardService $awardService
+     * @param PartnerTypeService $partnerTypeService
      */
     public function __construct(
         Company $company,
@@ -65,7 +74,8 @@ class ReportsController extends Controller
         ScoreService $scoreService,
         Award $award,
         CompanyService $companyService,
-        AwardService $awardService
+        AwardService $awardService,
+        PartnerTypeService $partnerTypeService
     )
     {
         $this->partner = $partner;
@@ -75,6 +85,7 @@ class ReportsController extends Controller
         $this->award = $award;
         $this->companyService = $companyService;
         $this->awardService = $awardService;
+        $this->partnerTypeService = $partnerTypeService;
     }
 
     /**
@@ -91,7 +102,7 @@ class ReportsController extends Controller
         $companies = $this->company->all();
         $partners = $this->partner::with('user')->get();
 
-        return view('admin.scores.report.index', compact('companies', 'partners'));
+        return view('admin.reports.index', compact('companies', 'partners'));
 
     }
 
@@ -123,7 +134,7 @@ class ReportsController extends Controller
             $award->partners = $partners;
         });
 
-        return view('admin.scores.report.company',
+        return view('admin.reports.company',
             ['companies' => $companies, 'company' => $company, 'awards' => $awards]);
 
     }
@@ -140,7 +151,7 @@ class ReportsController extends Controller
 
         $scores = $this->scoreService->getAllScoresFromPartner($partner);
 
-        return view('admin.scores.report.detail', compact('partner', 'scores', 'company'));
+        return view('admin.reports.detail', compact('partner', 'scores', 'company'));
     }
 
     public function reportPartnerDetail($id)
@@ -163,7 +174,7 @@ class ReportsController extends Controller
             });
         });
 
-        return view('admin.scores.report.partnerDetail',
+        return view('admin.reports.partnerDetail',
             compact('partner', 'scores', 'awards')
         );
     }
@@ -183,7 +194,7 @@ class ReportsController extends Controller
 
         $scores = $this->scoreService->filterPartnerScoresOfAward($allScores, $award);
 
-        return view('admin.scores.report.partnerAwardDetail',
+        return view('admin.reports.partnerAwardDetail',
             compact('partner', 'scores', 'award')
         );
     }
@@ -192,7 +203,7 @@ class ReportsController extends Controller
     {
         $companies = $this->company::all();
 
-        return view('admin.scores.report.companyTop10.index',
+        return view('admin.reports.companyTop10.index',
             compact('companies')
         );
     }
@@ -204,7 +215,7 @@ class ReportsController extends Controller
         $awards = $this->companyService->getAwards($company);
 
 
-        return view('admin.scores.report.companyTop10.detail')
+        return view('admin.reports.companyTop10.detail')
             ->with(['company' => $company,
                 'awards' => $awards,
                 'partners' => $partners,
@@ -213,8 +224,42 @@ class ReportsController extends Controller
             ]);
     }
 
-    public function reportAwardIndex()
+    public function reportByAwardIndex()
     {
-
+        $awards = $this->award::all();
+        return view('admin.reports.byAward.index')->with(['awards' => $awards]);
     }
+
+    public function reportByAwardDetail($id)
+    {
+        $award = $this->award::findOrFail($id);
+        $partner_types_ids = $award->partner_types()->get()->pluck('id');
+        $allPartners = $this->partner::with('user')->get();
+
+
+        $partners = $allPartners->whereIn('partner_type_id', $partner_types_ids);
+
+        $partnersUsers = $partners->pluck('user')->unique();
+
+
+        $usersGroup = $partners->groupBy(function ($partner) {
+            return $partner['user']->id;
+        });
+
+
+        $reportAwards = $partnersUsers->map(function ($item) use ($usersGroup, $award) {
+            return new ReportAwardDTO($item, $usersGroup[$item->id], $award);
+        });
+
+
+        return view('admin.reports.byAward.detail')
+            ->with([
+                'award' => $award,
+                'reportAwards' => $reportAwards,
+                'awardService' => $this->awardService,
+                'scoreService' => $this->scoreService
+                ]);
+    }
+
+
 }

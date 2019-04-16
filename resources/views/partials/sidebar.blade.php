@@ -35,6 +35,11 @@
                     </a>
                     <ul class="treeview-menu">
                         <li>
+                            <a href="{{ route('admin.reports.award.index') }}">
+                                <span>Premições</span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{ route('admin.scores.report') }}">
                                 <span>Parceiros</span>
                             </a>
