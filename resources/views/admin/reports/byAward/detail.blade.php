@@ -52,27 +52,6 @@
                             </tr>
                         @endforeach
 
-                        {{--@foreach($partners as $partner)--}}
-                            {{--<tr>--}}
-                                {{--<td>{{ $company->nome }}</td>--}}
-                                {{--<td>{{ $partner->user->name }}</td>--}}
-                                {{--<td>--}}
-                                    {{--@foreach($awardService->getPartnerAwards($partner) as $award)--}}
-                                        {{--<div>--}}
-                                            {{--<strong>--}}
-                                                {{--{{ $scoreService->formataPontuacao(--}}
-                                                        {{--$scoreService->sumOfScores($scoreService->filterPartnerScoresOfAward($partner->scores, $award))--}}
-                                                {{--)}}--}}
-                                                {{--({{ $scoreService->getPercentReachedGoal($award->goal, $scoreService->sumOfScores($partner->scores)) }}%)--}}
-                                            {{--</strong>--}}
-                                            {{-----}}
-                                            {{--{{ $award->title }}--}}
-                                        {{--</div>--}}
-                                    {{--@endforeach--}}
-                                {{--</td>--}}
-                                {{--<td>{{ $scoreService->formataPontuacao( $scoreService->sumOfScores($partner->scores) ) }}</td>--}}
-                            {{--</tr>--}}
-                        {{--@endforeach--}}
                         </tbody>
                     </table>
                 </div>
