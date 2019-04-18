@@ -117,7 +117,7 @@ class ScoresController extends Controller
         }
 
         $orders = \App\Models\Order::get()->pluck('codigo', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
-        $users = \App\User::get()->pluck('email', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
+        $users = \App\Models\User::get()->pluck('email', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
 
         return view('admin.scores.create', compact('orders', 'users'));
     }

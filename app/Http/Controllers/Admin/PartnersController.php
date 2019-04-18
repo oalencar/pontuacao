@@ -7,7 +7,7 @@ use App\Models\Partner;
 use App\Models\PartnerType;
 use App\Models\Score;
 use App\Services\PartnerService;
-use App\User;
+use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;

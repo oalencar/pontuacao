@@ -11,7 +11,7 @@ namespace App\Models\DTO;
 
 use App\Models\Partner;
 use App\Services\ScoreService;
-use App\User;
+use App\Models\User;
 use Illuminate\Support\Collection;
 
 class ReportAwardDTO

@@ -108,7 +108,7 @@ class RolesController extends Controller
         if (! Gate::allows('role_view')) {
             return abort(401);
         }
-        $users = \App\User::where('role_id', $id)->get();
+        $users = \App\Models\User::where('role_id', $id)->get();
 
         $role = Role::findOrFail($id);
 

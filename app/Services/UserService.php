@@ -5,7 +5,7 @@ namespace App\Services;
 
 
 use App\Models\Partner;
-use App\User;
+use App\Models\User;
 
 /**
  * Class UserService
