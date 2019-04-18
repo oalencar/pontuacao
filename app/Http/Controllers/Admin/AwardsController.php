@@ -81,7 +81,6 @@ class AwardsController extends Controller
 
         $award = $this->award->create($request->except(['partner_type_id', 'company_id']));
         $award->partner_types()->sync($request->get('partner_type_id'));
-        // $award->companies()->sync($request->get('company_id'));
 
         return redirect()->route('admin.awards.index');
     }
@@ -99,7 +98,6 @@ class AwardsController extends Controller
             return abort(401);
         }
 
-        // $partner_types = $this->partnerType->get()->pluck('description', 'id');
         $partner_types = $this->partnerType->get();
         $allCompanies = $this->company->get()->pluck('nome', 'id');
 
