@@ -18,20 +18,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $deleted_at
  * @property-read \App\Models\Order|null $order
  * @method static bool|null forceDelete()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\OrderStatus newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\OrderStatus newQuery()
- * @method static \Illuminate\Database\Query\Builder|\App\OrderStatus onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\OrderStatus query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderStatus newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderStatus newQuery()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\OrderStatus onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderStatus query()
  * @method static bool|null restore()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\OrderStatus whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\OrderStatus whereData($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\OrderStatus whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\OrderStatus whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\OrderStatus whereObservacao($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\OrderStatus whereOrderId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\OrderStatus whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\OrderStatus withTrashed()
- * @method static \Illuminate\Database\Query\Builder|\App\OrderStatus withoutTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderStatus whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderStatus whereData($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderStatus whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderStatus whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderStatus whereObservacao($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderStatus whereOrderId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderStatus whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\OrderStatus withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\OrderStatus withoutTrashed()
  * @mixin \Eloquent
  */
 class OrderStatus extends Model

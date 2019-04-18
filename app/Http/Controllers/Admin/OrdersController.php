@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use \App\Models\Cliente;
 use App\Models\Company;
 use App\Models\Order;
-use App\OrderStatus;
+use App\Models\OrderStatus;
 use App\Partner;
 use App\Score;
 use App\Services\EmailMarketingService;

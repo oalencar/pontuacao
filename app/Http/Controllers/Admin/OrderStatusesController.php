@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\OrderStatus;
+use App\Models\OrderStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
