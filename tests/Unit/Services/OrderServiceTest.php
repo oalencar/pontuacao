@@ -18,7 +18,7 @@ class OrderServiceTest extends TestCase
     {
         $partner = $this->app->make('App\Models\Partner');
         $order = $this->app->make('App\Models\Order');
-        $score = $this->app->make('App\Score');
+        $score = $this->app->make('App\Models\Score');
 
         $orderService = new OrderService($partner, $order, $score);
 

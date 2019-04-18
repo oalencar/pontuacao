@@ -131,7 +131,7 @@ class UsersController extends Controller
             return abort(401);
         }
 
-        $roles = \App\Role::get()->pluck('title', 'id')->prepend(trans('quickadmin.qa_please_select'), '');$partners = \App\Models\Partner::where('user_id', $id)->get();$scores = \App\Score::where('user_id', $id)->get();
+        $roles = \App\Role::get()->pluck('title', 'id')->prepend(trans('quickadmin.qa_please_select'), '');$partners = \App\Models\Partner::where('user_id', $id)->get();$scores = \App\Models\Score::where('user_id', $id)->get();
 
         $user = User::findOrFail($id);
 

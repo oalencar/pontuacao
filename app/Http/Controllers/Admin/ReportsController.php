@@ -6,7 +6,7 @@ use App\Award;
 use App\Models\Company;
 use App\Models\DTO\ReportAwardDTO;
 use App\Models\Partner;
-use App\Score;
+use App\Models\Score;
 use App\Services\AwardService;
 use App\Services\CompanyService;
 use App\Services\PartnerService;

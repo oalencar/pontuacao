@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -18,20 +18,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int|null $order_id
  * @property int|null $user_id
  * @method static bool|null forceDelete()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Score newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Score newQuery()
- * @method static \Illuminate\Database\Query\Builder|\App\Score onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Score query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Score newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Score newQuery()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Score onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Score query()
  * @method static bool|null restore()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Score whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Score whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Score whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Score whereOrderId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Score whereScore($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Score whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Score whereUserId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Score withTrashed()
- * @method static \Illuminate\Database\Query\Builder|\App\Score withoutTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Score whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Score whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Score whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Score whereOrderId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Score whereScore($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Score whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Score whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Score withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Score withoutTrashed()
  * @mixin \Eloquent
  */
 class Score extends Model

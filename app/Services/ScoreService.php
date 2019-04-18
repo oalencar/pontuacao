@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Award;
 use App\Models\Partner;
-use App\Score;
+use App\Models\Score;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 

@@ -12,7 +12,7 @@ namespace App\Models\DTO;
 use App\Award;
 use App\Models\Company;
 use App\Models\Report;
-use App\Score;
+use App\Models\Score;
 
 /**
  * Class ReportCompanyTop10DTO

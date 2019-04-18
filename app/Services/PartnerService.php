@@ -10,7 +10,7 @@ namespace App\Services;
 
 
 use App\Models\Partner;
-use App\Score;
+use App\Models\Score;
 
 class PartnerService
 {

@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Models\Company;
 use App\Models\Partner;
 use App\Award;
-use App\Score;
+use App\Models\Score;
 use App\Services\ScoreService;
 
 
@@ -42,7 +42,7 @@ class Report
      * @param Company $company
      * @param \App\Models\Partner $partners
      * @param \App\Models\Award $awards
-     * @param \App\Score $scores
+     * @param \App\Models\Score $scores
      * @param ScoreService $scoreService
      */
     public function __construct(Company $company, Partner $partners, Award $awards, Score $scores, ScoreService $scoreService)
@@ -103,17 +103,17 @@ class Report
     }
 
     /**
-     * @return \App\Score
+     * @return \App\Models\Score
      */
-    public function getScores(): \App\Score
+    public function getScores(): \App\Models\Score
     {
         return $this->scores;
     }
 
     /**
-     * @param \App\Score $scores
+     * @param \App\Models\Score $scores
      */
-    public function setScores(\App\Score $scores): void
+    public function setScores(\App\Models\Score $scores): void
     {
         $this->scores = $scores;
     }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Company;
 use App\Models\Partner;
 use App\Models\PartnerType;
-use App\Score;
+use App\Models\Score;
 use App\Services\PartnerService;
 use App\User;
 use Illuminate\Database\QueryException;

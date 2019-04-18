@@ -7,7 +7,7 @@ use App\Models\Company;
 use App\Models\Order;
 use App\Models\OrderStatus;
 use App\Models\Partner;
-use App\Score;
+use App\Models\Score;
 use App\Services\EmailMarketingService;
 use App\Services\ScoreService;
 use Carbon\Carbon;
@@ -272,7 +272,7 @@ class OrdersController extends Controller
         }
 
         $companies = $this->company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
-        $clients = $this->client::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');$scores = \App\Score::where('order_id', $id)->get();
+        $clients = $this->client::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');$scores = \App\Models\Score::where('order_id', $id)->get();
 
         $order = $this->order::findOrFail($id);
 

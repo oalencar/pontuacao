@@ -1,6 +1,6 @@
 <?php
 
-$factory->define(App\Score::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\Score::class, function (Faker\Generator $faker) {
     return [
         "order_id" => factory('App\Models\Order')->create(),
         "user_id" => factory('App\User')->create(),

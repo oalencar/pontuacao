@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int|null $company_id
  * @property int|null $client_id
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\OrderStatus[] $order_statuses
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Score[] $scores
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Score[] $scores
  * @method static bool|null forceDelete()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order newQuery()
