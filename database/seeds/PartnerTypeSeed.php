@@ -12,13 +12,13 @@ class PartnerTypeSeed extends Seeder
     public function run()
     {
         $items = [
-            
+
             ['id' => 1, 'description' => 'Consultor Celmar', 'company_id' => 1,],
 
         ];
 
         foreach ($items as $item) {
-            \App\PartnerType::create($item);
+            \App\Models\PartnerType::create($item);
         }
     }
 }

@@ -7,7 +7,7 @@ $factory->define(App\Award::class, function (Faker\Generator $faker) {
         "goal" => $faker->randomNumber(2),
         "start_date" => $faker->date("d/m/Y", $max = 'now'),
         "finish_date" => $faker->date("d/m/Y", $max = 'now'),
-        "partner_type_id" => factory('App\PartnerType')->create(),
+        "partner_type_id" => factory('App\Models\PartnerType')->create(),
         "company_id" => factory('App\Models\Company')->create(),
     ];
 });

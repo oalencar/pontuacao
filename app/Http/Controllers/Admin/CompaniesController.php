@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Company;
 use App\Models\Order;
-use App\PartnerType;
+use App\Models\PartnerType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
@@ -129,7 +129,7 @@ class CompaniesController extends Controller
             return abort(401);
         }
 
-        $partner_types = \App\PartnerType::where('company_id', $id)->get();
+        $partner_types = \App\Models\PartnerType::where('company_id', $id)->get();
         $orders = \App\Models\Order::where('company_id', $id)->get();
         $clientes = \App\Models\Cliente::where('company_id', $id)->get();
         $awards = \App\Models\Award::where('company_id', $id)->get();
@@ -191,7 +191,7 @@ class CompaniesController extends Controller
         if (! Gate::allows('company_view')) {
             return abort(401);
         }
-        $partner_types = \App\PartnerType::where('company_id', $id)->get();
+        $partner_types = \App\Models\PartnerType::where('company_id', $id)->get();
         $orders = \App\Models\Order::where('company_id', $id)->get();
         $clientes = \App\Models\Cliente::where('company_id', $id)->get();
         $awards = \App\Models\Award::where('company_id', $id)->get();

@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Award;
 use App\Models\Company;
-use App\PartnerType;
+use App\Models\PartnerType;
 
 class CompanyService
 {

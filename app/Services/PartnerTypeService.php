@@ -5,7 +5,7 @@ namespace App\Services;
 
 
 use App\Partner;
-use App\PartnerType;
+use App\Models\PartnerType;
 
 class PartnerTypeService
 {

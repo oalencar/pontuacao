@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Company[] $companies
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\PartnerType[] $partner_types
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\PartnerType[] $partner_types
  * @property-write mixed $company_id
  * @property-write mixed $partner_type_id
  * @method static bool|null forceDelete()
