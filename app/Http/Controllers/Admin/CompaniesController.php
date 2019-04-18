@@ -88,7 +88,7 @@ class CompaniesController extends Controller
         $partner_types = \App\PartnerType::where('company_id', $id)->get();
         $orders = \App\Order::where('company_id', $id)->get();
         $clientes = \App\Cliente::where('company_id', $id)->get();
-        $awards = \App\Award::where('company_id', $id)->get();
+        $awards = \App\Models\Award::where('company_id', $id)->get();
 
         $company = $this->company->findOrFail($id);
 
@@ -150,7 +150,7 @@ class CompaniesController extends Controller
         $partner_types = \App\PartnerType::where('company_id', $id)->get();
         $orders = \App\Order::where('company_id', $id)->get();
         $clientes = \App\Cliente::where('company_id', $id)->get();
-        $awards = \App\Award::where('company_id', $id)->get();
+        $awards = \App\Models\Award::where('company_id', $id)->get();
 
         $company = $this->company->findOrFail($id);
         $partners = $company->partners()->get();

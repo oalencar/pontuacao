@@ -1,4 +1,4 @@
-<?php /** @var $award \App\Award */ ?>
+<?php /** @var $award \App\Models\Award */ ?>
 @inject('request', 'Illuminate\Http\Request')
 @inject('scoreService', '\App\Services\ScoreService')
 @extends('layouts.app')

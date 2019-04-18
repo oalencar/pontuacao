@@ -18,7 +18,7 @@ class AwardSeed extends Seeder
         ];
 
         foreach ($items as $item) {
-            \App\Award::create($item);
+            \App\Models\Award::create($item);
         }
     }
 }

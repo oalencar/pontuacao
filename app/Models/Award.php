@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace App\Models;
 
 use App\Classes\FormatData;
 use Illuminate\Database\Eloquent\Model;
@@ -27,23 +27,23 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-write mixed $company_id
  * @property-write mixed $partner_type_id
  * @method static bool|null forceDelete()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Award newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Award newQuery()
- * @method static \Illuminate\Database\Query\Builder|\App\Award onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Award query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Award newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Award newQuery()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Award onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Award query()
  * @method static bool|null restore()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Award whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Award whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Award whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Award whereFinishDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Award whereGoal($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Award whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Award whereImage($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Award whereStartDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Award whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Award whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Award withTrashed()
- * @method static \Illuminate\Database\Query\Builder|\App\Award withoutTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Award whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Award whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Award whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Award whereFinishDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Award whereGoal($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Award whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Award whereImage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Award whereStartDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Award whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Award whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Award withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Award withoutTrashed()
  * @mixin \Eloquent
  */
 class Award extends Model

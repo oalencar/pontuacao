@@ -1,6 +1,6 @@
 <?php
 /**
- * @var $award \App\Award
+ * @var $award \App\Models\Award
  * @var $reportAward \App\Models\DTO\ReportAwardDTO
  */
 ?>

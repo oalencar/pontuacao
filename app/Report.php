@@ -41,7 +41,7 @@ class Report
      * ReportCompanyTop10 constructor.
      * @param Company $company
      * @param \App\Partner $partners
-     * @param \App\Award $awards
+     * @param \App\Models\Award $awards
      * @param \App\Score $scores
      * @param ScoreService $scoreService
      */
@@ -87,17 +87,17 @@ class Report
     }
 
     /**
-     * @return \App\Award
+     * @return \App\Models\Award
      */
-    public function getAwards(): \App\Award
+    public function getAwards(): \App\Models\Award
     {
         return $this->awards;
     }
 
     /**
-     * @param \App\Award $awards
+     * @param \App\Models\Award $awards
      */
-    public function setAwards(\App\Award $awards): void
+    public function setAwards(\App\Models\Award $awards): void
     {
         $this->awards = $awards;
     }
