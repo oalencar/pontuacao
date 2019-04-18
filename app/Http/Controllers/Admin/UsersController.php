@@ -10,6 +10,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreUsersRequest;
 use App\Http\Requests\Admin\UpdateUsersRequest;
 
+/**
+ * Class UsersController
+ * @package App\Http\Controllers\Admin
+ */
 class UsersController extends Controller
 {
 
@@ -142,14 +146,20 @@ class UsersController extends Controller
     /**
      * Remove User from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy($id)
     {
         if (! Gate::allows('user_delete')) {
             return abort(401);
         }
+
+        if ($id == 1) {
+            return abort(403);
+        }
+
         $user = User::findOrFail($id);
         $this->userService->removeUserPartnersAndAllYourScores($user);
         $user->delete();
@@ -157,23 +167,5 @@ class UsersController extends Controller
         return redirect()->route('admin.users.index');
     }
 
-    /**
-     * Delete all selected User at once.
-     *
-     * @param Request $request
-     */
-    public function massDestroy(Request $request)
-    {
-        if (! Gate::allows('user_delete')) {
-            return abort(401);
-        }
-        if ($request->input('ids')) {
-            $entries = User::whereIn('id', $request->input('ids'))->get();
-
-            foreach ($entries as $entry) {
-                $entry->delete();
-            }
-        }
-    }
 
 }

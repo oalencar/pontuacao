@@ -78,4 +78,15 @@ class User extends Authenticatable
         return $this->hasMany(Partner::class, 'user_id');
     }
 
+    /**
+     *
+     * @return bool
+     */
+    public function isSuperAdmin() {
+        if ($this->id == 1) {
+            return true;
+        }
+        return false;
+    }
+
 }
