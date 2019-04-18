@@ -29,9 +29,6 @@
             <table class="table table-bordered table-striped {{ count($partners) > 0 ? 'datatable' : '' }} @can('partner_delete') @if ( request('show_deleted') != 1 ) dt-select @endif @endcan">
                 <thead>
                     <tr>
-                        @can('partner_delete')
-                            @if ( request('show_deleted') != 1 )<th style="text-align:center;"><input type="checkbox" id="select-all" /></th>@endif
-                        @endcan
                         <th>@lang('quickadmin.partner.fields.user')</th>
                         <th>@lang('quickadmin.partner.fields.partner-type')</th>
                         <th>@lang('quickadmin.partner.fields.company')</th>
@@ -47,9 +44,7 @@
                     @if (count($partners) > 0)
                         @foreach ($partners as $partner)
                             <tr data-entry-id="{{ $partner->id }}">
-                                @can('partner_delete')
-                                    @if ( request('show_deleted') != 1 )<td></td>@endif
-                                @endcan
+
                                 <td field-key='user'>{{ $partner->user->name or '' }} - {{ $partner->user->email or '' }}</td>
                                 <td field-key='partner_type'>{{ $partner->partner_type->description or '' }}</td>
                                 <td field-key='company'>
@@ -107,12 +102,3 @@
         </div>
     </div>
 @stop
-
-@section('javascript')
-    <script>
-        @can('partner_delete')
-            @if ( request('show_deleted') != 1 ) window.route_mass_crud_entries_destroy = '{{ route('admin.partners.mass_destroy') }}'; @endif
-        @endcan
-
-    </script>
-@endsection
