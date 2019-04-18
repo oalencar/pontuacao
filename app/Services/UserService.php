@@ -4,7 +4,7 @@
 namespace App\Services;
 
 
-use App\Partner;
+use App\Models\Partner;
 use App\User;
 
 /**

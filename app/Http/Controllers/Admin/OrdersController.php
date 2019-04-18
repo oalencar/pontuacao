@@ -6,7 +6,7 @@ use \App\Models\Cliente;
 use App\Models\Company;
 use App\Models\Order;
 use App\Models\OrderStatus;
-use App\Partner;
+use App\Models\Partner;
 use App\Score;
 use App\Services\EmailMarketingService;
 use App\Services\ScoreService;

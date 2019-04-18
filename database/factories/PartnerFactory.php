@@ -1,6 +1,6 @@
 <?php
 
-$factory->define(App\Partner::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\Partner::class, function (Faker\Generator $faker) {
     return [
         "company_id" => factory('App\Models\Company')->create(),
         "user_id" => factory('App\User')->create(),

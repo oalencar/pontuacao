@@ -4,7 +4,7 @@ namespace App\Services;
 
 use \App\Models\Cliente;
 use App\Models\Order;
-use App\Partner;
+use App\Models\Partner;
 use App\Services\MailjetService;
 use Illuminate\Http\Response;
 use Mailjet\Resources;

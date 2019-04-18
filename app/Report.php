@@ -3,7 +3,7 @@
 namespace App;
 
 use App\Models\Company;
-use App\Partner;
+use App\Models\Partner;
 use App\Award;
 use App\Score;
 use App\Services\ScoreService;
@@ -40,7 +40,7 @@ class Report
     /**
      * ReportCompanyTop10 constructor.
      * @param Company $company
-     * @param \App\Partner $partners
+     * @param \App\Models\Partner $partners
      * @param \App\Models\Award $awards
      * @param \App\Score $scores
      * @param ScoreService $scoreService
@@ -71,17 +71,17 @@ class Report
     }
 
     /**
-     * @return \App\Partner
+     * @return \App\Models\Partner
      */
-    public function getPartners(): \App\Partner
+    public function getPartners(): \App\Models\Partner
     {
         return $this->partners;
     }
 
     /**
-     * @param \App\Partner $partners
+     * @param \App\Models\Partner $partners
      */
-    public function setPartners(\App\Partner $partners): void
+    public function setPartners(\App\Models\Partner $partners): void
     {
         $this->partners = $partners;
     }

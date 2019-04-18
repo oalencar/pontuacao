@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Award;
 use App\Models\Company;
-use App\Partner;
+use App\Models\Partner;
 use App\Score;
 use App\Services\AwardService;
 use App\Services\CompanyService;

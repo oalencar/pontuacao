@@ -9,7 +9,7 @@
 namespace App\Models\DTO;
 
 
-use App\Partner;
+use App\Models\Partner;
 use App\Services\ScoreService;
 use App\User;
 use Illuminate\Support\Collection;

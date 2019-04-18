@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -20,19 +20,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Company[] $companies
  * @property-write mixed $company_id
  * @method static bool|null forceDelete()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Partner newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Partner newQuery()
- * @method static \Illuminate\Database\Query\Builder|\App\Partner onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Partner query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Partner newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Partner newQuery()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Partner onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Partner query()
  * @method static bool|null restore()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Partner whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Partner whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Partner whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Partner wherePartnerTypeId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Partner whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Partner whereUserId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Partner withTrashed()
- * @method static \Illuminate\Database\Query\Builder|\App\Partner withoutTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Partner whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Partner whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Partner whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Partner wherePartnerTypeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Partner whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Partner whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Partner withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Partner withoutTrashed()
  * @mixin \Eloquent
  */
 class Partner extends Model

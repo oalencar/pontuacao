@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Award;
-use App\Partner;
+use App\Models\Partner;
 use App\Score;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;

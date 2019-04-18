@@ -3,7 +3,7 @@
 namespace App\Services;
 
 
-use App\Partner;
+use App\Models\Partner;
 use App\Models\Order;
 use App\Score;
 

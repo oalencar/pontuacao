@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Company;
-use App\Partner;
+use App\Models\Partner;
 use App\Models\PartnerType;
 use App\Score;
 use App\Services\PartnerService;

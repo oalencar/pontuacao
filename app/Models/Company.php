@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Award[] $awards
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Partner[] $partners
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Partner[] $partners
  * @method static bool|null forceDelete()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Company newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Company newQuery()
