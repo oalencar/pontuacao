@@ -14,6 +14,7 @@ use App\Services\PartnerTypeService;
 use App\Services\ScoreService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 
 class ReportsController extends Controller
 {
