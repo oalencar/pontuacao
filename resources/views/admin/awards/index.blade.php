@@ -55,7 +55,7 @@
                                     @if ( request('show_deleted') != 1 )<td></td>@endif
                                 @endcan
                                 <td field-key='title'>{{ $award->title }}</td>
-                                <td field-key='goal'>{{ $award->goal }}</td>
+                                <td field-key='goal'><span class="score-mask">{{ $award->goal }}</span></td>
                                 <td field-key='start_date'>{{ $award->start_date }}</td>
                                 <td field-key='finish_date'>{{ $award->finish_date }}</td>
                                 <td field-key='partner_type'>

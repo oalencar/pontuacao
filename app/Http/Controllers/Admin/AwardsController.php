@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Award;
+use App\Classes\FormatData;
 use App\PartnerType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -77,6 +78,7 @@ class AwardsController extends Controller
         if (! Gate::allows('award_create')) {
             return abort(401);
         }
+
         $request = $this->saveFiles($request);
 
         $award = $this->award->create($request->except(['partner_type_id', 'company_id']));
@@ -128,6 +130,7 @@ class AwardsController extends Controller
         if (! Gate::allows('award_edit')) {
             return abort(401);
         }
+
         $request = $this->saveFiles($request);
         $award = $this->award->findOrFail($id);
 

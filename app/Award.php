@@ -1,6 +1,7 @@
 <?php
 namespace App;
 
+use App\Classes\FormatData;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -61,7 +62,7 @@ class Award extends Model
      */
     public function setGoalAttribute($input)
     {
-        $this->attributes['goal'] = $input ? $input : null;
+        $this->attributes['goal'] = $input ? FormatData::removeDotsOfString($input) : null;
     }
 
     /**

@@ -37,7 +37,7 @@
             <div class="row">
                 <div class="col-xs-12 form-group">
                     {!! Form::label('goal', trans('quickadmin.award.fields.goal').'*', ['class' => 'control-label']) !!}
-                    {!! Form::number('goal', old('goal'), ['class' => 'form-control', 'placeholder' => 'Pontuação a ser atingida', 'required' => '']) !!}
+                    {!! Form::text('goal', old('goal'), ['class' => 'form-control', 'placeholder' => 'Pontuação a ser atingida', 'required' => '']) !!}
                     <p class="help-block">Pontuação a ser atingida</p>
                     @if($errors->has('goal'))
                         <p class="help-block">
