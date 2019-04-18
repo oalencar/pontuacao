@@ -11,7 +11,7 @@ namespace App\Models\DTO;
 
 use App\Award;
 use App\Models\Company;
-use App\Report;
+use App\Models\Report;
 use App\Score;
 
 /**
