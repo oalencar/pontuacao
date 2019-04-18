@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Services\UserService;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -11,6 +12,21 @@ use App\Http\Requests\Admin\UpdateUsersRequest;
 
 class UsersController extends Controller
 {
+
+    /**
+     * @var UserService
+     */
+    private $userService;
+
+    /**
+     * UsersController constructor.
+     * @param UserService $userService
+     */
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
     /**
      * Display a listing of User.
      *
@@ -38,7 +54,7 @@ class UsersController extends Controller
         if (! Gate::allows('user_create')) {
             return abort(401);
         }
-        
+
         $roles = \App\Role::get()->pluck('title', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
 
         return view('admin.users.create', compact('roles'));
@@ -74,7 +90,7 @@ class UsersController extends Controller
         if (! Gate::allows('user_edit')) {
             return abort(401);
         }
-        
+
         $roles = \App\Role::get()->pluck('title', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
 
         $user = User::findOrFail($id);
@@ -114,7 +130,7 @@ class UsersController extends Controller
         if (! Gate::allows('user_view')) {
             return abort(401);
         }
-        
+
         $roles = \App\Role::get()->pluck('title', 'id')->prepend(trans('quickadmin.qa_please_select'), '');$partners = \App\Partner::where('user_id', $id)->get();$scores = \App\Score::where('user_id', $id)->get();
 
         $user = User::findOrFail($id);
@@ -135,6 +151,7 @@ class UsersController extends Controller
             return abort(401);
         }
         $user = User::findOrFail($id);
+        $this->userService->removeUserPartnersAndAllYourScores($user);
         $user->delete();
 
         return redirect()->route('admin.users.index');

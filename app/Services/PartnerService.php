@@ -34,7 +34,7 @@ class PartnerService
      */
     public function getPartnerScores($partner)
     {
-        return $this->score::where('user_id', $partner->user_id)->get();
+        return $this->score::where('partner_id', $partner->id)->get();
     }
 
     /**
