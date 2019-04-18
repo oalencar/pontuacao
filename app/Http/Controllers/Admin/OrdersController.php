@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use \App\Models\Cliente;
 use App\Models\Company;
-use App\Order;
+use App\Models\Order;
 use App\OrderStatus;
 use App\Partner;
 use App\Score;

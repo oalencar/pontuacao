@@ -1,6 +1,6 @@
 <?php
 
-$factory->define(App\Order::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\Order::class, function (Faker\Generator $faker) {
     return [
         "codigo" => $faker->name,
         "descricao" => $faker->name,

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Order;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreOrdersRequest;
@@ -24,7 +24,7 @@ class OrdersController extends Controller
     {
         $order = Order::findOrFail($id);
         $order->update($request->all());
-        
+
 
         return $order;
     }
@@ -32,7 +32,7 @@ class OrdersController extends Controller
     public function store(StoreOrdersRequest $request)
     {
         $order = Order::create($request->all());
-        
+
 
         return $order;
     }

@@ -4,7 +4,7 @@ namespace App\Services;
 
 
 use App\Partner;
-use App\Order;
+use App\Models\Order;
 use App\Score;
 
 class OrderService

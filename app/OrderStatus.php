@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
- * @property-read \App\Order|null $order
+ * @property-read \App\Models\Order|null $order
  * @method static bool|null forceDelete()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\OrderStatus newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\OrderStatus newQuery()

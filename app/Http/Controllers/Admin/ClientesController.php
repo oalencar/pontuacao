@@ -122,7 +122,7 @@ class ClientesController extends Controller
             return abort(401);
         }
 
-        $companies = \App\Models\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');$orders = \App\Order::where('client_id', $id)->get();
+        $companies = \App\Models\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');$orders = \App\Models\Order::where('client_id', $id)->get();
 
         $cliente = Cliente::findOrFail($id);
 

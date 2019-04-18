@@ -17,7 +17,7 @@ class OrderServiceTest extends TestCase
     public function testGetAllPartnersOfOrder()
     {
         $partner = $this->app->make('App\Partner');
-        $order = $this->app->make('App\Order');
+        $order = $this->app->make('App\Models\Order');
         $score = $this->app->make('App\Score');
 
         $orderService = new OrderService($partner, $order, $score);

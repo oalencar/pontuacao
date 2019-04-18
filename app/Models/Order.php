@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
@@ -20,25 +20,25 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $deleted_at
  * @property int|null $company_id
  * @property int|null $client_id
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\OrderStatus[] $order_statuses
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\OrderStatus[] $order_statuses
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Score[] $scores
  * @method static bool|null forceDelete()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Order newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Order newQuery()
- * @method static \Illuminate\Database\Query\Builder|\App\Order onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Order query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order newQuery()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Order onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order query()
  * @method static bool|null restore()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Order whereClientId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Order whereCodigo($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Order whereCompanyId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Order whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Order whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Order whereDescricao($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Order whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Order whereStartDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Order whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Order withTrashed()
- * @method static \Illuminate\Database\Query\Builder|\App\Order withoutTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereClientId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereCodigo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereCompanyId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereDescricao($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereStartDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Order withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Order withoutTrashed()
  * @mixin \Eloquent
  */
 class Order extends Model
