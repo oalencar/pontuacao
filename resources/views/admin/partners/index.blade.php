@@ -26,7 +26,7 @@
         </div>
 
         <div class="panel-body table-responsive">
-            <table class="table table-bordered table-striped {{ count($partners) > 0 ? 'datatable' : '' }} @can('partner_delete') @if ( request('show_deleted') != 1 ) dt-select @endif @endcan">
+            <table class="table table-bordered table-striped {{ count($partners) > 0 ? 'datatable' : '' }}">
                 <thead>
                     <tr>
                         <th>@lang('quickadmin.partner.fields.user')</th>

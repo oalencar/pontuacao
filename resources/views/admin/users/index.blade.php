@@ -18,7 +18,7 @@
         </div>
 
         <div class="panel-body table-responsive">
-            <table class="table table-bordered table-striped {{ count($users) > 0 ? 'datatable' : '' }} @can('user_delete') dt-select @endcan">
+            <table class="table table-bordered table-striped {{ count($users) > 0 ? 'datatable' : '' }}">
                 <thead>
                 <tr>
 
