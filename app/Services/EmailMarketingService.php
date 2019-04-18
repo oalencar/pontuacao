@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Cliente;
+use \App\Models\Cliente;
 use App\Order;
 use App\Partner;
 use App\Services\MailjetService;

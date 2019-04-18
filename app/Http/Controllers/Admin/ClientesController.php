@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Cliente;
+use \App\Models\Cliente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
@@ -45,7 +45,7 @@ class ClientesController extends Controller
         if (! Gate::allows('cliente_create')) {
             return abort(401);
         }
-        
+
         $companies = \App\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
 
         return view('admin.clientes.create', compact('companies'));
@@ -81,7 +81,7 @@ class ClientesController extends Controller
         if (! Gate::allows('cliente_edit')) {
             return abort(401);
         }
-        
+
         $companies = \App\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
 
         $cliente = Cliente::findOrFail($id);
@@ -121,7 +121,7 @@ class ClientesController extends Controller
         if (! Gate::allows('cliente_view')) {
             return abort(401);
         }
-        
+
         $companies = \App\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');$orders = \App\Order::where('client_id', $id)->get();
 
         $cliente = Cliente::findOrFail($id);

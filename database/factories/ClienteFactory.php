@@ -1,6 +1,6 @@
 <?php
 
-$factory->define(App\Cliente::class, function (Faker\Generator $faker) {
+$factory->define(\App\Models\Cliente::class, function (Faker\Generator $faker) {
     return [
         "name" => $faker->name,
         "email" => $faker->safeEmail,

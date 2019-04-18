@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Cliente;
+use \App\Models\Cliente;
 use App\Company;
 use App\Order;
 use App\OrderStatus;

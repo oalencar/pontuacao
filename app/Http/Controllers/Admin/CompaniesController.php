@@ -3,17 +3,61 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Company;
+use App\Order;
+use App\PartnerType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreCompaniesRequest;
 use App\Http\Requests\Admin\UpdateCompaniesRequest;
 
+/**
+ * Class CompaniesController
+ * @package App\Http\Controllers\Admin
+ */
 class CompaniesController extends Controller
 {
-    public function __construct(Company $company)
-    {
+    /**
+     * @var Company
+     */
+    private $company;
+    /**
+     * @var PartnerType
+     */
+    private $partnerType;
+    /**
+     * @var Order
+     */
+    private $order;
+    /**
+     * @var Cliente
+     */
+    private $client;
+    /**
+     * @var Award
+     */
+    private $award;
+
+    /**
+     * CompaniesController constructor.
+     * @param Company $company
+     * @param PartnerType $partnerType
+     * @param Order $order
+     * @param Cliente $client
+     * @param Award $award
+     */
+    public function __construct(
+        Company $company,
+        PartnerType $partnerType,
+        Order $order,
+        Cliente $client,
+        Award $award
+    ) {
         $this->company = $company;
+        $this->partnerType = $partnerType;
+        $this->order = $order;
+        $this->client = $client;
+        $this->award = $award;
     }
 
     /**
@@ -87,7 +131,7 @@ class CompaniesController extends Controller
 
         $partner_types = \App\PartnerType::where('company_id', $id)->get();
         $orders = \App\Order::where('company_id', $id)->get();
-        $clientes = \App\Cliente::where('company_id', $id)->get();
+        $clientes = \App\Models\Cliente::where('company_id', $id)->get();
         $awards = \App\Models\Award::where('company_id', $id)->get();
 
         $company = $this->company->findOrFail($id);
@@ -149,7 +193,7 @@ class CompaniesController extends Controller
         }
         $partner_types = \App\PartnerType::where('company_id', $id)->get();
         $orders = \App\Order::where('company_id', $id)->get();
-        $clientes = \App\Cliente::where('company_id', $id)->get();
+        $clientes = \App\Models\Cliente::where('company_id', $id)->get();
         $awards = \App\Models\Award::where('company_id', $id)->get();
 
         $company = $this->company->findOrFail($id);

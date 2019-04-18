@@ -5,6 +5,6 @@ $factory->define(App\Order::class, function (Faker\Generator $faker) {
         "codigo" => $faker->name,
         "descricao" => $faker->name,
         "company_id" => factory('App\Company')->create(),
-        "client_id" => factory('App\Cliente')->create(),
+        "client_id" => factory('\App\Models\Cliente')->create(),
     ];
 });
