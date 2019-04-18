@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Role;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreRolesRequest;
@@ -24,7 +24,7 @@ class RolesController extends Controller
     {
         $role = Role::findOrFail($id);
         $role->update($request->all());
-        
+
 
         return $role;
     }
@@ -32,7 +32,7 @@ class RolesController extends Controller
     public function store(StoreRolesRequest $request)
     {
         $role = Role::create($request->all());
-        
+
 
         return $role;
     }

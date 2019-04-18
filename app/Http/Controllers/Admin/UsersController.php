@@ -55,7 +55,7 @@ class UsersController extends Controller
             return abort(401);
         }
 
-        $roles = \App\Role::get()->pluck('title', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
+        $roles = \App\Models\Role::get()->pluck('title', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
 
         return view('admin.users.create', compact('roles'));
     }
@@ -91,7 +91,7 @@ class UsersController extends Controller
             return abort(401);
         }
 
-        $roles = \App\Role::get()->pluck('title', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
+        $roles = \App\Models\Role::get()->pluck('title', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
 
         $user = User::findOrFail($id);
 
@@ -131,7 +131,7 @@ class UsersController extends Controller
             return abort(401);
         }
 
-        $roles = \App\Role::get()->pluck('title', 'id')->prepend(trans('quickadmin.qa_please_select'), '');$partners = \App\Models\Partner::where('user_id', $id)->get();$scores = \App\Models\Score::where('user_id', $id)->get();
+        $roles = \App\Models\Role::get()->pluck('title', 'id')->prepend(trans('quickadmin.qa_please_select'), '');$partners = \App\Models\Partner::where('user_id', $id)->get();$scores = \App\Models\Score::where('user_id', $id)->get();
 
         $user = User::findOrFail($id);
 
