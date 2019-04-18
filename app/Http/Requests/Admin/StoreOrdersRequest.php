@@ -26,6 +26,7 @@ class StoreOrdersRequest extends FormRequest
             'codigo' => 'required',
             'company_id' => 'required',
             'start_date' => 'required',
+            'client_id' => 'required'
         ];
     }
 }

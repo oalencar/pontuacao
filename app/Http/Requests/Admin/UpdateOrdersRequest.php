@@ -23,7 +23,6 @@ class UpdateOrdersRequest extends FormRequest
     public function rules()
     {
         return [
-
             'codigo' => 'required',
             'company_id' => 'required',
             'start_date' => 'required'
