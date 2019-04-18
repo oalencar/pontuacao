@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Award;
-use App\Company;
+use App\Models\Company;
 use App\Models\DTO\ReportAwardDTO;
 use App\Partner;
 use App\Score;

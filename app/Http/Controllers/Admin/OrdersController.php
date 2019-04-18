@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use \App\Models\Cliente;
-use App\Company;
+use App\Models\Company;
 use App\Order;
 use App\OrderStatus;
 use App\Partner;

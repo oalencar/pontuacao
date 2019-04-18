@@ -8,6 +8,6 @@ $factory->define(App\Award::class, function (Faker\Generator $faker) {
         "start_date" => $faker->date("d/m/Y", $max = 'now'),
         "finish_date" => $faker->date("d/m/Y", $max = 'now'),
         "partner_type_id" => factory('App\PartnerType')->create(),
-        "company_id" => factory('App\Company')->create(),
+        "company_id" => factory('App\Models\Company')->create(),
     ];
 });

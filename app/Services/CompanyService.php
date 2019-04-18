@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Award;
-use App\Company;
+use App\Models\Company;
 use App\PartnerType;
 
 class CompanyService

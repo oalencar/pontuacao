@@ -12,14 +12,14 @@ class CompanySeed extends Seeder
     public function run()
     {
         $items = [
-            
+
             ['id' => 1, 'nome' => 'Celmar', 'endereco' => null, 'telefone' => null,],
             ['id' => 2, 'nome' => 'Sierra', 'endereco' => null, 'telefone' => null,],
 
         ];
 
         foreach ($items as $item) {
-            \App\Company::create($item);
+            \App\Models\Company::create($item);
         }
     }
 }

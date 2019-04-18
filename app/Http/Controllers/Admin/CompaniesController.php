@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Company;
+use App\Models\Company;
 use App\Order;
 use App\PartnerType;
 use Illuminate\Http\Request;

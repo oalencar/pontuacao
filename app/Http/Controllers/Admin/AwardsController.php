@@ -11,7 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreAwardsRequest;
 use App\Http\Requests\Admin\UpdateAwardsRequest;
 use App\Http\Controllers\Traits\FileUploadTrait;
-use App\Company;
+use App\Models\Company;
 
 class AwardsController extends Controller
 {

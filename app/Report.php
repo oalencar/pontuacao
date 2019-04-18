@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Company;
+use App\Models\Company;
 use App\Partner;
 use App\Award;
 use App\Score;
@@ -55,17 +55,17 @@ class Report
     }
 
     /**
-     * @return \App\Company
+     * @return \App\Models\Company
      */
-    public function getCompany(): \App\Company
+    public function getCompany(): \App\Models\Company
     {
         return $this->company;
     }
 
     /**
-     * @param \App\Company $company
+     * @param \App\Models\Company $company
      */
-    public function setCompany(\App\Company $company): void
+    public function setCompany(\App\Models\Company $company): void
     {
         $this->company = $company;
     }

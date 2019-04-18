@@ -46,7 +46,7 @@ class ClientesController extends Controller
             return abort(401);
         }
 
-        $companies = \App\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
+        $companies = \App\Models\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
 
         return view('admin.clientes.create', compact('companies'));
     }
@@ -82,7 +82,7 @@ class ClientesController extends Controller
             return abort(401);
         }
 
-        $companies = \App\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
+        $companies = \App\Models\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
 
         $cliente = Cliente::findOrFail($id);
 
@@ -122,7 +122,7 @@ class ClientesController extends Controller
             return abort(401);
         }
 
-        $companies = \App\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');$orders = \App\Order::where('client_id', $id)->get();
+        $companies = \App\Models\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');$orders = \App\Order::where('client_id', $id)->get();
 
         $cliente = Cliente::findOrFail($id);
 

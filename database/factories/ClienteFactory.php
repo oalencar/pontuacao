@@ -6,6 +6,6 @@ $factory->define(\App\Models\Cliente::class, function (Faker\Generator $faker) {
         "email" => $faker->safeEmail,
         "email_alternative" => $faker->safeEmail,
         "phone" => $faker->safeEmail,
-        "company_id" => factory('App\Company')->create(),
+        "company_id" => factory('App\Models\Company')->create(),
     ];
 });

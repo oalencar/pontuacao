@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $deleted_at
  * @property int|null $user_id
  * @property int|null $partner_type_id
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Company[] $companies
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Company[] $companies
  * @property-write mixed $company_id
  * @method static bool|null forceDelete()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Partner newModelQuery()

@@ -46,7 +46,7 @@ class PartnerTypesController extends Controller
             return abort(401);
         }
 
-        $companies = \App\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
+        $companies = \App\Models\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
 
         return view('admin.partner_types.create', compact('companies'));
     }
@@ -85,7 +85,7 @@ class PartnerTypesController extends Controller
             return abort(401);
         }
 
-        $companies = \App\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
+        $companies = \App\Models\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
 
         $partner_type = PartnerType::findOrFail($id);
 
@@ -142,7 +142,7 @@ class PartnerTypesController extends Controller
             return abort(401);
         }
 
-        $companies = \App\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');$partners = \App\Partner::where('partner_type_id', $id)->get();$awards = \App\Models\Award::where('partner_type_id', $id)->get();
+        $companies = \App\Models\Company::get()->pluck('nome', 'id')->prepend(trans('quickadmin.qa_please_select'), '');$partners = \App\Partner::where('partner_type_id', $id)->get();$awards = \App\Models\Award::where('partner_type_id', $id)->get();
 
         $partner_type = PartnerType::findOrFail($id);
 

@@ -10,7 +10,7 @@ namespace App\Models\DTO;
 
 
 use App\Award;
-use App\Company;
+use App\Models\Company;
 use App\Report;
 use App\Score;
 

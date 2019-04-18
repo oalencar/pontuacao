@@ -6,7 +6,7 @@ namespace App\Services;
 use App\Award;
 use App\Partner;
 use App\PartnerType;
-use App\Company;
+use App\Models\Company;
 
 /**
  * Class AwardService
