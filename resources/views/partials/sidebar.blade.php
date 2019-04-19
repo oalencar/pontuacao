@@ -23,6 +23,15 @@
                 @endcan
             @endcan
 
+            @can('cliente_access')
+                <li>
+                    <a href="{{ route('admin.clientes.index') }}">
+                        <i class="fa fa-gears"></i>
+                        <span>@lang('quickadmin.clientes.title')</span>
+                    </a>
+                </li>
+            @endcan
+
 
             @can('report_access')
                 <li class="treeview">
@@ -36,7 +45,7 @@
                     <ul class="treeview-menu">
                         <li>
                             <a href="{{ route('admin.reports.award.index') }}">
-                                <span>Premições</span>
+                                <span>Premiações</span>
                             </a>
                         </li>
                         <li>
@@ -54,34 +63,6 @@
 
             @endcan
 
-            @can('user_management_access')
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-users"></i>
-                    <span>@lang('quickadmin.user-management.title')</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    @can('role_access')
-                    <li>
-                        <a href="{{ route('admin.roles.index') }}">
-                            <i class="fa fa-briefcase"></i>
-                            <span>@lang('quickadmin.roles.title')</span>
-                        </a>
-                    </li>@endcan
-
-                    @can('user_access')
-                    <li>
-                        <a href="{{ route('admin.users.index') }}">
-                            <i class="fa fa-user"></i>
-                            <span>@lang('quickadmin.users.title')</span>
-                        </a>
-                    </li>@endcan
-
-                </ul>
-            </li>@endcan
 
             @can('gestão_de_empresa_access')
             <li class="treeview">
@@ -149,13 +130,35 @@
                 </ul>
             </li>@endcan
 
-            @can('cliente_access')
-            <li>
-                <a href="{{ route('admin.clientes.index') }}">
-                    <i class="fa fa-gears"></i>
-                    <span>@lang('quickadmin.clientes.title')</span>
-                </a>
-            </li>@endcan
+            @can('user_management_access')
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-users"></i>
+                        <span>@lang('quickadmin.user-management.title')</span>
+                        <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        @can('role_access')
+                            <li>
+                                <a href="{{ route('admin.roles.index') }}">
+                                    <i class="fa fa-briefcase"></i>
+                                    <span>@lang('quickadmin.roles.title')</span>
+                                </a>
+                            </li>@endcan
+
+                        @can('user_access')
+                            <li>
+                                <a href="{{ route('admin.users.index') }}">
+                                    <i class="fa fa-user"></i>
+                                    <span>@lang('quickadmin.users.title')</span>
+                                </a>
+                            </li>@endcan
+
+                    </ul>
+                </li>
+            @endcan
 
 
 
