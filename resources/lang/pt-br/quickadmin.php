@@ -102,7 +102,7 @@ return [
 	],
 
 	'clientes' => [
-		'title' => 'Clientes',
+		'title' => 'Gestão de Clientes',
 		'fields' => [
 			'name' => 'Nome',
 			'email' => 'Email',

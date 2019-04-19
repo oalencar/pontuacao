@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Award;
+use App\Models\Award;
 use App\Classes\FormatData;
 use App\Models\PartnerType;
 use Illuminate\Http\Request;

@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Award;
+use App\Models\Award;
 use App\Models\Company;
 use App\Models\DTO\ReportAwardDTO;
 use App\Models\Partner;
 use App\Models\Score;
 use App\Services\AwardService;
 use App\Services\CompanyService;
-use App\Services\PartnerService;
 use App\Services\PartnerTypeService;
 use App\Services\ScoreService;
 use Illuminate\Http\Request;

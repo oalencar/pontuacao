@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Award;
+use App\Models\Award;
 use App\Models\Company;
 use App\Models\Partner;
 use App\Models\Score;

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Company;
 use App\Models\Partner;
-use App\Award;
+use App\Models\Award;
 use App\Models\Score;
 use App\Services\ScoreService;
 

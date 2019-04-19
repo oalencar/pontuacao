@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Award;
+use App\Models\Award;
 use App\Models\Company;
 use App\Models\PartnerType;
 
