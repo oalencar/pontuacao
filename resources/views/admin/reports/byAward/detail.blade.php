@@ -9,14 +9,14 @@
 @extends('layouts.app')
 
 @section('content')
-    <h3 class="page-title">Relatório {{ $award->title }}</h3>
+    <h3 class="page-title">Relatório</h3>
 
     <div class="row">
         <div class="col-md-12">
 
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title"></h3>
+                    <h3 class="box-title">{{ $award->title }}</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -24,7 +24,7 @@
                         <thead>
                             <tr>
                                 <th>Usuário</th>
-                                <th>Pontuação/Premiação</th>
+                                <th>Tipo de Parceiro - Pontuação</th>
                                 <th>Pontuação total</th>
                             </tr>
                         </thead>
@@ -32,21 +32,21 @@
 
                         @foreach($reportAwards as $reportAward)
                             <tr>
-                                <td>{{ $reportAward->getUser()->name }}</td>
+                                <td>{{ $reportAward->getUser()->name }} ( {{ $reportAward->getUser()->email }} )</td>
                                 <td>
-                                    <table>
+                                    <ul class="list-unstyled">
                                         @foreach($reportAward->getPartners() as $partner)
-                                            <tr>
-                                                <td>{{ $partner->partner_type->getFullDescription() }}</td>
-                                                <td>
+                                            <li>
+                                                {{ $partner->partner_type->getFullDescription() }}
+                                                -
                                                 {{ $scoreService->formataPontuacao(
                                                     $scoreService->sumOfScores($scoreService->filterPartnerScoresOfAward($partner->scores, $award))
                                                 )}}
-                                                </td>
-                                            </tr>
+
+                                            </li>
 
                                         @endforeach
-                                    </table>
+                                    </ul>
                                 </td>
                                 <td>{{ $scoreService->formataPontuacao($reportAward->getTotal()) }} ({{ $scoreService->getPercentReachedGoal($award->goal, $reportAward->getTotal())  }}%)</td>
                             </tr>
