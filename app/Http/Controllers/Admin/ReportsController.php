@@ -102,7 +102,7 @@ class ReportsController extends Controller
         $companies = $this->company->all();
         $partners = $this->partner::with('user')->get();
 
-        return view('admin.reports.index', compact('companies', 'partners'));
+        return view('admin.reports.byPartners.index', compact('companies', 'partners'));
 
     }
 
@@ -134,7 +134,7 @@ class ReportsController extends Controller
             $award->partners = $partners;
         });
 
-        return view('admin.reports.company',
+        return view('admin.reports.byCompany.company',
             ['companies' => $companies, 'company' => $company, 'awards' => $awards]);
 
     }
@@ -151,7 +151,7 @@ class ReportsController extends Controller
 
         $scores = $this->scoreService->getAllScoresFromPartner($partner);
 
-        return view('admin.reports.detail', compact('partner', 'scores', 'company'));
+        return view('admin.reports.byCompany.detail', compact('partner', 'scores', 'company'));
     }
 
     public function reportPartnerDetail($id)
@@ -174,7 +174,7 @@ class ReportsController extends Controller
             });
         });
 
-        return view('admin.reports.partnerDetail',
+        return view('admin.reports.byPartners.partnerDetail',
             compact('partner', 'scores', 'awards')
         );
     }
@@ -194,7 +194,7 @@ class ReportsController extends Controller
 
         $scores = $this->scoreService->filterPartnerScoresOfAward($allScores, $award);
 
-        return view('admin.reports.partnerAwardDetail',
+        return view('admin.reports.byPartnerAward.partnerAwardDetail.partnerAwardDetail',
             compact('partner', 'scores', 'award')
         );
     }

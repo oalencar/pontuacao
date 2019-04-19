@@ -2,7 +2,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h3 class="page-title">@lang('quickadmin.score.report') @lang('quickadmin.award.title')</h3>
+    <h3 class="page-title">Relatório por Parceiros</h3>
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -13,10 +13,9 @@
                 <div class="col-xs-12">
 
                     <div class="panel-body table-responsive">
-                        <table class="table table-bordered table-striped {{ count($partners) > 0 ? 'datatable' : '' }} @can('score_delete') @if ( request('show_deleted') != 1 ) dt-select @endif @endcan">
+                        <table class="table table-bordered table-striped {{ count($partners) > 0 ? 'datatable' : '' }}">
                             <thead>
                             <tr>
-                                <th></th>
                                 <th>@lang('quickadmin.users.fields.name')</th>
                                 <th>@lang('quickadmin.users.fields.email')</th>
                                 @if( request('show_deleted') == 1 )
@@ -31,9 +30,7 @@
                             @if (count($partners) > 0)
                                 @foreach ($partners as $partner)
                                     <tr data-entry-id="{{ $partner->id }}">
-                                        @can('score_delete')
-                                            @if ( request('show_deleted') != 1 )<td></td>@endif
-                                        @endcan
+
 
                                         <td field-key='nome'>{{ $partner->user->name or '' }}</td>
                                         <td field-key='user'>{{ $partner->user->email or '' }}</td>
