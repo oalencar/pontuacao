@@ -70,6 +70,8 @@
         }).parentsUntil('.sidebar-menu > .treeview-menu').addClass('menu-open').css('display', 'block');
 
         $('.score-mask').mask('000.000.000.000.000', {reverse: true});
+
+        $('.phone-mask').mask('(00) 00000-0000');
     });
 </script>
 

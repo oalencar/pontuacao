@@ -6,7 +6,7 @@
     @can('cliente_create')
     <p>
         <a href="{{ route('admin.clientes.create') }}" class="btn btn-success">@lang('quickadmin.qa_add_new')</a>
-        
+
     </p>
     @endcan
 
@@ -45,7 +45,7 @@
                         @endif
                     </tr>
                 </thead>
-                
+
                 <tbody>
                     @if (count($clientes) > 0)
                         @foreach ($clientes as $cliente)
@@ -57,7 +57,7 @@
                                 <td field-key='name'>{{ $cliente->name }}</td>
                                 <td field-key='email'>{{ $cliente->email }}</td>
                                 <td field-key='email_alternative'>{{ $cliente->email_alternative }}</td>
-                                <td field-key='phone'>{{ $cliente->phone }}</td>
+                                <td field-key='phone'><span class="phone-mask">{{ $cliente->phone }}</span></td>
                                 <td field-key='company'>{{ $cliente->company->nome or '' }}</td>
                                 @if( request('show_deleted') == 1 )
                                 <td>
@@ -112,7 +112,7 @@
     </div>
 @stop
 
-@section('javascript') 
+@section('javascript')
     <script>
         @can('cliente_delete')
             @if ( request('show_deleted') != 1 ) window.route_mass_crud_entries_destroy = '{{ route('admin.clientes.mass_destroy') }}'; @endif

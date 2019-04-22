@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use App\Classes\WhatsappMessage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -58,6 +59,14 @@ class Cliente extends Model
     public function company()
     {
         return $this->belongsTo(Company::class, 'company_id')->withTrashed();
+    }
+
+    public function getPhoneAttribute($value){
+        return preg_replace("/[^0-9]/", "", $value );
+    }
+
+    public function setPhoneAttribute($value){
+        return preg_replace("/[^0-9]/", "", $value );
     }
 
 }

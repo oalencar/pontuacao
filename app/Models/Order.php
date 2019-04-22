@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $codigo
  * @property string $descricao
  * @property string $start_date
- * @property string $company
+ * @property Company $company
  * @property string $client
  * @property int $id
  * @property \Illuminate\Support\Carbon|null $created_at

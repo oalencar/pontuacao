@@ -8,7 +8,7 @@
         <div class="panel-heading">
             @lang('quickadmin.qa_create')
         </div>
-        
+
         <div class="panel-body">
             <div class="row">
                 <div class="col-xs-12 form-group">
@@ -49,7 +49,7 @@
             <div class="row">
                 <div class="col-xs-12 form-group">
                     {!! Form::label('phone', trans('quickadmin.clientes.fields.phone').'', ['class' => 'control-label']) !!}
-                    {!! Form::email('phone', old('phone'), ['class' => 'form-control', 'placeholder' => '']) !!}
+                    {!! Form::text('phone', old('phone'), ['class' => 'form-control phone-mask', 'placeholder' => '']) !!}
                     <p class="help-block"></p>
                     @if($errors->has('phone'))
                         <p class="help-block">
@@ -70,7 +70,7 @@
                     @endif
                 </div>
             </div>
-            
+
         </div>
     </div>
 

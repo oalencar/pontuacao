@@ -1,16 +1,30 @@
+<?php
+/**
+ * @var $order \App\Models\Order
+ * @var $messageService \App\Services\MessageService
+ */;
+?>
+
 <div class="row">
     <div class="col-xs-12 form-group">
         <table id="order-status-list" class="table">
             <thead>
             <tr>
+                <td></td>
                 <td>Descrição</td>
                 <td>Data</td>
+                <td></td>
             </tr>
             </thead>
             <tbody>
                 @if(isset($orderStatuses))
                     @foreach($orderStatuses as $orderStatus)
                     <tr>
+                        <td>
+                            <a href="{{ $messageService->getWhatsappClientMessageOrderStatusUrl($order, $orderStatus) }}"
+                               target="_blank"
+                               class="btn btn-circle btn-success"><i class="fa fa-whatsapp"></i></a>
+                        </td>
                         <td class="col-sm-8">
                             <input
                                 type="text"

@@ -9,6 +9,7 @@ use App\Models\OrderStatus;
 use App\Models\Partner;
 use App\Models\Score;
 use App\Services\EmailMarketingService;
+use App\Services\MessageService;
 use App\Services\ScoreService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -55,7 +56,16 @@ class OrdersController extends Controller
      */
     private $client;
 
+
+    /**
+     * @var ScoreService
+     */
     private $scoreService;
+
+    /**
+     * @var MessageService
+     */
+    private $messageService;
 
     public function __construct(
         Order $order,
@@ -65,7 +75,8 @@ class OrdersController extends Controller
         EmailMarketingService $emailMarketing,
         Cliente $client,
         Company $company,
-        ScoreService $scoreService
+        ScoreService $scoreService,
+        MessageService $messageService
     )
     {
         $this->order = $order;
@@ -76,6 +87,7 @@ class OrdersController extends Controller
         $this->client = $client;
         $this->company = $company;
         $this->scoreService = $scoreService;
+        $this->messageService = $messageService;
     }
 
     /**
@@ -190,7 +202,14 @@ class OrdersController extends Controller
             return $partner->company->id == $order->company_id;
         })->toJson();
 
-        return view('admin.orders.edit', compact('order', 'orderStatuses', 'scores', 'partners'));
+        $messageService = $this->messageService;
+
+        return view('admin.orders.edit',
+                        compact('order',
+                            'orderStatuses',
+                                'scores',
+                                'partners',
+                                'messageService'));
     }
 
     /**
