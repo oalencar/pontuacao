@@ -21,9 +21,11 @@
                     @foreach($orderStatuses as $orderStatus)
                     <tr>
                         <td>
-                            <a href="{{ $messageService->getWhatsappClientMessageOrderStatusUrl($order, $orderStatus) }}"
-                               target="_blank"
-                               class="btn btn-circle btn-success"><i class="fa fa-whatsapp"></i></a>
+                            @if ($order->client->phone)
+                                <a href="{{ $messageService->getWhatsappClientMessageOrderStatusUrl($order, $orderStatus) }}"
+                                   target="_blank"
+                                   class="btn btn-circle btn-success"><i class="fa fa-whatsapp"></i></a>
+                            @endif
                         </td>
                         <td class="col-sm-8">
                             <input
@@ -50,6 +52,7 @@
                     @endforeach
                 @else
                     <tr>
+                        <td></td>
                         <td class="col-sm-8">
                             <input type="text" class="form-control" name="order-status-observacao[]"/>
                         </td>

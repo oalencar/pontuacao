@@ -74,6 +74,7 @@ export class Order {
         const newRow = $('<tr>');
 
         const rowTemplate = `
+                <td></td>
                 <td><input type="text" class="form-control" name="order-status-observacao[]"/></td>
                 <td>
                     <div class="input-group date">

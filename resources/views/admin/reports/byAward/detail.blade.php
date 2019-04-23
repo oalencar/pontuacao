@@ -53,15 +53,17 @@
                                 <td>{{ $scoreService->formataPontuacao($reportAward->getTotal()) }} ({{ $scoreService->getPercentReachedGoal($award->goal, $reportAward->getTotal())}}%)</td>
                                 <td>
                                     @foreach ($reportAward->getPartners() as $partner)
-                                        <a href="{{ $messageService->getWhatsappPartnerMessageReportAwardTotalScoreUrl(
+                                        @if ($partner->whatsapp)
+                                            <a href="{{ $messageService->getWhatsappPartnerMessageReportAwardTotalScoreUrl(
                                                         $reportAward->getAward(),
                                                         $partner,
                                                         $scoreService->formataPontuacao($reportAward->getTotal()),
                                                         $scoreService->getPercentReachedGoal($award->goal, $reportAward->getTotal())
                                                     )
                                                  }}"
-                                           target="_blank"
-                                           class="btn btn-circle btn-success btn-xs"><i class="fa fa-whatsapp"></i> <span class="phone-mask">{{ $partner->whatsapp }}</span></a>
+                                               target="_blank"
+                                               class="btn btn-circle btn-success btn-xs"><i class="fa fa-whatsapp"></i> <span class="phone-mask">{{ $partner->whatsapp }}</span></a>
+                                        @endif
                                     @endforeach
 
                                 </td>
