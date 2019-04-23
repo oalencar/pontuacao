@@ -93,11 +93,11 @@ class Partner extends Model
         return $this->hasMany(Score::class, 'partner_id');
     }
 
-    public function setWhatsappAttribute($value){
+    public function getWhatsappAttribute($value){
         return FormatData::cleanPhoneNumber($value);
     }
 
-    public function getWhatsappAttribute($value){
+    public function setWhatsappAttribute($value){
         $this->attributes['whatsapp'] = FormatData::cleanPhoneNumber($value);
     }
 
