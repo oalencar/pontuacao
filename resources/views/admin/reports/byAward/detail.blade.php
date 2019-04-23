@@ -6,6 +6,7 @@
 ?>
 
 @inject('request', 'Illuminate\Http\Request')
+@inject('messageService', 'App\Services\MessageService')
 @extends('layouts.app')
 
 @section('content')
@@ -26,6 +27,7 @@
                                 <th>Usuário</th>
                                 <th>Tipo de Parceiro - Pontuação</th>
                                 <th>Pontuação total</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -48,7 +50,21 @@
                                         @endforeach
                                     </ul>
                                 </td>
-                                <td>{{ $scoreService->formataPontuacao($reportAward->getTotal()) }} ({{ $scoreService->getPercentReachedGoal($award->goal, $reportAward->getTotal())  }}%)</td>
+                                <td>{{ $scoreService->formataPontuacao($reportAward->getTotal()) }} ({{ $scoreService->getPercentReachedGoal($award->goal, $reportAward->getTotal())}}%)</td>
+                                <td>
+                                    @foreach ($reportAward->getPartners() as $partner)
+                                        <a href="{{ $messageService->getWhatsappPartnerMessageReportAwardTotalScoreUrl(
+                                                        $reportAward->getAward(),
+                                                        $partner,
+                                                        $scoreService->formataPontuacao($reportAward->getTotal()),
+                                                        $scoreService->getPercentReachedGoal($award->goal, $reportAward->getTotal())
+                                                    )
+                                                 }}"
+                                           target="_blank"
+                                           class="btn btn-circle btn-success btn-xs"><i class="fa fa-whatsapp"></i> <span class="phone-mask">{{ $partner->whatsapp }}</span></a>
+                                    @endforeach
+
+                                </td>
                             </tr>
                         @endforeach
 

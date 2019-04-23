@@ -14,4 +14,9 @@ class FormatData
     {
         return str_replace('.', '', $string);
     }
+
+    public static function cleanPhoneNumber($value)
+    {
+        return preg_replace("/[^0-9]/", "", $value );
+    }
 }

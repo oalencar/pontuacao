@@ -38,6 +38,18 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 form-group">
+                    {!! Form::label('whatsapp', 'Whatsapp', ['class' => 'control-label']) !!}
+                    {!! Form::text('whatsapp', old('whatsapp'), ['class' => 'form-control phone-mask', 'placeholder' => '']) !!}
+                    <p class="help-block"></p>
+                    @if($errors->has('whatsapp'))
+                        <p class="help-block">
+                            {{ $errors->first('whatsapp') }}
+                        </p>
+                    @endif
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 form-group">
                     {!! Form::label('password', trans('quickadmin.users.fields.password'), ['class' => 'control-label']) !!}
                     {!! Form::password('password', ['class' => 'form-control']) !!}
                     <p class="help-block"></p>

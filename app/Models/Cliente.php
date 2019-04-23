@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use App\Classes\FormatData;
 use App\Classes\WhatsappMessage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -62,11 +63,11 @@ class Cliente extends Model
     }
 
     public function getPhoneAttribute($value){
-        return preg_replace("/[^0-9]/", "", $value );
+        return FormatData::cleanPhoneNumber($value);
     }
 
     public function setPhoneAttribute($value){
-        return preg_replace("/[^0-9]/", "", $value );
+        return FormatData::cleanPhoneNumber($value);
     }
 
 }

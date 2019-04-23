@@ -3,6 +3,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Classes\FormatData;
 
 /**
  * Class Partner
@@ -39,7 +40,7 @@ class Partner extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['user_id', 'partner_type_id', 'company_id'];
+    protected $fillable = ['user_id', 'partner_type_id', 'company_id', 'whatsapp'];
     protected $hidden = [];
     protected $with = ['partner_type', 'company', 'user'];
 
@@ -90,6 +91,14 @@ class Partner extends Model
     public function scores()
     {
         return $this->hasMany(Score::class, 'partner_id');
+    }
+
+    public function setWhatsappAttribute($value){
+        return FormatData::cleanPhoneNumber($value);
+    }
+
+    public function getWhatsappAttribute($value){
+        return FormatData::cleanPhoneNumber($value);
     }
 
 }
