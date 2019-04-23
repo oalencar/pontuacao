@@ -67,7 +67,7 @@ class Cliente extends Model
     }
 
     public function setPhoneAttribute($value){
-        return FormatData::cleanPhoneNumber($value);
+        $this->attributes['phone'] = FormatData::cleanPhoneNumber($value);
     }
 
 }

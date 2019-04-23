@@ -98,7 +98,7 @@ class Partner extends Model
     }
 
     public function getWhatsappAttribute($value){
-        return FormatData::cleanPhoneNumber($value);
+        $this->attributes['whatsapp'] = FormatData::cleanPhoneNumber($value);
     }
 
 }
