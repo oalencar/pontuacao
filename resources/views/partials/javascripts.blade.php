@@ -75,5 +75,19 @@
     });
 </script>
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-138991372-1"></script>
+
+@if (getenv('GOOGLE_ANALYTICS') != null || getenv('GOOGLE_ANALYTICS') != '' )
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', {{ getenv('GOOGLE_ANALYTICS') }});
+    </script>
+@endif
+
+
 
 @yield('javascript')
